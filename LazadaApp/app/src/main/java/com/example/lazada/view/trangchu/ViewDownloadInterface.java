@@ -6,5 +6,6 @@ package com.example.lazada.view.trangchu;
 
 public interface ViewDownloadInterface {
     void downloadSuccess(String data);
+
     void downloadFailed();
 }
