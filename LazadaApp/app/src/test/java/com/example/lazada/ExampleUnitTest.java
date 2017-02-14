@@ -1,4 +1,4 @@
-package com.example.lazada_app;
+package com.example.lazada;
 
 import org.junit.Test;
 
