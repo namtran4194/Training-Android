@@ -21,7 +21,6 @@
 
         <activity
             android:name=".view.trangchu.HomeActivity"
-            android:label="Trang chủ"
             android:screenOrientation="portrait" />
     </application>
 
