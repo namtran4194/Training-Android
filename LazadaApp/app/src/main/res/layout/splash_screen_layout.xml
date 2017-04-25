@@ -11,7 +11,8 @@
         android:layout_height="match_parent"
         android:background="#80000000"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="250dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -21,9 +22,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thế giới mua sắm trong tầm tay bạn"
+            android:text="@string/slogan1"
             android:textColor="#fff"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -34,9 +35,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Giao hàng tận nơi + Thanh toán dễ dàng"
+            android:text="@string/slogan2"
             android:textColor="#fff"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -45,12 +46,18 @@
             android:src="@drawable/icon_sercurity" />
 
         <TextView
-            android:paddingBottom="150dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100% bảo vệ người tiêu dùng"
+            android:text="@string/slogan3"
             android:textColor="#fff"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/slogan4"
+            android:textColor="#fff"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <ImageView

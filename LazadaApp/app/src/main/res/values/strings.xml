@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">LazadaApp</string>
+    <string name="slogan1">Thế giới mua sắm trong tầm tay bạn</string>
+    <string name="slogan2">Giao hàng tận nơi + Thanh toán dễ dàng</string>
+    <string name="slogan3">100% bảo vệ người tiêu dùng</string>
+    <string name="slogan4">Cam kết</string>
 </resources>
