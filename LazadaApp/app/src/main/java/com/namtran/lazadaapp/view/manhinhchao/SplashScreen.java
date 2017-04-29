@@ -24,6 +24,7 @@ public class SplashScreen extends AppCompatActivity {
                 }finally {
                     Intent home = new Intent(SplashScreen.this, HomeActivity.class);
                     startActivity(home);
+                    finish();
                 }
             }
         });
