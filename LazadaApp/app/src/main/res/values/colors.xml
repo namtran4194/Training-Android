@@ -7,7 +7,8 @@
     <color name="bgToolbar">#183545</color>
     <color name="white">#fff</color>
     <color name="bgLogo">#f67122</color>
-    <color name="gray">#cccccc</color>
+    <color name="gray">#c0c0c0</color>
+    <color name="lightGray">#cccccc</color>
     <color name="darkGray">#b3b3b3</color>
     <color name="facebook">#4a6ea9</color>
     <color name="goooglePlus">#da4835</color>

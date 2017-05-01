@@ -22,4 +22,7 @@
     <string name="mn_title_settings">Cài đặt</string>
     <string name="mn_title_policy">Chính sách</string>
     <string name="mn_title_help">Trợ giúp</string>
+    <string name="et_hint_password">Mật khẩu</string>
+    <string name="et_hint_account">Địa chỉ email</string>
+    <string name="txt_forget_password">Quên mật khẩu?</string>
 </resources>
