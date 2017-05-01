@@ -9,4 +9,7 @@
     <color name="bgLogo">#f67122</color>
     <color name="gray">#cccccc</color>
     <color name="darkGray">#b3b3b3</color>
+    <color name="facebook">#4a6ea9</color>
+    <color name="goooglePlus">#da4835</color>
+    <color name="forgetPW">#00CEFF</color>
 </resources>

@@ -2,6 +2,7 @@ package com.namtran.lazadaapp.model.trangchu.xulymenu;
 
 import android.util.Log;
 
+import com.namtran.lazadaapp.connection.internet.DownloadJSON;
 import com.namtran.lazadaapp.model.objectclass.LoaiSanPham;
 
 import org.json.JSONArray;
@@ -9,7 +10,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by namtr on 26/04/2017.
@@ -40,5 +43,25 @@ public class XuLyJSONMenu {
             e.printStackTrace();
         }
         return datas;
+    }
+
+    public List<LoaiSanPham> getTypeOfProductById(int parentId) {
+        List<LoaiSanPham> loaiSanPhams = new ArrayList<>();
+        List<HashMap<String, String>> attrs = new ArrayList<>();
+
+        String url = "http://192.168.43.24:8000/lazada/loaisanpham.php";
+        HashMap<String, String> maLoaiCha = new HashMap<>();
+        maLoaiCha.put("maloaicha", String.valueOf(parentId));
+        attrs.add(maLoaiCha);
+        DownloadJSON downloadJSON = new DownloadJSON(url, attrs);
+        downloadJSON.execute();
+        try {
+            String jsonData = downloadJSON.get();
+            XuLyJSONMenu xuLyJSONMenu = new XuLyJSONMenu();
+            loaiSanPhams = xuLyJSONMenu.parserJSONMenu(jsonData);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return loaiSanPhams;
     }
 }

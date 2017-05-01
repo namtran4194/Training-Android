@@ -22,7 +22,12 @@
         </activity>
 
         <activity
-            android:name=".view.trangchu.HomeActivity"
+            android:name=".view.trangchu.TrangChuActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.dangnhap.DangNhapActivity"
+            android:parentActivityName=".view.trangchu.TrangChuActivity"
             android:screenOrientation="portrait" />
     </application>
 

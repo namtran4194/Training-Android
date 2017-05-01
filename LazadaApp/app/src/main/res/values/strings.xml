@@ -11,4 +11,15 @@
     <string name="mn_title_more">More</string>
     <string name="openDescRes">openDrawerContentDescRes</string>
     <string name="closeDescRes">closeDrawerContentDescRes</string>
+    <string name="btn_txt_fb">Facebook</string>
+    <string name="btn_txt_gg">Google+</string>
+    <string name="txt_login_others">Hoặc đăng nhập bằng</string>
+    <string name="btn_txt_login">Đăng nhập</string>
+    <string name="mn_title_login">Đăng nhập</string>
+    <string name="mn_title_notify">Thông báo</string>
+    <string name="mn_title_wishList">Danh sách mong muốn</string>
+    <string name="mn_title_myCart">Đơn hàng của tôi</string>
+    <string name="mn_title_settings">Cài đặt</string>
+    <string name="mn_title_policy">Chính sách</string>
+    <string name="mn_title_help">Trợ giúp</string>
 </resources>

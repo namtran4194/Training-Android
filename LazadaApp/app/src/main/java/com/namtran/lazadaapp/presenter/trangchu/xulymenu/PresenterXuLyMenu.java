@@ -1,6 +1,6 @@
 package com.namtran.lazadaapp.presenter.trangchu.xulymenu;
 
-import com.namtran.lazadaapp.connectinternet.DownloadJSON;
+import com.namtran.lazadaapp.connection.internet.DownloadJSON;
 import com.namtran.lazadaapp.model.objectclass.LoaiSanPham;
 import com.namtran.lazadaapp.model.trangchu.xulymenu.XuLyJSONMenu;
 import com.namtran.lazadaapp.view.trangchu.ViewXuLyMenu;
