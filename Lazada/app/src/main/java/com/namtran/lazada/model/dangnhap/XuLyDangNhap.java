@@ -11,7 +11,7 @@ public class XuLyDangNhap {
     private AccessToken accessToken;
     private AccessTokenTracker tracker;
 
-    public AccessToken getCurrentAccessToken() {
+    public AccessToken getCurrentFBAccessToken() {
         tracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
@@ -19,7 +19,7 @@ public class XuLyDangNhap {
             }
         };
         accessToken = AccessToken.getCurrentAccessToken();
-//        destroyTracker();
+        destroyTracker();
         return accessToken;
     }
 
