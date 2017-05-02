@@ -25,8 +25,6 @@ import java.util.List;
 public class ExpandableLVAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<LoaiSanPham> loaiSanPhams;
-    private TextView currentMenu;
-
 
     public ExpandableLVAdapter(Context context, List<LoaiSanPham> loaiSanPhams) {
         this.context = context;

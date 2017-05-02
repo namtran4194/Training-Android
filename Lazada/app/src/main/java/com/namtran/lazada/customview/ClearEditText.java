@@ -16,7 +16,7 @@ import com.namtran.lazada.R;
 
 public class ClearEditText extends TextInputEditText {
     private Drawable cross, nonCross;
-    boolean visible = false;
+    private boolean visible = false;
 
     public ClearEditText(Context context) {
         super(context);

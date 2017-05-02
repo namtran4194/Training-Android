@@ -49,7 +49,7 @@ public class XuLyJSONMenu {
         List<LoaiSanPham> loaiSanPhams = new ArrayList<>();
         List<HashMap<String, String>> attrs = new ArrayList<>();
 
-        String url = "http://192.168.43.24:8000/lazada/loaisanpham.php";
+        String url = "http://192.168.1.227:8000/lazada/loaisanpham.php";
         HashMap<String, String> maLoaiCha = new HashMap<>();
         maLoaiCha.put("maloaicha", String.valueOf(parentId));
         attrs.add(maLoaiCha);

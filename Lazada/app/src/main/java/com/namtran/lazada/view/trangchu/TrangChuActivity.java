@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.widget.ExpandableListView;
 
 import com.facebook.AccessToken;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
@@ -25,6 +24,7 @@ import com.namtran.lazada.adapter.ViewPagerAdapterHome;
 import com.namtran.lazada.model.objectclass.LoaiSanPham;
 import com.namtran.lazada.presenter.trangchu.xulymenu.PresenterXuLyMenu;
 import com.namtran.lazada.view.dangnhap.DangNhapActivity;
+import com.namtran.lazada.view.dangnhap.fragment.FragmentDangNhap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +32,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu {
+    private static final int REQUEST_CODE_LOGIN = 0;
     private Toolbar mToolbar;
     private TabLayout mTabs;
     private ViewPager mViewPager;
@@ -45,9 +46,8 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(this);
-
         setContentView(R.layout.trang_chu_activity);
+
         init();
 
         setSupportActionBar(mToolbar);
@@ -94,8 +94,10 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
         menu.clear();
         getMenuInflater().inflate(R.menu.home_menu, menu);
 
+        // lấy token đăng nhập fb
         token = xuLyMenu.layTokenNguoiDungFB();
 
+        // lấy thông tin người dùng từ token nhận được
         if (token != null) {
             GraphRequest request = GraphRequest.newMeRequest(token, new GraphRequest.GraphJSONObjectCallback() {
                 @Override
@@ -110,16 +112,19 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
                 }
             });
 
+            // truyền các tham số cần lấy
             Bundle parameter = new Bundle();
             parameter.putString("fields", "name");
             request.setParameters(parameter);
             request.executeAsync();
         }
         if (token != null) {
+            // hiển thị menu Đăng xuất
             MenuItem item = menu.findItem(R.id.menu_logout);
             item.setVisible(true);
         }
 
+        // lưu menu hiện tại
         this.menu = menu;
         return true;
     }
@@ -132,12 +137,13 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_login:
-                if (token == null) {
+                if (token == null) { // chưa đăng nhập
                     Intent loginIntent = new Intent(this, DangNhapActivity.class);
-                    startActivityForResult(loginIntent, 0);
+                    startActivityForResult(loginIntent, REQUEST_CODE_LOGIN);
                 }
                 break;
             case R.id.menu_logout:
+                // đăng xuất
                 LoginManager.getInstance().logOut();
                 this.onCreateOptionsMenu(menu);
                 break;
@@ -147,8 +153,9 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 0) {
-            if (resultCode == 1) {
+        if (requestCode == REQUEST_CODE_LOGIN) {
+            // resultCode từ FragmentDangNhap
+            if (resultCode == FragmentDangNhap.RESULT_CODE_LOGIN) {
                 this.onCreateOptionsMenu(menu);
             }
         }

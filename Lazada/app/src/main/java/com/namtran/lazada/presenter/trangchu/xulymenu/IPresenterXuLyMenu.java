@@ -1,7 +1,5 @@
 package com.namtran.lazada.presenter.trangchu.xulymenu;
 
-import android.content.Context;
-
 import com.facebook.AccessToken;
 
 /**

@@ -11,6 +11,7 @@ public class XuLyDangNhap {
     private AccessToken accessToken;
     private AccessTokenTracker tracker;
 
+    // lấy token đăng nhập fb
     public AccessToken getCurrentFBAccessToken() {
         tracker = new AccessTokenTracker() {
             @Override
@@ -23,6 +24,7 @@ public class XuLyDangNhap {
         return accessToken;
     }
 
+    // dừng theo dõi access token hiện tại
     private void destroyTracker() {
         tracker.stopTracking();
     }

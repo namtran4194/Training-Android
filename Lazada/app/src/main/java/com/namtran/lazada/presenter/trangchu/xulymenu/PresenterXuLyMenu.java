@@ -29,13 +29,13 @@ public class PresenterXuLyMenu implements IPresenterXuLyMenu {
         List<LoaiSanPham> loaiSanPhams;
         List<HashMap<String, String>> attrs = new ArrayList<>();
 
-        // GET method
-//        String url = "http://192.168.43.23:8000/lazada/loaisanpham.php?maloaicha=1";
-//        DownloadJSON downloadJSON = new DownloadJSON(url);
-        // End GET
+        /* GET method
+        String url = "http://192.168.43.23:8000/lazada/loaisanpham.php?maloaicha=1";
+        DownloadJSON downloadJSON = new DownloadJSON(url);
+         End GET*/
 
         // POST method
-        String url = "http://192.168.43.24:8000/lazada/loaisanpham.php";
+        String url = "http://192.168.1.227:8000/lazada/loaisanpham.php";
         HashMap<String, String> maLoaiCha = new HashMap<>();
         maLoaiCha.put("maloaicha", "0");
         attrs.add(maLoaiCha);

@@ -13,11 +13,9 @@ import android.widget.Button;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.namtran.lazada.R;
-import com.namtran.lazada.view.trangchu.TrangChuActivity;
 
 import java.util.Collections;
 
@@ -27,6 +25,7 @@ import java.util.Collections;
 
 public class FragmentDangNhap extends Fragment implements View.OnClickListener {
     private static final String TAG = "FragmentDangNhap";
+    public static final int RESULT_CODE_LOGIN = 1;
     private Button btnLoginFB;
     private CallbackManager callbackManager;
 
@@ -34,7 +33,6 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View loginView = inflater.inflate(R.layout.fragment_dang_nhap, container, false);
-        FacebookSdk.sdkInitialize(getContext().getApplicationContext());
 
         init(loginView);
         return loginView;
@@ -45,7 +43,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                getActivity().setResult(1);
+                getActivity().setResult(RESULT_CODE_LOGIN);
                 getActivity().finish();
             }
 

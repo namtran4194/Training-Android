@@ -28,7 +28,6 @@ public class ViewPagerAdapterHome extends FragmentPagerAdapter {
 
     public ViewPagerAdapterHome(FragmentManager fm) {
         super(fm);
-
         fragments.add(new FragmentNoiBat());
         fragments.add(new FragmentKhuyenMai());
         fragments.add(new FragmentDienTu());
