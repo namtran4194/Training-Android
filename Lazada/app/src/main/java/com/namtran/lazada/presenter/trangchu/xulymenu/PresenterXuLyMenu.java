@@ -1,6 +1,8 @@
 package com.namtran.lazada.presenter.trangchu.xulymenu;
 
+import com.facebook.AccessToken;
 import com.namtran.lazada.connection.internet.DownloadJSON;
+import com.namtran.lazada.model.dangnhap.XuLyDangNhap;
 import com.namtran.lazada.model.objectclass.LoaiSanPham;
 import com.namtran.lazada.model.trangchu.xulymenu.XuLyJSONMenu;
 import com.namtran.lazada.view.trangchu.ViewXuLyMenu;
@@ -49,5 +51,11 @@ public class PresenterXuLyMenu implements IPresenterXuLyMenu {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public AccessToken layTokenNguoiDungFB() {
+        XuLyDangNhap xuLyDangNhap = new XuLyDangNhap();
+        return xuLyDangNhap.getCurrentAccessToken();
     }
 }

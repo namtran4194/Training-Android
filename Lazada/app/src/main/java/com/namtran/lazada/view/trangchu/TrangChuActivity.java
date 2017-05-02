@@ -14,12 +14,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.namtran.lazada.R;
 import com.namtran.lazada.adapter.ExpandableLVAdapter;
 import com.namtran.lazada.adapter.ViewPagerAdapterHome;
 import com.namtran.lazada.model.objectclass.LoaiSanPham;
 import com.namtran.lazada.presenter.trangchu.xulymenu.PresenterXuLyMenu;
 import com.namtran.lazada.view.dangnhap.DangNhapActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -30,12 +38,16 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ExpandableListView mExpandableListView;
+    private AccessToken token;
+    private Menu menu;
+    private PresenterXuLyMenu xuLyMenu;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.trang_chu_activity);
+        FacebookSdk.sdkInitialize(this);
 
+        setContentView(R.layout.trang_chu_activity);
         init();
 
         setSupportActionBar(mToolbar);
@@ -51,7 +63,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.openDescRes, R.string.closeDescRes);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        PresenterXuLyMenu xuLyMenu = new PresenterXuLyMenu(this);
+        xuLyMenu = new PresenterXuLyMenu(this);
         xuLyMenu.layDanhSachMenu();
     }
 
@@ -78,8 +90,37 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        menu.clear();
         getMenuInflater().inflate(R.menu.home_menu, menu);
+
+        token = xuLyMenu.layTokenNguoiDungFB();
+
+        if (token != null) {
+            GraphRequest request = GraphRequest.newMeRequest(token, new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(JSONObject object, GraphResponse response) {
+                    try {
+                        String name = object.getString("name");
+                        MenuItem item = menu.findItem(R.id.menu_login);
+                        item.setTitle(name);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            Bundle parameter = new Bundle();
+            parameter.putString("fields", "name");
+            request.setParameters(parameter);
+            request.executeAsync();
+        }
+        if (token != null) {
+            MenuItem item = menu.findItem(R.id.menu_logout);
+            item.setVisible(true);
+        }
+
+        this.menu = menu;
         return true;
     }
 
@@ -91,10 +132,26 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_login:
-                Intent loginIntent = new Intent(this, DangNhapActivity.class);
-                startActivity(loginIntent);
+                if (token == null) {
+                    Intent loginIntent = new Intent(this, DangNhapActivity.class);
+                    startActivityForResult(loginIntent, 0);
+                }
+                break;
+            case R.id.menu_logout:
+                LoginManager.getInstance().logOut();
+                this.onCreateOptionsMenu(menu);
+                break;
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0) {
+            if (resultCode == 1) {
+                this.onCreateOptionsMenu(menu);
+            }
+        }
     }
 
     @Override

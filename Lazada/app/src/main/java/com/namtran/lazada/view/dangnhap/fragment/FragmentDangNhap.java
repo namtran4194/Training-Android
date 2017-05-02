@@ -45,18 +45,17 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                getActivity().setResult(1);
                 getActivity().finish();
             }
 
             @Override
             public void onCancel() {
-                Log.d(TAG, "cancel");
             }
 
             @Override
             public void onError(FacebookException error) {
                 Log.d(TAG, error.toString());
-                error.printStackTrace();
             }
         });
         btnLoginFB = (Button) loginView.findViewById(R.id.login_withFB);

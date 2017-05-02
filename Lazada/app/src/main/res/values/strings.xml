@@ -27,4 +27,5 @@
     <string name="txt_forget_password">Quên mật khẩu?</string>
 
     <string name="facebook_app_id">1858252967726380</string>
+    <string name="mn_title_logout">Đăng xuất</string>
 </resources>
