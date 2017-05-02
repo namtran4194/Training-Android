@@ -25,4 +25,6 @@
     <string name="et_hint_password">Mật khẩu</string>
     <string name="et_hint_account">Địa chỉ email</string>
     <string name="txt_forget_password">Quên mật khẩu?</string>
+
+    <string name="facebook_app_id">1858252967726380</string>
 </resources>

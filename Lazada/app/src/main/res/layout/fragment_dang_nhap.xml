@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <com.namtran.lazadaapp.customview.ClearEditText
+        <com.namtran.lazada.customview.ClearEditText
             android:id="@+id/login_etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,6 +35,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <TextView
+        android:id="@+id/login_tvForgetPW"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

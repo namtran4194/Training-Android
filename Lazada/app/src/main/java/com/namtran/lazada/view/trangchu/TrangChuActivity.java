@@ -1,4 +1,4 @@
-package com.namtran.lazadaapp.view.trangchu;
+package com.namtran.lazada.view.trangchu;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,12 +14,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 
-import com.namtran.lazadaapp.R;
-import com.namtran.lazadaapp.adapter.ExpandableLVAdapter;
-import com.namtran.lazadaapp.adapter.ViewPagerAdapterHome;
-import com.namtran.lazadaapp.model.objectclass.LoaiSanPham;
-import com.namtran.lazadaapp.presenter.trangchu.xulymenu.PresenterXuLyMenu;
-import com.namtran.lazadaapp.view.dangnhap.DangNhapActivity;
+import com.namtran.lazada.R;
+import com.namtran.lazada.adapter.ExpandableLVAdapter;
+import com.namtran.lazada.adapter.ViewPagerAdapterHome;
+import com.namtran.lazada.model.objectclass.LoaiSanPham;
+import com.namtran.lazada.presenter.trangchu.xulymenu.PresenterXuLyMenu;
+import com.namtran.lazada.view.dangnhap.DangNhapActivity;
 
 import java.util.List;
 
