@@ -40,6 +40,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
 
     private void init(View loginView) {
         callbackManager = CallbackManager.Factory.create();
+        // xử lý kết quả trả về khi đăng nhập bằng fb
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -62,6 +63,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        // hiện đăng nhập với fb
         LoginManager.getInstance().logInWithReadPermissions(this, Collections.singletonList("public_profile"));
     }
 

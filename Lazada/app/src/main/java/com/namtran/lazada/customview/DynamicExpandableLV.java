@@ -10,6 +10,7 @@ import android.widget.ExpandableListView;
  * Created by namtr on 30/04/2017.
  */
 
+// custom lại ExpandableListView
 public class DynamicExpandableLV extends ExpandableListView {
     private Context context;
     private Point size = new Point();

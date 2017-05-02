@@ -69,7 +69,7 @@ public class DownloadJSON extends AsyncTask<String, Void, String> {
                 data.append(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
         Log.d(TAG, data.toString()); // Logging
         return data.toString();
@@ -102,10 +102,8 @@ public class DownloadJSON extends AsyncTask<String, Void, String> {
 
             return methodGET(connection);
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
 
 }

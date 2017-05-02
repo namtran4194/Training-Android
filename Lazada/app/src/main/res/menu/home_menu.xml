@@ -50,7 +50,7 @@
                 android:title="@string/mn_title_help" />
             <item
                 android:id="@+id/menu_logout"
-                android:icon="@drawable/logout"
+                android:icon="@drawable/ic_power_settings_new_black_24dp"
                 android:title="@string/mn_title_logout"
                 android:visible="false" />
         </menu>

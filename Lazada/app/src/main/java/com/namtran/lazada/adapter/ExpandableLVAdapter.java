@@ -33,6 +33,7 @@ public class ExpandableLVAdapter extends BaseExpandableListAdapter {
         getChilds();
     }
 
+    // lấy các item con
     private void getChilds() {
         XuLyJSONMenu xuLyJSONMenu = new XuLyJSONMenu();
         int count = loaiSanPhams.size();
@@ -87,7 +88,7 @@ public class ExpandableLVAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.custom_layout_group_parent, parent, false);
             holder.menu = (TextView) convertView.findViewById(R.id.txtTenLoaiSP);
-            holder.oldColor = holder.menu.getTextColors();
+            holder.oldColor = holder.menu.getTextColors(); // lưu màu chữ hiện tại
             holder.indicator = (ImageView) convertView.findViewById(R.id.indicator);
             convertView.setTag(holder);
         } else {
@@ -97,16 +98,16 @@ public class ExpandableLVAdapter extends BaseExpandableListAdapter {
         holder.menu.setText(loaiSanPhams.get(groupPosition).getTenLoaiSP());
 
         final int numOfChilds = loaiSanPhams.get(groupPosition).getChilds().size();
-        if (numOfChilds > 0) {
-            if (isExpanded) {
+        if (numOfChilds > 0) { // item chứa các item con
+            if (isExpanded) { // nếu item đc mở rộng thì đổi icon và tô màu text
                 holder.indicator.setImageResource(R.drawable.ic_remove_black_12dp);
                 holder.menu.setTextColor(ContextCompat.getColor(context, R.color.bgLogo));
-            } else {
+            } else { // set về mặc định
                 holder.indicator.setImageResource(R.drawable.ic_add_black_12dp);
                 holder.menu.setTextColor(holder.oldColor);
             }
             holder.indicator.setVisibility(View.VISIBLE);
-        } else {
+        } else { // ẩn indicator
             holder.indicator.setVisibility(View.INVISIBLE);
         }
 
@@ -125,7 +126,7 @@ public class ExpandableLVAdapter extends BaseExpandableListAdapter {
         ExpandableLVAdapter adapter = new ExpandableLVAdapter(context, loaiSanPhams.get(groupPosition).getChilds());
         expandedListView.setAdapter(adapter);
         expandedListView.setPadding(16, 0, 0, 0);
-        expandedListView.setGroupIndicator(null);
+        expandedListView.setGroupIndicator(null); // xóa indicator mặc định
         return expandedListView;
     }
 

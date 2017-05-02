@@ -40,6 +40,7 @@ public class ClearEditText extends TextInputEditText {
         setup();
     }
 
+    // gán hình vào bên phải của TextInputEditText
     private void setup() {
         Drawable[] drawables = getCompoundDrawables();
         Drawable drawable = visible ? cross : nonCross;
@@ -48,7 +49,6 @@ public class ClearEditText extends TextInputEditText {
 
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
-        Log.d("TextChanged", lengthAfter + "-" + start);
         visible = !(lengthAfter == 0);
         setup();
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
@@ -56,6 +56,7 @@ public class ClearEditText extends TextInputEditText {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        // khi nhấn vào dấu "x"
         if (event.getAction() == MotionEvent.ACTION_UP && event.getX() >= getRight() - getCompoundDrawables()[2].getBounds().width()) {
             setText("");
         }

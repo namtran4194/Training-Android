@@ -105,7 +105,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
                     try {
                         String name = object.getString("name");
                         MenuItem item = menu.findItem(R.id.menu_login);
-                        item.setTitle(name);
+                        item.setTitle(String.valueOf("Hi, " + name));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

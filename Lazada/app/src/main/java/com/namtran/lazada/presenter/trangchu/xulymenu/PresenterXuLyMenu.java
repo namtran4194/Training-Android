@@ -47,7 +47,7 @@ public class PresenterXuLyMenu implements IPresenterXuLyMenu {
             String jsonData = downloadJSON.get();
             XuLyJSONMenu xuLyJSONMenu = new XuLyJSONMenu();
             loaiSanPhams = xuLyJSONMenu.parserJSONMenu(jsonData);
-            viewXuLyMenu.hienThiDanhSachMenu(loaiSanPhams);
+            viewXuLyMenu.hienThiDanhSachMenu(loaiSanPhams); // trả danh sách các loại sản phẩm cho view
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

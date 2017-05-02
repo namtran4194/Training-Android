@@ -21,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 public class XuLyJSONMenu {
     private static final String TAG = "XuLyJSONMenu";
 
+    // lấy danh sách các loại sản phẩm từ chuỗi JSON
     public List<LoaiSanPham> parserJSONMenu(String jsonData) {
         List<LoaiSanPham> datas = new ArrayList<>();
 
@@ -40,14 +41,15 @@ public class XuLyJSONMenu {
                 datas.add(loaiSanPham);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            return null;
         }
         return datas;
     }
 
+    // lấy danh sách các loại sản phẩm theo mã loại cha
     public List<LoaiSanPham> getTypeOfProductById(int parentId) {
-        List<LoaiSanPham> loaiSanPhams = new ArrayList<>();
-        List<HashMap<String, String>> attrs = new ArrayList<>();
+        List<LoaiSanPham> loaiSanPhams;
+        List<HashMap<String, String>> attrs = new ArrayList<>(); // các tham số truyền theo request
 
         String url = "http://192.168.1.227:8000/lazada/loaisanpham.php";
         HashMap<String, String> maLoaiCha = new HashMap<>();
@@ -60,7 +62,7 @@ public class XuLyJSONMenu {
             XuLyJSONMenu xuLyJSONMenu = new XuLyJSONMenu();
             loaiSanPhams = xuLyJSONMenu.parserJSONMenu(jsonData);
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            return null;
         }
         return loaiSanPhams;
     }
