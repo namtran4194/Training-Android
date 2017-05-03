@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:drawableStart="@drawable/ic_replay_black_24dp"
+        android:text="Không có kết nối\nNhấn để thử lại!"
+        android:textAllCaps="false"
+        android:textSize="12sp" />
+</LinearLayout>

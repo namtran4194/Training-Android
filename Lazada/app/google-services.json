@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "217079519547",
+    "project_id": "firebase-lazada-login"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217079519547:android:95014e2235686422",
+        "android_client_info": {
+          "package_name": "com.namtran.lazada"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217079519547-ebsg0s07qnlkh8k474goq2e1c3l0l6nn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.namtran.lazada",
+            "certificate_hash": "f93f8c4237516655ba1b0df939b103c85461bba4"
+          }
+        },
+        {
+          "client_id": "217079519547-k46toof0658h15qesc0q0ch2huq1t1r2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtkbst2C_scUfdimz1WcmQF9GI4xrg34I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

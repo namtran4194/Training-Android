@@ -2,13 +2,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/bgToolbar"
-    android:orientation="vertical">
+    android:background="@color/bgToolbar">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
         android:src="@drawable/ic_shopping_cart_white_24dp" />
 
     <TextView
@@ -18,7 +16,7 @@
         android:layout_gravity="end"
         android:background="@drawable/circle"
         android:gravity="center"
-        android:text="1"
         android:textColor="@color/white"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:visibility="invisible" />
 </FrameLayout>

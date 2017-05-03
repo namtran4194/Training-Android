@@ -2,25 +2,36 @@ package com.namtran.lazada.view.trangchu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.namtran.lazada.R;
 import com.namtran.lazada.adapter.ExpandableLVAdapter;
 import com.namtran.lazada.adapter.ViewPagerAdapterHome;
+import com.namtran.lazada.model.dangnhap.XuLyDangNhap;
 import com.namtran.lazada.model.objectclass.LoaiSanPham;
 import com.namtran.lazada.presenter.trangchu.xulymenu.PresenterXuLyMenu;
 import com.namtran.lazada.view.dangnhap.DangNhapActivity;
@@ -31,7 +42,8 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu {
+public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu, GoogleApiClient.OnConnectionFailedListener, AppBarLayout.OnOffsetChangedListener {
+    private static final String TAG = "TrangChuActivity";
     private static final int REQUEST_CODE_LOGIN = 0;
     private Toolbar mToolbar;
     private TabLayout mTabs;
@@ -39,9 +51,15 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ExpandableListView mExpandableListView;
-    private AccessToken token;
-    private Menu menu;
-    private PresenterXuLyMenu xuLyMenu;
+    private AccessToken mFbToken;
+    private GoogleSignInResult mGgToken;
+    private Menu mMenu;
+    private MenuItem mMenuLogin;
+    private PresenterXuLyMenu mXuLyMenu;
+    private XuLyDangNhap mXuLyDangNhap;
+    private GoogleApiClient mGoogleApiClient;
+    private CollapsingToolbarLayout mCollapsingToolbar;
+    private LinearLayout mLayoutSearch;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,8 +81,11 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.openDescRes, R.string.closeDescRes);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        xuLyMenu = new PresenterXuLyMenu(this);
-        xuLyMenu.layDanhSachMenu();
+        mXuLyMenu = new PresenterXuLyMenu(this);
+        mXuLyDangNhap = new XuLyDangNhap();
+
+        mXuLyMenu.layDanhSachMenu();
+        mGoogleApiClient = mXuLyDangNhap.getGoogleApiClient(this, this);
     }
 
     private void init() {
@@ -73,6 +94,10 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
         mViewPager = (ViewPager) findViewById(R.id.home_viewPager);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.home_drawerLayout);
         mExpandableListView = (ExpandableListView) findViewById(R.id.home_expandableLV);
+        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.home_collapsingToolbar);
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.home_appBar);
+        appBarLayout.addOnOffsetChangedListener(this);
+        mLayoutSearch = (LinearLayout) findViewById(R.id.home_layout_search);
     }
 
     @Override
@@ -93,21 +118,23 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
     public boolean onCreateOptionsMenu(final Menu menu) {
         menu.clear();
         getMenuInflater().inflate(R.menu.home_menu, menu);
+        mMenuLogin = menu.findItem(R.id.menu_login);
+        MenuItem menuLogout = menu.findItem(R.id.menu_logout);
 
-        // lấy token đăng nhập fb
-        token = xuLyMenu.layTokenNguoiDungFB();
+        // lấy facebookToken đăng nhập fb
+        mFbToken = mXuLyMenu.layTokenNguoiDungFB();
+        mGgToken = mXuLyDangNhap.getGoogleSignInResult(mGoogleApiClient);
 
-        // lấy thông tin người dùng từ token nhận được
-        if (token != null) {
-            GraphRequest request = GraphRequest.newMeRequest(token, new GraphRequest.GraphJSONObjectCallback() {
+        // lấy thông tin người dùng từ facebookToken
+        if (mFbToken != null) {
+            GraphRequest request = GraphRequest.newMeRequest(mFbToken, new GraphRequest.GraphJSONObjectCallback() {
                 @Override
                 public void onCompleted(JSONObject object, GraphResponse response) {
                     try {
                         String name = object.getString("name");
-                        MenuItem item = menu.findItem(R.id.menu_login);
-                        item.setTitle(String.valueOf("Hi, " + name));
+                        mMenuLogin.setTitle(String.valueOf("Hi, " + name));
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Log.d(TAG, e.toString());
                     }
                 }
             });
@@ -118,14 +145,20 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
             request.setParameters(parameter);
             request.executeAsync();
         }
-        if (token != null) {
-            // hiển thị menu Đăng xuất
-            MenuItem item = menu.findItem(R.id.menu_logout);
-            item.setVisible(true);
+
+        // lấy thông tin người dùng từ googleToken
+        if (mGgToken != null) {
+            String name = mGgToken.getSignInAccount().getDisplayName();
+            mMenuLogin.setTitle(String.valueOf("Hi, " + name));
         }
 
-        // lưu menu hiện tại
-        this.menu = menu;
+        if (mFbToken != null || mGgToken != null) {
+            // hiển thị mMenu Đăng xuất
+            menuLogout.setVisible(true);
+        }
+
+        // lưu mMenu hiện tại
+        this.mMenu = menu;
         return true;
     }
 
@@ -137,15 +170,19 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_login:
-                if (token == null) { // chưa đăng nhập
+                if (mFbToken == null && mGgToken == null) { // chưa đăng nhập
                     Intent loginIntent = new Intent(this, DangNhapActivity.class);
                     startActivityForResult(loginIntent, REQUEST_CODE_LOGIN);
                 }
                 break;
             case R.id.menu_logout:
                 // đăng xuất
-                LoginManager.getInstance().logOut();
-                this.onCreateOptionsMenu(menu);
+                if (mFbToken != null) {
+                    LoginManager.getInstance().logOut();
+                } else {
+                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                }
+                this.onCreateOptionsMenu(mMenu);
                 break;
         }
         return true;
@@ -156,7 +193,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
         if (requestCode == REQUEST_CODE_LOGIN) {
             // resultCode từ FragmentDangNhap
             if (resultCode == FragmentDangNhap.RESULT_CODE_LOGIN) {
-                this.onCreateOptionsMenu(menu);
+                this.onCreateOptionsMenu(mMenu);
             }
         }
     }
@@ -165,5 +202,31 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu 
     public void hienThiDanhSachMenu(List<LoaiSanPham> loaiSanPhams) {
         ExpandableLVAdapter adapter = new ExpandableLVAdapter(this, loaiSanPhams);
         mExpandableListView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.d(TAG, connectionResult.toString());
+    }
+
+    // AppBarLayout gồm Toolbar, LinearLayout chứa thanh tìm kiếm và TabLayout
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        // ẩn LinearLayout chứa button tìm kiếm + camera khi scroll lên
+        int height = mCollapsingToolbar.getHeight() + verticalOffset;
+        Log.d(TAG, mCollapsingToolbar.getHeight() + "-" + verticalOffset + "-" + ViewCompat.getMinimumHeight(mCollapsingToolbar));
+
+        if (height <= ViewCompat.getMinimumHeight(mCollapsingToolbar)) {
+            mLayoutSearch.animate().alpha(0).setDuration(200);
+            MenuItem menuSearch = mMenu.findItem(R.id.menu_seach);
+            menuSearch.setVisible(true);
+        } else { // lần đầu chạy app sẽ vào trường hợp này
+            mLayoutSearch.animate().alpha(1).setDuration(200);
+            // do ban đầu mMenu = null nên phải kiểm tra
+            if (mMenu != null) {
+                MenuItem menuSearch = mMenu.findItem(R.id.menu_seach);
+                menuSearch.setVisible(false);
+            }
+        }
     }
 }
