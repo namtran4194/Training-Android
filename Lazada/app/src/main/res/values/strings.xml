@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lazada</string>
+    <string name="app_name">CustomLazada</string>
     <string name="localhost">http://192.168.1.227:8000/lazada/loaisanpham.php</string>
     <string name="slogan1">Thế giới mua sắm trong tầm tay bạn</string>
     <string name="slogan2">Giao hàng tận nơi + Thanh toán dễ dàng</string>
@@ -35,7 +35,7 @@
     <string name="signUp_et_hint_name">Họ tên đầy đủ</string>
     <string name="signUp_et_hint_email">Địa chỉ email</string>
     <string name="signUp_et_hint_password">Mật khẩu</string>
-    <string name="signUp_tv_warn">Mật khẩu phải bao gồm ít nhất 6 ký tự và một chữ hoa.</string>
+    <string name="signUp_tv_warn">Mật khẩu phải bao gồm ít nhất 6 ký tự và một chữ số.</string>
     <string name="signUp_et_hint_repass">Nhập lại mật khẩu</string>
     <string name="signUp_sc_txt_offer">Tôi muốn nhận các khuyến mãi độc quyền qua email.</string>
     <string name="signUp_btn_txt_signup">Đăng Ký</string>
