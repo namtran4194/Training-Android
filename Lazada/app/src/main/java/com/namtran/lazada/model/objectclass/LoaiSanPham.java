@@ -4,6 +4,10 @@ import java.util.List;
 
 /**
  * Created by namtr on 26/04/2017.
+ * <p>
+ *     maLoaiCha = 0 là các menu to nhất ngoài cùng
+ *     còn lại các menu con(maLoaiCha) của menu cha(maLoaiSP) sẽ có maLoaiCha = maLoaiSP
+ * </p>
  */
 
 public class LoaiSanPham {

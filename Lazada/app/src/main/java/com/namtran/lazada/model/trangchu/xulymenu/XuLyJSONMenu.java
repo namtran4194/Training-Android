@@ -59,7 +59,6 @@ public class XuLyJSONMenu {
         function.put("function", "getListMenu");
         attrs.add(function);
 
-
         HashMap<String, String> maLoaiCha = new HashMap<>();
         maLoaiCha.put("parentCode", String.valueOf(parentId));
         attrs.add(maLoaiCha);
