@@ -31,11 +31,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.namtran.lazada.R;
 import com.namtran.lazada.adapter.ExpandableLVAdapter;
 import com.namtran.lazada.adapter.ViewPagerAdapterHome;
-import com.namtran.lazada.model.dangnhap.XuLyDangNhap;
+import com.namtran.lazada.model.dangnhap_dangky.ModelDangNhap;
 import com.namtran.lazada.model.objectclass.LoaiSanPham;
 import com.namtran.lazada.presenter.trangchu.xulymenu.PresenterXuLyMenu;
-import com.namtran.lazada.view.dangnhap.DangNhapActivity;
-import com.namtran.lazada.view.dangnhap.fragment.FragmentDangNhap;
+import com.namtran.lazada.view.dangnhap_dangky.DangNhapVaDangKyActivity;
+import com.namtran.lazada.view.dangnhap_dangky.fragment.FragmentDangNhap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,6 +44,7 @@ import java.util.List;
 
 public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu, GoogleApiClient.OnConnectionFailedListener, AppBarLayout.OnOffsetChangedListener {
     private static final String TAG = "TrangChuActivity";
+    public static final String SERVER_NAME = "http://192.168.1.227:8000";
     private static final int REQUEST_CODE_LOGIN = 0;
     private Toolbar mToolbar;
     private TabLayout mTabs;
@@ -56,7 +57,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
     private Menu mMenu;
     private MenuItem mMenuLogin;
     private PresenterXuLyMenu mXuLyMenu;
-    private XuLyDangNhap mXuLyDangNhap;
+    private ModelDangNhap mModelDangNhap;
     private GoogleApiClient mGoogleApiClient;
     private CollapsingToolbarLayout mCollapsingToolbar;
     private LinearLayout mLayoutSearch;
@@ -82,10 +83,10 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
         mXuLyMenu = new PresenterXuLyMenu(this);
-        mXuLyDangNhap = new XuLyDangNhap();
+        mModelDangNhap = new ModelDangNhap();
 
         mXuLyMenu.layDanhSachMenu();
-        mGoogleApiClient = mXuLyDangNhap.getGoogleApiClient(this, this);
+        mGoogleApiClient = mModelDangNhap.getGoogleApiClient(this, this);
     }
 
     private void init() {
@@ -123,7 +124,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
 
         // lấy facebookToken đăng nhập fb
         mFbToken = mXuLyMenu.layTokenNguoiDungFB();
-        mGgToken = mXuLyDangNhap.getGoogleSignInResult(mGoogleApiClient);
+        mGgToken = mModelDangNhap.getGoogleSignInResult(mGoogleApiClient);
 
         // lấy thông tin người dùng từ facebookToken
         if (mFbToken != null) {
@@ -171,7 +172,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
         switch (id) {
             case R.id.menu_login:
                 if (mFbToken == null && mGgToken == null) { // chưa đăng nhập
-                    Intent loginIntent = new Intent(this, DangNhapActivity.class);
+                    Intent loginIntent = new Intent(this, DangNhapVaDangKyActivity.class);
                     startActivityForResult(loginIntent, REQUEST_CODE_LOGIN);
                 }
                 break;

@@ -1,6 +1,5 @@
-package com.namtran.lazada.view.dangnhap.fragment;
+package com.namtran.lazada.view.dangnhap_dangky.fragment;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,12 +18,11 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.namtran.lazada.R;
-import com.namtran.lazada.model.dangnhap.XuLyDangNhap;
+import com.namtran.lazada.model.dangnhap_dangky.ModelDangNhap;
 
 import java.util.Collections;
 
@@ -48,7 +46,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
         return loginView;
     }
 
-    private void init(View loginView) {
+    private void init(View v) {
         // fb login
         mCallbackManager = CallbackManager.Factory.create();
         // xử lý kết quả trả về khi đăng nhập bằng fb
@@ -69,10 +67,10 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
             }
         });
         // gg login
-        mGoogleApiClient = new XuLyDangNhap().getGoogleApiClient(getActivity(), this);
+        mGoogleApiClient = new ModelDangNhap().getGoogleApiClient(getActivity(), this);
 
-        Button btnLoginFB = (Button) loginView.findViewById(R.id.login_withFB);
-        Button btnLoginGG = (Button) loginView.findViewById(R.id.login_withGG);
+        Button btnLoginFB = (Button) v.findViewById(R.id.login_withFB);
+        Button btnLoginGG = (Button) v.findViewById(R.id.login_withGG);
         btnLoginFB.setOnClickListener(this);
         btnLoginGG.setOnClickListener(this);
     }

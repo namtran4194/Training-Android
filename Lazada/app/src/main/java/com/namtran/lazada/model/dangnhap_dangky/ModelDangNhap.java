@@ -1,7 +1,5 @@
-package com.namtran.lazada.model.dangnhap;
+package com.namtran.lazada.model.dangnhap_dangky;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 
 import com.facebook.AccessToken;
@@ -16,7 +14,7 @@ import com.google.android.gms.common.api.OptionalPendingResult;
  * Created by namtr on 02/05/2017.
  */
 
-public class XuLyDangNhap {
+public class ModelDangNhap {
     private AccessToken accessToken;
     private AccessTokenTracker tracker;
 

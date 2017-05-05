@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -27,6 +27,7 @@
                 android:id="@+id/signUp_et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textCapWords"
                 android:hint="@string/signUp_et_hint_name" />
 
         </android.support.design.widget.TextInputLayout>
@@ -89,7 +90,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.SwitchCompat
-            android:id="@+id/signUp_sc_offer"
+            android:id="@+id/signUp_sc_offerViaEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -158,5 +159,5 @@
 
     </LinearLayout>
 
-</android.support.v4.widget.NestedScrollView>
+</ScrollView>
 

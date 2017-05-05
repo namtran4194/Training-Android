@@ -86,25 +86,26 @@ public class ExpandableLVAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             holder = new MenuItemHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.custom_layout_group_parent, parent, false);
-            holder.menu = (TextView) convertView.findViewById(R.id.txtTenLoaiSP);
-            holder.oldColor = holder.menu.getTextColors(); // lưu màu chữ hiện tại
+            convertView = inflater.inflate(R.layout.custom_menu_parent, parent, false);
+            holder.menuName = (TextView) convertView.findViewById(R.id.txtTenLoaiSP);
+            holder.oldColor = holder.menuName.getTextColors(); // lưu màu chữ hiện tại
             holder.indicator = (ImageView) convertView.findViewById(R.id.indicator);
+
             convertView.setTag(holder);
         } else {
             holder = (MenuItemHolder) convertView.getTag();
         }
 
-        holder.menu.setText(loaiSanPhams.get(groupPosition).getTenLoaiSP());
+        holder.menuName.setText(loaiSanPhams.get(groupPosition).getTenLoaiSP());
 
         final int numOfChilds = loaiSanPhams.get(groupPosition).getChilds().size();
         if (numOfChilds > 0) { // item chứa các item con
             if (isExpanded) { // nếu item đc mở rộng thì đổi icon và tô màu text
                 holder.indicator.setImageResource(R.drawable.ic_remove_black_12dp);
-                holder.menu.setTextColor(ContextCompat.getColor(context, R.color.bgLogo));
+                holder.menuName.setTextColor(ContextCompat.getColor(context, R.color.bgLogo));
             } else { // set về mặc định
                 holder.indicator.setImageResource(R.drawable.ic_add_black_12dp);
-                holder.menu.setTextColor(holder.oldColor);
+                holder.menuName.setTextColor(holder.oldColor);
             }
             holder.indicator.setVisibility(View.VISIBLE);
         } else { // ẩn indicator
@@ -136,7 +137,7 @@ public class ExpandableLVAdapter extends BaseExpandableListAdapter {
     }
 
     private static class MenuItemHolder {
-        TextView menu;
+        TextView menuName;
         ImageView indicator;
         ColorStateList oldColor;
     }

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.namtran.lazada.connection.internet.DownloadJSON;
 import com.namtran.lazada.model.objectclass.LoaiSanPham;
+import com.namtran.lazada.view.trangchu.TrangChuActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,11 +52,20 @@ public class XuLyJSONMenu {
         List<LoaiSanPham> loaiSanPhams;
         List<HashMap<String, String>> attrs = new ArrayList<>(); // các tham số truyền theo request
 
-        String url = "http://192.168.1.227:8000/lazada/loaisanpham.php";
+        // POST method
+        String url = TrangChuActivity.SERVER_NAME + "/lazada/loaisanpham.php";
+
+        HashMap<String, String> function = new HashMap<>();
+        function.put("function", "getListMenu");
+        attrs.add(function);
+
+
         HashMap<String, String> maLoaiCha = new HashMap<>();
-        maLoaiCha.put("maloaicha", String.valueOf(parentId));
+        maLoaiCha.put("parentCode", String.valueOf(parentId));
         attrs.add(maLoaiCha);
         DownloadJSON downloadJSON = new DownloadJSON(url, attrs);
+        // End POST
+
         downloadJSON.execute();
         try {
             String jsonData = downloadJSON.get();

@@ -56,7 +56,7 @@ public class ClearEditText extends TextInputEditText {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // khi nhấn vào dấu "x"
+        // xóa EditText khi nhấn vào dấu "x"
         if (event.getAction() == MotionEvent.ACTION_UP && event.getX() >= getRight() - getCompoundDrawables()[2].getBounds().width()) {
             setText("");
         }

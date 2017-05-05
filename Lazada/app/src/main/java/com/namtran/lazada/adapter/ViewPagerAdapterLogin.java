@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.namtran.lazada.view.dangnhap.fragment.FragmentDangKy;
-import com.namtran.lazada.view.dangnhap.fragment.FragmentDangNhap;
+import com.namtran.lazada.view.dangnhap_dangky.fragment.FragmentDangKy;
+import com.namtran.lazada.view.dangnhap_dangky.fragment.FragmentDangNhap;
 
 /**
  * Created by namtr on 01/05/2017.

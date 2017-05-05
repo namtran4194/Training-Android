@@ -1,4 +1,4 @@
-package com.namtran.lazada.view.dangnhap;
+package com.namtran.lazada.view.dangnhap_dangky;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +14,7 @@ import com.namtran.lazada.adapter.ViewPagerAdapterLogin;
  * Created by namtr on 01/05/2017.
  */
 
-public class DangNhapActivity extends AppCompatActivity {
+public class DangNhapVaDangKyActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private Toolbar mToolbar;

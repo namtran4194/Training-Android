@@ -32,7 +32,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.namtran.lazada.view.dangnhap.DangNhapActivity"
+            android:name="com.namtran.lazada.view.dangnhap_dangky.DangNhapVaDangKyActivity"
             android:parentActivityName="com.namtran.lazada.view.trangchu.TrangChuActivity"
             android:screenOrientation="portrait" />
     </application>
