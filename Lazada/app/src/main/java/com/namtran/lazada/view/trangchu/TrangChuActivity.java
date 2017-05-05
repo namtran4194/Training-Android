@@ -44,7 +44,7 @@ import java.util.List;
 
 public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu, GoogleApiClient.OnConnectionFailedListener, AppBarLayout.OnOffsetChangedListener {
     private static final String TAG = "TrangChuActivity";
-    public static final String SERVER_NAME = "http://192.168.1.227:8000";
+    public static final String SERVER = "http://192.168.1.227:8000/lazada";
     private static final int REQUEST_CODE_LOGIN = 0;
     private Toolbar mToolbar;
     private TabLayout mTabs;

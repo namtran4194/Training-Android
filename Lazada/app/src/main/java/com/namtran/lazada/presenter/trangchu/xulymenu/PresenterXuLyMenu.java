@@ -30,7 +30,7 @@ public class PresenterXuLyMenu implements IPresenterXuLyMenu {
         List<HashMap<String, String>> attrs = new ArrayList<>();
 
         // POST method
-        String url = TrangChuActivity.SERVER_NAME + "/lazada/loaisanpham.php";
+        String url = TrangChuActivity.SERVER;
 
         HashMap<String, String> function = new HashMap<>();
         function.put("function", "getListMenu");

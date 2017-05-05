@@ -1,12 +1,9 @@
 package com.namtran.lazada.model.dangnhap_dangky;
 
-import android.util.Log;
-
 import com.namtran.lazada.connection.internet.DownloadJSON;
 import com.namtran.lazada.model.objectclass.NhanVien;
 import com.namtran.lazada.view.trangchu.TrangChuActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,7 +18,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ModelDangKy {
     public boolean dangKyThanhVIen(NhanVien nhanVien) {
-        String url = TrangChuActivity.SERVER_NAME + "/lazada/loaisanpham.php";
+        String url = TrangChuActivity.SERVER;
         List<HashMap<String, String>> attrs = new ArrayList<>();
 
         HashMap<String, String> function = new HashMap<>();

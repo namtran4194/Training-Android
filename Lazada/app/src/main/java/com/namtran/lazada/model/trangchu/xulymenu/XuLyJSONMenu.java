@@ -53,7 +53,7 @@ public class XuLyJSONMenu {
         List<HashMap<String, String>> attrs = new ArrayList<>(); // các tham số truyền theo request
 
         // POST method
-        String url = TrangChuActivity.SERVER_NAME + "/lazada/loaisanpham.php";
+        String url = TrangChuActivity.SERVER;
 
         HashMap<String, String> function = new HashMap<>();
         function.put("function", "getListMenu");
