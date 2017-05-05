@@ -29,7 +29,6 @@ public class XuLyJSONMenu {
         try {
             JSONObject jsonObject = new JSONObject(jsonData);
             JSONArray array = jsonObject.getJSONArray("LOAISANPHAM");
-            Log.d(TAG, array.toString()); // Logging
             int count = array.length();
             for (int i = 0; i < count; i++) {
                 JSONObject value = array.getJSONObject(i);

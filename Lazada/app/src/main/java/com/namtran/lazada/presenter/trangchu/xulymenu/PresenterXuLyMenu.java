@@ -56,6 +56,6 @@ public class PresenterXuLyMenu implements IPresenterXuLyMenu {
     @Override
     public AccessToken layTokenNguoiDungFB() {
         ModelDangNhap modelDangNhap = new ModelDangNhap();
-        return modelDangNhap.getCurrentFBAccessToken();
+        return modelDangNhap.layAccessTokenFB();
     }
 }

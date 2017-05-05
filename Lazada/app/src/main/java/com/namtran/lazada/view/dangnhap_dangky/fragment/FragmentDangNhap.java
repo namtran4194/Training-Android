@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -31,29 +32,33 @@ import java.util.Collections;
  */
 
 public class FragmentDangNhap extends Fragment implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
-    private static final String TAG = "FragmentDangNhap";
-    public static final int RESULT_CODE_LOGIN = 99;
-    public static final int REQUEST_CODE_LOGIN = 1;
+    public static final int LOGIN_WITH_SOCIAL_NETWORK = 99;
+    public static final int REQUEST_CODE_LOGIN_WITH_GG = 1;
+    public static final int LOGIN_WITH_EMAIL = 1;
     private CallbackManager mCallbackManager;
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mDialog;
+    private TextInputEditText mETEmail, mETPassword;
+    private ModelDangNhap modelDangNhap;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View loginView = inflater.inflate(R.layout.fragment_dang_nhap, container, false);
         init(loginView);
+
         return loginView;
     }
 
     private void init(View v) {
+        modelDangNhap = new ModelDangNhap();
         // fb login
         mCallbackManager = CallbackManager.Factory.create();
         // xử lý kết quả trả về khi đăng nhập bằng fb
         LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                getActivity().setResult(RESULT_CODE_LOGIN);
+                getActivity().setResult(LOGIN_WITH_SOCIAL_NETWORK);
                 getActivity().finish();
             }
 
@@ -63,14 +68,19 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
 
             @Override
             public void onError(FacebookException error) {
-                Log.d(TAG, error.toString());
+                error.printStackTrace();
             }
         });
         // gg login
-        mGoogleApiClient = new ModelDangNhap().getGoogleApiClient(getActivity(), this);
+        mGoogleApiClient = modelDangNhap.layGoogleApiClient(getActivity(), this);
 
+        mETEmail = (TextInputEditText) v.findViewById(R.id.login_etEmail);
+        mETPassword = (TextInputEditText) v.findViewById(R.id.login_etPassword);
+
+        Button btnLogin = (Button) v.findViewById(R.id.login_btnLogin);
         Button btnLoginFB = (Button) v.findViewById(R.id.login_withFB);
         Button btnLoginGG = (Button) v.findViewById(R.id.login_withGG);
+        btnLogin.setOnClickListener(this);
         btnLoginFB.setOnClickListener(this);
         btnLoginGG.setOnClickListener(this);
     }
@@ -80,13 +90,23 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
         // hiện đăng nhập với fb
         int id = v.getId();
         switch (id) {
+            case R.id.login_btnLogin:
+                String username = mETEmail.getText().toString();
+                String password = mETPassword.getText().toString();
+                boolean isSuccessed = modelDangNhap.kiemTraDangNhap(getContext(), username, password);
+                if (isSuccessed) {
+                    getActivity().setResult(LOGIN_WITH_EMAIL);
+                    getActivity().finish();
+                } else
+                    Toast.makeText(getContext(), "Email hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.login_withFB:
                 LoginManager.getInstance().logInWithReadPermissions(this, Collections.singletonList("public_profile"));
                 break;
             case R.id.login_withGG:
                 showProgressDialog();
                 Intent loginGG = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-                startActivityForResult(loginGG, REQUEST_CODE_LOGIN);
+                startActivityForResult(loginGG, REQUEST_CODE_LOGIN_WITH_GG);
                 break;
         }
     }
@@ -96,10 +116,10 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CODE_LOGIN) {
+        if (requestCode == REQUEST_CODE_LOGIN_WITH_GG) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
-                getActivity().setResult(RESULT_CODE_LOGIN);
+                getActivity().setResult(LOGIN_WITH_SOCIAL_NETWORK);
                 getActivity().finish();
             }
             mDialog.dismiss();
@@ -110,7 +130,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         mDialog.hide();
-        Log.d(TAG, connectionResult.toString());
+        Toast.makeText(getContext(), connectionResult.getErrorMessage(), Toast.LENGTH_LONG).show();
     }
 
     private void showProgressDialog() {

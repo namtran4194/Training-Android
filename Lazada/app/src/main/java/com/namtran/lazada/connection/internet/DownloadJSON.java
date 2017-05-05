@@ -2,7 +2,6 @@ package com.namtran.lazada.connection.internet;
 
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,29 +21,28 @@ import java.util.Map;
  */
 
 public class DownloadJSON extends AsyncTask<String, Void, String> {
-    private static final String TAG = "DownloadJSON";
     private String mUrl;
-    private List<HashMap<String, String>> attrs;
-    private boolean method;
+    private List<HashMap<String, String>> mAttrs;
+    private boolean mMethod;
 
     public DownloadJSON(String url) {
         this.mUrl = url;
-        method = true; // GET method
+        mMethod = true; // GET mMethod
     }
 
     public DownloadJSON(String mUrl, List<HashMap<String, String>> attrs) {
         this.mUrl = mUrl;
-        this.attrs = attrs;
-        method = false; // POST method
+        this.mAttrs = attrs;
+        mMethod = false; // POST mMethod
     }
 
     @Override
     protected String doInBackground(String... params) {
         try {
-            URL url = new URL(this.mUrl);
+            URL url = new URL(mUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-            if (method) {
+            if (mMethod) {
                 return methodGET(connection);
             } else {
                 return methodPOST(connection);
@@ -52,8 +50,8 @@ public class DownloadJSON extends AsyncTask<String, Void, String> {
 
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     private String methodGET(HttpURLConnection connection) {
@@ -69,9 +67,9 @@ public class DownloadJSON extends AsyncTask<String, Void, String> {
                 data.append(line);
             }
         } catch (IOException e) {
+            e.printStackTrace();
             return null;
         }
-        Log.d(TAG, data.toString()); // Logging
         return data.toString();
     }
 
@@ -82,14 +80,13 @@ public class DownloadJSON extends AsyncTask<String, Void, String> {
             connection.setDoInput(true);
 
             Uri.Builder builder = new Uri.Builder();
-            int count = attrs.size();
+            int count = mAttrs.size();
             String key = "", value = "";
             for (int i = 0; i < count; i++) {
-                for (Map.Entry<String, String> values : attrs.get(i).entrySet()) {
+                for (Map.Entry<String, String> values : mAttrs.get(i).entrySet()) {
                     key = values.getKey();
                     value = values.getValue();
                 }
-
                 builder.appendQueryParameter(key, value);
             }
             String query = builder.build().getEncodedQuery();
@@ -102,6 +99,7 @@ public class DownloadJSON extends AsyncTask<String, Void, String> {
 
             return methodGET(connection);
         } catch (IOException e) {
+            e.printStackTrace();
             return null;
         }
     }
