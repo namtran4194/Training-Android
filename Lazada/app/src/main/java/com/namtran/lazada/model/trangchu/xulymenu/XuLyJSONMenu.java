@@ -1,7 +1,5 @@
 package com.namtran.lazada.model.trangchu.xulymenu;
 
-import android.util.Log;
-
 import com.namtran.lazada.connection.internet.DownloadJSON;
 import com.namtran.lazada.model.objectclass.LoaiSanPham;
 import com.namtran.lazada.view.trangchu.TrangChuActivity;
@@ -20,8 +18,6 @@ import java.util.concurrent.ExecutionException;
  */
 
 public class XuLyJSONMenu {
-    private static final String TAG = "XuLyJSONMenu";
-
     // lấy danh sách các loại sản phẩm từ chuỗi JSON
     public List<LoaiSanPham> parserJSONMenu(String jsonData) {
         List<LoaiSanPham> datas = new ArrayList<>();
@@ -52,11 +48,11 @@ public class XuLyJSONMenu {
         List<HashMap<String, String>> attrs = new ArrayList<>(); // các tham số truyền theo request
 
         // POST method
-        String url = TrangChuActivity.SERVER;
+        String url = TrangChuActivity.SERVER_NAME + "danhsachmenu.php";
 
-        HashMap<String, String> function = new HashMap<>();
-        function.put("function", "getListMenu");
-        attrs.add(function);
+//        HashMap<String, String> function = new HashMap<>();
+//        function.put("function", "getListMenu");
+//        attrs.add(function);
 
         HashMap<String, String> maLoaiCha = new HashMap<>();
         maLoaiCha.put("parentCode", String.valueOf(parentId));

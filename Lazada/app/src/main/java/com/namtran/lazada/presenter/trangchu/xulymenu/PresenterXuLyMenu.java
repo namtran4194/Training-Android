@@ -28,19 +28,12 @@ public class PresenterXuLyMenu implements IPresenterXuLyMenu {
     public void layDanhSachMenu() {
         List<LoaiSanPham> loaiSanPhams;
         List<HashMap<String, String>> attrs = new ArrayList<>();
-
-        // POST method
-        String url = TrangChuActivity.SERVER;
-
-        HashMap<String, String> function = new HashMap<>();
-        function.put("function", "getListMenu");
-        attrs.add(function);
+        String url = TrangChuActivity.SERVER_NAME + "danhsachmenu.php";
 
         HashMap<String, String> maLoaiCha = new HashMap<>();
         maLoaiCha.put("parentCode", "0");
         attrs.add(maLoaiCha);
         DownloadJSON downloadJSON = new DownloadJSON(url, attrs);
-        // End POST
 
         downloadJSON.execute();
         try {

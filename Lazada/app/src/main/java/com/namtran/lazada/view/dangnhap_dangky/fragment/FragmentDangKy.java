@@ -54,7 +54,6 @@ public class FragmentDangKy extends Fragment implements Validator.ValidationList
     @NotEmpty(sequence = 1, message = "Cần nhập mục này", trim = true)
     @ConfirmPassword(sequence = 2, message = "Mật khẩu không khớp")
     private TextInputEditText mETRetype;
-    private Button mButtonSignUp, mButtonWithFB, mButtonWithGG;
     private SwitchCompat mSwitchCompat;
 
     private Validator mValidator;
@@ -92,9 +91,9 @@ public class FragmentDangKy extends Fragment implements Validator.ValidationList
         mETEmail = (TextInputEditText) v.findViewById(R.id.signUp_et_email);
         mETPassword = (TextInputEditText) v.findViewById(R.id.signUp_et_password);
         mETRetype = (TextInputEditText) v.findViewById(R.id.signUp_et_retype);
-        mButtonSignUp = (Button) v.findViewById(R.id.signUp_btn_signup);
-        mButtonWithFB = (Button) v.findViewById(R.id.signUp_btn_withFB);
-        mButtonWithGG = (Button) v.findViewById(R.id.signUp_btn_withGG);
+        Button btnSignUp = (Button) v.findViewById(R.id.signUp_btn_signup);
+        Button btnWithFB = (Button) v.findViewById(R.id.signUp_btn_withFB);
+        Button btnWithGG = (Button) v.findViewById(R.id.signUp_btn_withGG);
         mSwitchCompat = (SwitchCompat) v.findViewById(R.id.signUp_sc_offerViaEmail);
 
         mETFullName.addTextChangedListener(this);
@@ -102,9 +101,9 @@ public class FragmentDangKy extends Fragment implements Validator.ValidationList
         mETPassword.addTextChangedListener(this);
         mETRetype.addTextChangedListener(this);
 
-        mButtonSignUp.setOnClickListener(this);
-        mButtonWithFB.setOnClickListener(this);
-        mButtonWithGG.setOnClickListener(this);
+        btnSignUp.setOnClickListener(this);
+        btnWithFB.setOnClickListener(this);
+        btnWithGG.setOnClickListener(this);
     }
 
     @Override
@@ -181,7 +180,7 @@ public class FragmentDangKy extends Fragment implements Validator.ValidationList
         nhanVien.setTenNV(name);
         nhanVien.setTenDangNhap(username);
         nhanVien.setMatKhau(password);
-        nhanVien.setMaLoaiNV(2);
+        nhanVien.setMaLoaiNV(3); // Khách hàng
         nhanVien.setEmailDocQuyen(String.valueOf(viaEmail));
 
         presenterDangKy.thucHienDangKy(nhanVien);

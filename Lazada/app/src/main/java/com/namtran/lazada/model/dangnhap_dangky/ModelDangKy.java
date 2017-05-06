@@ -18,12 +18,8 @@ import java.util.concurrent.ExecutionException;
 
 public class ModelDangKy {
     public boolean dangKyThanhVIen(NhanVien nhanVien) {
-        String url = TrangChuActivity.SERVER;
         List<HashMap<String, String>> attrs = new ArrayList<>();
-
-        HashMap<String, String> function = new HashMap<>();
-        function.put("function", "registerStaff");
-        attrs.add(function);
+        String url = TrangChuActivity.SERVER_NAME + "dangky.php";
 
         HashMap<String, String> tenNV = new HashMap<>();
         tenNV.put("name", nhanVien.getTenNV());
@@ -52,9 +48,7 @@ public class ModelDangKy {
             String jsonData = downloadJSON.get();
             JSONObject object = new JSONObject(jsonData);
             return object.getBoolean("result");
-        } catch (InterruptedException | ExecutionException e) {
-            return false;
-        } catch (JSONException e) {
+        } catch (InterruptedException | ExecutionException | JSONException e) {
             return false;
         }
     }

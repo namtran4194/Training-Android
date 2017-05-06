@@ -71,12 +71,8 @@ public class ModelDangNhap {
 
     // kiểm tra đăng nhập, nếu đăng nhập thành công thì lưu cache tên người dùng
     public boolean kiemTraDangNhap(Context context, String username, String password) {
-        String url = TrangChuActivity.SERVER;
         List<HashMap<String, String>> attrs = new ArrayList<>();
-
-        HashMap<String, String> function = new HashMap<>();
-        function.put("function", "checkingLogin");
-        attrs.add(function);
+        String url = TrangChuActivity.SERVER_NAME + "dangnhap.php";
 
         HashMap<String, String> attrUser = new HashMap<>();
         attrUser.put("username", username);

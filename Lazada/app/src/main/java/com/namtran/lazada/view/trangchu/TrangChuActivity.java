@@ -43,7 +43,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu, GoogleApiClient.OnConnectionFailedListener, AppBarLayout.OnOffsetChangedListener {
-    public static final String SERVER = "http://192.168.1.227:8000/lazada/"; // phải có dấu "/" ở cuối để tự redirect vào index.php
+    public static final String SERVER_NAME = "http://192.168.1.227:8000/lazada/"; // phải có dấu "/" ở cuối để tự redirect vào index.php
     private static final int REQUEST_CODE_LOGIN = 0;
     private Toolbar mToolbar;
     private TabLayout mTabs;
