@@ -28,7 +28,7 @@ public class PresenterXuLyMenu implements IPresenterXuLyMenu {
     public void layDanhSachMenu() {
         List<LoaiSanPham> loaiSanPhams;
         List<HashMap<String, String>> attrs = new ArrayList<>();
-        String url = TrangChuActivity.SERVER_NAME + "danhsachmenu.php";
+        String url = TrangChuActivity.SERVER_NAME + "laydanhsachmenu.php";
 
         HashMap<String, String> maLoaiCha = new HashMap<>();
         maLoaiCha.put("parentCode", "0");
