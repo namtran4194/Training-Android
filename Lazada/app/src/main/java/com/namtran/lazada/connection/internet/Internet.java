@@ -16,7 +16,7 @@ public class Internet {
     }
 
     // kiểm tra mạng
-    private boolean isOnline() {
+    public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnected();

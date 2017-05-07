@@ -46,19 +46,12 @@ public class XuLyJSONMenu {
     public List<LoaiSanPham> getTypeOfProductById(int parentId) {
         List<LoaiSanPham> loaiSanPhams;
         List<HashMap<String, String>> attrs = new ArrayList<>(); // các tham số truyền theo request
-
-        // POST method
         String url = TrangChuActivity.SERVER_NAME + "danhsachmenu.php";
-
-//        HashMap<String, String> function = new HashMap<>();
-//        function.put("function", "getListMenu");
-//        attrs.add(function);
 
         HashMap<String, String> maLoaiCha = new HashMap<>();
         maLoaiCha.put("parentCode", String.valueOf(parentId));
         attrs.add(maLoaiCha);
         DownloadJSON downloadJSON = new DownloadJSON(url, attrs);
-        // End POST
 
         downloadJSON.execute();
         try {

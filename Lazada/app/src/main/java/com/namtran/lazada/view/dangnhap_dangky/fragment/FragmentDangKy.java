@@ -24,6 +24,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.namtran.lazada.R;
+import com.namtran.lazada.connection.internet.Internet;
 import com.namtran.lazada.model.objectclass.NhanVien;
 import com.namtran.lazada.presenter.dangky.PresenterDangKy;
 import com.namtran.lazada.view.dangnhap_dangky.ViewDangKy;
@@ -59,6 +60,7 @@ public class FragmentDangKy extends Fragment implements Validator.ValidationList
     private Validator mValidator;
     private PresenterDangKy presenterDangKy;
     private boolean allowRegistration;
+    private Internet internet;
 
     @Nullable
     @Override
@@ -82,6 +84,7 @@ public class FragmentDangKy extends Fragment implements Validator.ValidationList
         });
 
         presenterDangKy = new PresenterDangKy(this);
+        internet = new Internet(getContext());
 
         return signUpView;
     }
@@ -145,6 +148,7 @@ public class FragmentDangKy extends Fragment implements Validator.ValidationList
     @Override
     public void dangKyThanhCong() {
         Toast.makeText(getContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+        getActivity().finish();
     }
 
     @Override
@@ -159,7 +163,10 @@ public class FragmentDangKy extends Fragment implements Validator.ValidationList
             case R.id.signUp_btn_signup:
                 mValidator.validate();
                 if (allowRegistration) {
-                    dangKy();
+                    if (internet.isOnline())
+                        dangKy();
+                    else
+                        Toast.makeText(getContext(), "Không có kết nối mạng, vui lòng thử lại sau", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.signUp_btn_withFB:

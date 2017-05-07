@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.namtran.lazada.R;
+import com.namtran.lazada.connection.internet.Internet;
 import com.namtran.lazada.model.dangnhap_dangky.ModelDangNhap;
 
 import java.util.Collections;
@@ -40,13 +42,14 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     private ProgressDialog mDialog;
     private TextInputEditText mETEmail, mETPassword;
     private ModelDangNhap modelDangNhap;
+    private Internet internet;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View loginView = inflater.inflate(R.layout.fragment_dang_nhap, container, false);
         init(loginView);
-
+        internet = new Internet(getContext());
         return loginView;
     }
 
@@ -69,6 +72,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
             @Override
             public void onError(FacebookException error) {
                 error.printStackTrace();
+                Toast.makeText(getContext(), "Đăng nhập thất bại, hãy đảm bảo bạn đã mở kết nối mạng", Toast.LENGTH_SHORT).show();
             }
         });
         // gg login
@@ -93,12 +97,15 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
             case R.id.login_btnLogin:
                 String username = mETEmail.getText().toString();
                 String password = mETPassword.getText().toString();
-                boolean isSuccessed = modelDangNhap.kiemTraDangNhap(getContext(), username, password);
-                if (isSuccessed) {
-                    getActivity().setResult(LOGIN_WITH_EMAIL);
-                    getActivity().finish();
+                if (internet.isOnline()) {
+                    boolean isSuccessed = modelDangNhap.kiemTraDangNhap(getContext(), username, password);
+                    if (isSuccessed) {
+                        getActivity().setResult(LOGIN_WITH_EMAIL);
+                        getActivity().finish();
+                    } else
+                        Toast.makeText(getContext(), "Email hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
                 } else
-                    Toast.makeText(getContext(), "Email hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Không có kết nối mạng, vui lòng thử lại sau!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.login_withFB:
                 LoginManager.getInstance().logInWithReadPermissions(this, Collections.singletonList("public_profile"));
@@ -121,7 +128,8 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
             if (result.isSuccess()) {
                 getActivity().setResult(LOGIN_WITH_SOCIAL_NETWORK);
                 getActivity().finish();
-            }
+            } else
+                Toast.makeText(getContext(), "Đăng nhập thất bại, hãy đảm bảo bạn đã mở kết nối mạng", Toast.LENGTH_SHORT).show();
             mDialog.dismiss();
 
         }
@@ -130,7 +138,8 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         mDialog.hide();
-        Toast.makeText(getContext(), connectionResult.getErrorMessage(), Toast.LENGTH_LONG).show();
+        Log.e("Login with google", connectionResult.toString());
+        Toast.makeText(getContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
     }
 
     private void showProgressDialog() {

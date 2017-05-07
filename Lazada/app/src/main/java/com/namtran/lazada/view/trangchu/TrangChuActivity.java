@@ -31,6 +31,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.namtran.lazada.R;
 import com.namtran.lazada.adapter.ExpandableLVAdapter;
 import com.namtran.lazada.adapter.ViewPagerAdapterHome;
+import com.namtran.lazada.connection.internet.Internet;
 import com.namtran.lazada.model.dangnhap_dangky.ModelDangNhap;
 import com.namtran.lazada.model.objectclass.LoaiSanPham;
 import com.namtran.lazada.presenter.trangchu.xulymenu.PresenterXuLyMenu;
@@ -60,6 +61,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
     private GoogleApiClient mGoogleApiClient;
     private CollapsingToolbarLayout mCollapsingToolbar;
     private LinearLayout mLayoutSearch;
+    private Internet internet;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,8 +85,9 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
 
         mXuLyMenu = new PresenterXuLyMenu(this);
         mModelDangNhap = new ModelDangNhap();
+        internet = new Internet(this);
 
-        mXuLyMenu.layDanhSachMenu();
+        if (internet.isOnline()) mXuLyMenu.layDanhSachMenu();
         mGoogleApiClient = mModelDangNhap.layGoogleApiClient(this, this);
     }
 
@@ -189,6 +192,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
                     // xóa tên người dùng lưu trong cache
                     mModelDangNhap.capNhatCacheDangNhap(this, "");
                 }
+                Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
                 this.onCreateOptionsMenu(mMenu);
                 break;
         }
@@ -209,6 +213,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
 
     @Override
     public void hienThiDanhSachMenu(List<LoaiSanPham> loaiSanPhams) {
+        if (loaiSanPhams == null || loaiSanPhams.size() == 0) return;
         ExpandableLVAdapter adapter = new ExpandableLVAdapter(this, loaiSanPhams);
         mExpandableListView.setAdapter(adapter);
     }
