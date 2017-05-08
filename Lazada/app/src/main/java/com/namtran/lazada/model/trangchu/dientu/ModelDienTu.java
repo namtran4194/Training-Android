@@ -29,8 +29,21 @@ public class ModelDienTu {
             String json = downloadJSON.get();
             JSONObject object = new JSONObject(json);
             JSONArray arrayThuongHieu = object.getJSONArray("DANHSACHTHUONGHIEU");
+
+            int len = arrayThuongHieu.length();
+            for (int i = 0; i < len; i++) {
+                ThuongHieu thuongHieu = new ThuongHieu();
+                JSONObject item = arrayThuongHieu.getJSONObject(i);
+
+                thuongHieu.setMaThuongHieu(item.getInt("MATHUONGHIEU"));
+                thuongHieu.setTenThuongHieu(item.getString("TENTHUONGHIEU"));
+                thuongHieu.setHinhThuongHieu(item.getString("HINHLOAISPTH"));
+
+                thuongHieuList.add(thuongHieu);
+            }
         } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
+            return null;
         }
 
         return thuongHieuList;

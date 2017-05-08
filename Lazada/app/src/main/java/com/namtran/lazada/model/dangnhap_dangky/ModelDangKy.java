@@ -45,11 +45,14 @@ public class ModelDangKy {
         downloadJSON.execute();
 
         try {
-            String jsonData = downloadJSON.get();
-            JSONObject object = new JSONObject(jsonData);
-            return object.getBoolean("result");
+            String json = downloadJSON.get();
+            if (json != null) {
+                JSONObject object = new JSONObject(json);
+                return object.getBoolean("result");
+            }
         } catch (InterruptedException | ExecutionException | JSONException e) {
             return false;
         }
+        return false;
     }
 }

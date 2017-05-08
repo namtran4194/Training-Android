@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.namtran.lazada.view.trangchu.fragment.FragmentKhuyenMai;
-import com.namtran.lazada.view.trangchu.fragment.FragmentDienTu;
+import com.namtran.lazada.view.trangchu.dientu.FragmentDienTu;
 import com.namtran.lazada.view.trangchu.fragment.FragmentLamDep;
 import com.namtran.lazada.view.trangchu.fragment.FragmentMeVaBe;
 import com.namtran.lazada.view.trangchu.fragment.FragmentNhaCuaVaDoiSong;

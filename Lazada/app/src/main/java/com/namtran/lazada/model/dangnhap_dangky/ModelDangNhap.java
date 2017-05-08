@@ -86,13 +86,15 @@ public class ModelDangNhap {
         downloadJSON.execute();
 
         try {
-            String jsonData = downloadJSON.get();
-            JSONObject object = new JSONObject(jsonData);
-            boolean isSuccessed = object.getBoolean("result");
-            if (isSuccessed) {
-                String tenNV = object.getString("tenNV");
-                capNhatCacheDangNhap(context, tenNV);
-                return true;
+            String json = downloadJSON.get();
+            if (json != null) {
+                JSONObject object = new JSONObject(json);
+                boolean isSuccessed = object.getBoolean("result");
+                if (isSuccessed) {
+                    String tenNV = object.getString("tenNV");
+                    capNhatCacheDangNhap(context, tenNV);
+                    return true;
+                }
             }
             return false;
         } catch (JSONException | InterruptedException | ExecutionException e) {

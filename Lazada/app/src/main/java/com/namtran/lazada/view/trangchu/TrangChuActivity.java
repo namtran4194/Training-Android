@@ -14,8 +14,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Visibility;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -213,7 +215,6 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
 
     @Override
     public void hienThiDanhSachMenu(List<LoaiSanPham> loaiSanPhams) {
-        if (loaiSanPhams == null || loaiSanPhams.size() == 0) return;
         ExpandableLVAdapter adapter = new ExpandableLVAdapter(this, loaiSanPhams);
         mExpandableListView.setAdapter(adapter);
     }

@@ -33,14 +33,16 @@ public class PresenterXuLyMenu implements IPresenterXuLyMenu {
         HashMap<String, String> maLoaiCha = new HashMap<>();
         maLoaiCha.put("parentCode", "0");
         attrs.add(maLoaiCha);
-        DownloadJSON downloadJSON = new DownloadJSON(url, attrs);
 
+        DownloadJSON downloadJSON = new DownloadJSON(url, attrs);
         downloadJSON.execute();
+
         try {
             String jsonData = downloadJSON.get();
             XuLyJSONMenu xuLyJSONMenu = new XuLyJSONMenu();
             loaiSanPhams = xuLyJSONMenu.parserJSONMenu(jsonData);
-            viewXuLyMenu.hienThiDanhSachMenu(loaiSanPhams); // trả danh sách các loại sản phẩm cho view
+            if (loaiSanPhams != null && loaiSanPhams.size() > 0)
+                viewXuLyMenu.hienThiDanhSachMenu(loaiSanPhams); // trả danh sách các loại sản phẩm cho view
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

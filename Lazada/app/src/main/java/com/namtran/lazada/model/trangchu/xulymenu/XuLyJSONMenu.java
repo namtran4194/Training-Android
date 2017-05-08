@@ -44,9 +44,9 @@ public class XuLyJSONMenu {
 
     // lấy danh sách các loại sản phẩm theo mã loại cha
     public List<LoaiSanPham> getTypeOfProductById(int parentId) {
-        List<LoaiSanPham> loaiSanPhams;
+        List<LoaiSanPham> loaiSanPhams = new ArrayList<>();
         List<HashMap<String, String>> attrs = new ArrayList<>(); // các tham số truyền theo request
-        String url = TrangChuActivity.SERVER_NAME + "danhsachmenu.php";
+        String url = TrangChuActivity.SERVER_NAME + "laydanhsachmenu.php";
 
         HashMap<String, String> maLoaiCha = new HashMap<>();
         maLoaiCha.put("parentCode", String.valueOf(parentId));
@@ -55,9 +55,9 @@ public class XuLyJSONMenu {
 
         downloadJSON.execute();
         try {
-            String jsonData = downloadJSON.get();
-            XuLyJSONMenu xuLyJSONMenu = new XuLyJSONMenu();
-            loaiSanPhams = xuLyJSONMenu.parserJSONMenu(jsonData);
+            String json = downloadJSON.get();
+            if (json != null)
+                loaiSanPhams = parserJSONMenu(json);
         } catch (InterruptedException | ExecutionException e) {
             return null;
         }
