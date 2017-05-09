@@ -53,7 +53,7 @@ class ThuongHieuLonAdapter extends RecyclerView.Adapter<ThuongHieuLonAdapter.Vie
 
         ViewHolder(View itemView) {
             super(itemView);
-            mTVTieuDe = (TextView) itemView.findViewById(R.id.dientu_thuonghieulon_tieude);
+            mTVTieuDe = (TextView) itemView.findViewById(R.id.dientu_thuonghieulon_tenth);
             mIVHinhAnh = (ImageView) itemView.findViewById(R.id.dientu_thuonghieulon_hinhanh);
         }
     }

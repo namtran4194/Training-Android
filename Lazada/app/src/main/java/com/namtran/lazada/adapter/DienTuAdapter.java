@@ -37,12 +37,19 @@ public class DienTuAdapter extends RecyclerView.Adapter<DienTuAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         DienTu dienTu = dienTuList.get(position);
-        ThuongHieuLonAdapter adapter = new ThuongHieuLonAdapter(context, dienTu.getThuongHieuList());
+        // tạo adapter cho thương hiệu lớn, top điện thoại và máy tính bảng
+        ThuongHieuLonAdapter thlAdapter = new ThuongHieuLonAdapter(context, dienTu.getThuongHieuList());
+        TopDTvaMTBAdapter mtbAdapter = new TopDTvaMTBAdapter(context, dienTu.getSanPhamList());
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 3, LinearLayoutManager.HORIZONTAL, false);
         holder.mRecyclerThuongHieuLon.setLayoutManager(layoutManager);
         holder.mRecyclerThuongHieuLon.setNestedScrollingEnabled(false); // để khi scrollup thì toolbar sẽ scrollup
-        holder.mRecyclerThuongHieuLon.setAdapter(adapter);
+        holder.mRecyclerThuongHieuLon.setAdapter(thlAdapter);
+
+        layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        holder.mRecyclerTopDTvaMTB.setLayoutManager(layoutManager);
+        holder.mRecyclerTopDTvaMTB.setNestedScrollingEnabled(false);
+        holder.mRecyclerTopDTvaMTB.setAdapter(mtbAdapter);
     }
 
     @Override
@@ -53,13 +60,13 @@ public class DienTuAdapter extends RecyclerView.Adapter<DienTuAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mIVKhuyenMai;
-        RecyclerView mRecyclerThuongHieuLon, mRecyclerTopSP;
+        RecyclerView mRecyclerThuongHieuLon, mRecyclerTopDTvaMTB;
 
         ViewHolder(View itemView) {
             super(itemView);
             mIVKhuyenMai = (ImageView) itemView.findViewById(R.id.dientu_iv_khuyenmai);
             mRecyclerThuongHieuLon = (RecyclerView) itemView.findViewById(R.id.dientu_recycler_thuonghieulon);
-            mRecyclerTopSP = (RecyclerView) itemView.findViewById(R.id.dientu_recycler_topDTvaMTB);
+            mRecyclerTopDTvaMTB = (RecyclerView) itemView.findViewById(R.id.dientu_recycler_topDTvaMTB);
         }
     }
 }

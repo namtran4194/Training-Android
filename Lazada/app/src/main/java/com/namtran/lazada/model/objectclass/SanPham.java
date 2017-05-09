@@ -12,6 +12,7 @@ public class SanPham {
     private int maThuongHieu;
     private int maNV;
     private int luotMua;
+    private String tenSP;
     private String anhLon;
     private String anhNho;
     private String thongTin;
@@ -70,6 +71,14 @@ public class SanPham {
 
     public void setLuotMua(int luotMua) {
         this.luotMua = luotMua;
+    }
+
+    public String getTenSP() {
+        return tenSP;
+    }
+
+    public void setTenSP(String tenSP) {
+        this.tenSP = tenSP;
     }
 
     public String getAnhLon() {

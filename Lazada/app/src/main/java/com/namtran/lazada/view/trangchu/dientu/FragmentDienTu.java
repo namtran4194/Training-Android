@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.namtran.lazada.R;
 import com.namtran.lazada.adapter.DienTuAdapter;
 import com.namtran.lazada.model.objectclass.DienTu;
+import com.namtran.lazada.model.objectclass.SanPham;
 import com.namtran.lazada.model.objectclass.ThuongHieu;
 import com.namtran.lazada.presenter.trangchu.dientu.PresenterDienTu;
 
@@ -39,9 +40,10 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
     }
 
     @Override
-    public void hienThiThuongHieuLon(List<ThuongHieu> thuongHieuList) {
+    public void hienThiThuongHieuLon(List<ThuongHieu> thuongHieuList, List<SanPham> sanPhamList) {
         DienTu dienTu = new DienTu();
         dienTu.setThuongHieuList(thuongHieuList);
+        dienTu.setSanPhamList(sanPhamList);
         dienTuList.add(dienTu);
 
         DienTuAdapter adapter = new DienTuAdapter(getContext(), dienTuList);

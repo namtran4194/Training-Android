@@ -1,5 +1,6 @@
 package com.namtran.lazada.presenter.trangchu.dientu;
 
+import com.namtran.lazada.model.objectclass.SanPham;
 import com.namtran.lazada.model.objectclass.ThuongHieu;
 import com.namtran.lazada.model.trangchu.dientu.ModelDienTu;
 import com.namtran.lazada.view.trangchu.dientu.ViewDienTu;
@@ -22,8 +23,9 @@ public class PresenterDienTu implements IPresenterDienTu {
     @Override
     public void layDanhSachDienTu() {
         List<ThuongHieu> thuongHieuList = modelDienTu.layDanhSachThuongHieuLon();
-        if (thuongHieuList != null) {
-            viewDienTu.hienThiThuongHieuLon(thuongHieuList);
+        List<SanPham> sanPhamList = modelDienTu.layDanhSachDTvaMTB();
+        if (thuongHieuList != null && sanPhamList != null) {
+            viewDienTu.hienThiThuongHieuLon(thuongHieuList, sanPhamList);
         }
     }
 }
