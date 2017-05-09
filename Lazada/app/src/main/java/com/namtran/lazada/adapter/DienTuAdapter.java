@@ -41,6 +41,7 @@ public class DienTuAdapter extends RecyclerView.Adapter<DienTuAdapter.ViewHolder
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 3, LinearLayoutManager.HORIZONTAL, false);
         holder.mRecyclerThuongHieuLon.setLayoutManager(layoutManager);
+        holder.mRecyclerThuongHieuLon.setNestedScrollingEnabled(false); // để khi scrollup thì toolbar sẽ scrollup
         holder.mRecyclerThuongHieuLon.setAdapter(adapter);
     }
 
