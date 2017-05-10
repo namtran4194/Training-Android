@@ -20,11 +20,11 @@ import java.util.Locale;
  * Created by namtr on 09/05/2017.
  */
 
-class TopDTvaMTBAdapter extends RecyclerView.Adapter<TopDTvaMTBAdapter.ViewHolder> {
+class TopSPAdapter extends RecyclerView.Adapter<TopSPAdapter.ViewHolder> {
     private Context context;
     private List<SanPham> sanPhamList;
 
-    TopDTvaMTBAdapter(Context context, List<SanPham> sanPhamList) {
+    TopSPAdapter(Context context, List<SanPham> sanPhamList) {
         this.context = context;
         this.sanPhamList = sanPhamList;
     }
@@ -32,7 +32,7 @@ class TopDTvaMTBAdapter extends RecyclerView.Adapter<TopDTvaMTBAdapter.ViewHolde
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View v = inflater.inflate(R.layout.custom_recycler_dientu_topdtvamtb, parent, false);
+        View v = inflater.inflate(R.layout.custom_recycler_dientu_topsp, parent, false);
         return new ViewHolder(v);
     }
 

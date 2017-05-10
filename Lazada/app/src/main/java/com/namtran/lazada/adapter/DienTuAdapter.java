@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.namtran.lazada.R;
 import com.namtran.lazada.model.objectclass.DienTu;
@@ -39,7 +40,7 @@ public class DienTuAdapter extends RecyclerView.Adapter<DienTuAdapter.ViewHolder
         DienTu dienTu = dienTuList.get(position);
         // tạo adapter cho thương hiệu lớn, top điện thoại và máy tính bảng
         ThuongHieuLonAdapter thlAdapter = new ThuongHieuLonAdapter(context, dienTu.getThuongHieuList());
-        TopDTvaMTBAdapter mtbAdapter = new TopDTvaMTBAdapter(context, dienTu.getSanPhamList());
+        TopSPAdapter mtbAdapter = new TopSPAdapter(context, dienTu.getSanPhamList());
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 3, LinearLayoutManager.HORIZONTAL, false);
         holder.mRecyclerThuongHieuLon.setLayoutManager(layoutManager);
@@ -47,9 +48,12 @@ public class DienTuAdapter extends RecyclerView.Adapter<DienTuAdapter.ViewHolder
         holder.mRecyclerThuongHieuLon.setAdapter(thlAdapter);
 
         layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        holder.mRecyclerTopDTvaMTB.setLayoutManager(layoutManager);
-        holder.mRecyclerTopDTvaMTB.setNestedScrollingEnabled(false);
-        holder.mRecyclerTopDTvaMTB.setAdapter(mtbAdapter);
+        holder.mRecyclerTopSP.setLayoutManager(layoutManager);
+        holder.mRecyclerTopSP.setNestedScrollingEnabled(false);
+        holder.mRecyclerTopSP.setAdapter(mtbAdapter);
+
+        holder.mTVTieuDe.setText(dienTu.getTenTieuDe());
+        holder.mTVTieuDeTop.setText(dienTu.getTenTieuDeTop());
     }
 
     @Override
@@ -60,13 +64,16 @@ public class DienTuAdapter extends RecyclerView.Adapter<DienTuAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mIVKhuyenMai;
-        RecyclerView mRecyclerThuongHieuLon, mRecyclerTopDTvaMTB;
+        RecyclerView mRecyclerThuongHieuLon, mRecyclerTopSP;
+        TextView mTVTieuDe, mTVTieuDeTop;
 
         ViewHolder(View itemView) {
             super(itemView);
             mIVKhuyenMai = (ImageView) itemView.findViewById(R.id.dientu_iv_khuyenmai);
             mRecyclerThuongHieuLon = (RecyclerView) itemView.findViewById(R.id.dientu_recycler_thuonghieulon);
-            mRecyclerTopDTvaMTB = (RecyclerView) itemView.findViewById(R.id.dientu_recycler_topDTvaMTB);
+            mRecyclerTopSP = (RecyclerView) itemView.findViewById(R.id.dientu_recycler_topsp);
+            mTVTieuDe = (TextView) itemView.findViewById(R.id.dientu_tv_tieude);
+            mTVTieuDeTop = (TextView) itemView.findViewById(R.id.dientu_tv_tieudetop);
         }
     }
 }

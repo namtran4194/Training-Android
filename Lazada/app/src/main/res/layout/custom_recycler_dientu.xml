@@ -12,9 +12,10 @@
         android:src="@drawable/background_splash_screen" />
 
     <TextView
+        android:id="@+id/dientu_tv_tieude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Các thương hiệu lớn"
+        android:layout_marginTop="10dp"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -24,14 +25,15 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/dientu_tv_tieudetop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Top điện thoại và máy tính bảng"
+        android:layout_marginTop="10dp"
         android:textSize="16sp"
         android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/dientu_recycler_topDTvaMTB"
+        android:id="@+id/dientu_recycler_topsp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

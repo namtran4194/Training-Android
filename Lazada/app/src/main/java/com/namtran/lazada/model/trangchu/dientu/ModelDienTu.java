@@ -19,9 +19,12 @@ import java.util.concurrent.ExecutionException;
 
 public class ModelDienTu {
 
-    public List<ThuongHieu> layDanhSachThuongHieuLon() {
+    public List<ThuongHieu> layDanhSachThuongHieuLon(String action, String parentNodeName) {
+        if (!action.contains(".php"))
+            action += ".php";
+
         List<ThuongHieu> thuongHieuList = new ArrayList<>();
-        String url = TrangChuActivity.SERVER_NAME + "laydanhsachthuonghieulon.php";
+        String url = TrangChuActivity.SERVER_NAME + action;
 
         DownloadJSON downloadJSON = new DownloadJSON(url);
         downloadJSON.execute();
@@ -29,16 +32,16 @@ public class ModelDienTu {
         try {
             String json = downloadJSON.get();
             JSONObject object = new JSONObject(json);
-            JSONArray arrayThuongHieu = object.getJSONArray("DANHSACHTHUONGHIEU");
+            JSONArray arrayThuongHieu = object.getJSONArray(parentNodeName);
 
             int len = arrayThuongHieu.length();
             for (int i = 0; i < len; i++) {
                 ThuongHieu thuongHieu = new ThuongHieu();
                 JSONObject item = arrayThuongHieu.getJSONObject(i);
 
-                thuongHieu.setMaThuongHieu(item.getInt("MATHUONGHIEU"));
-                thuongHieu.setTenThuongHieu(item.getString("TENTHUONGHIEU"));
-                thuongHieu.setHinhThuongHieu(item.getString("HINHLOAISPTH"));
+                thuongHieu.setMaThuongHieu(item.getInt("MASP"));
+                thuongHieu.setTenThuongHieu(item.getString("TENSP"));
+                thuongHieu.setHinhThuongHieu(item.getString("ANHLON"));
 
                 thuongHieuList.add(thuongHieu);
             }
@@ -50,9 +53,12 @@ public class ModelDienTu {
         return thuongHieuList;
     }
 
-    public List<SanPham> layDanhSachDTvaMTB() {
+    public List<SanPham> layDanhSachTopSanPham(String action, String parentNodeName) {
+        if (!action.contains(".php"))
+            action += ".php";
+
         List<SanPham> sanPhamList = new ArrayList<>();
-        String url = TrangChuActivity.SERVER_NAME + "laydanhsachDTvaMTB.php";
+        String url = TrangChuActivity.SERVER_NAME + action;
 
         DownloadJSON downloadJSON = new DownloadJSON(url);
         downloadJSON.execute();
@@ -60,7 +66,7 @@ public class ModelDienTu {
         try {
             String json = downloadJSON.get();
             JSONObject object = new JSONObject(json);
-            JSONArray arraySanPham = object.getJSONArray("TOPDTVAMTB");
+            JSONArray arraySanPham = object.getJSONArray(parentNodeName);
 
             int len = arraySanPham.length();
             for (int i = 0; i < len; i++) {

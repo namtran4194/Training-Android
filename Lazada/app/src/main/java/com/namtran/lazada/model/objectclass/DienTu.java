@@ -7,17 +7,10 @@ import java.util.List;
  */
 
 public class DienTu {
-    private String hinhSanPham;
     private List<ThuongHieu> thuongHieuList;
     private List<SanPham> sanPhamList;
-
-    public String getHinhSanPham() {
-        return hinhSanPham;
-    }
-
-    public void setHinhSanPham(String hinhSanPham) {
-        this.hinhSanPham = hinhSanPham;
-    }
+    private String tenTieuDe;
+    private String tenTieuDeTop;
 
     public List<ThuongHieu> getThuongHieuList() {
         return thuongHieuList;
@@ -33,5 +26,21 @@ public class DienTu {
 
     public void setSanPhamList(List<SanPham> sanPhamList) {
         this.sanPhamList = sanPhamList;
+    }
+
+    public String getTenTieuDe() {
+        return tenTieuDe;
+    }
+
+    public void setTenTieuDe(String tenTieuDe) {
+        this.tenTieuDe = tenTieuDe;
+    }
+
+    public String getTenTieuDeTop() {
+        return tenTieuDeTop;
+    }
+
+    public void setTenTieuDeTop(String tenTieuDeTop) {
+        this.tenTieuDeTop = tenTieuDeTop;
     }
 }
