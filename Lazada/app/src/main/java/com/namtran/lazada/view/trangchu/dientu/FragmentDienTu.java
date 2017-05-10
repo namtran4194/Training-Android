@@ -43,7 +43,7 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
         if (dienTuList != null) {
             DienTuAdapter adapter = new DienTuAdapter(getContext(), dienTuList);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-//            mRecyclerDienTu.setHasFixedSize(true);
+            mRecyclerDienTu.setHasFixedSize(true);
             mRecyclerDienTu.setLayoutManager(layoutManager);
             mRecyclerDienTu.setAdapter(adapter);
         } else {
