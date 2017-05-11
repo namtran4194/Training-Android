@@ -43,4 +43,6 @@
     <string name="signUp_tv_other">Hoặc đăng ký bằng</string>
     <string name="signUp_btn_fb">Facebook</string>
     <string name="signUp_btn_gg">Google</string>
+    <string name="dientu_txt_title_topthl">Top Những Thương Hiệu Lớn</string>
+    <string name="dientu_txt_title_hangmoive">Hàng Mới Về</string>
 </resources>

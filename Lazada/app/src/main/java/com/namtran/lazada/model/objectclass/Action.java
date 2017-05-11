@@ -5,12 +5,14 @@ package com.namtran.lazada.model.objectclass;
  */
 
 public enum Action {
-    THUONG_HIEU_LON_LIST("laydanhsachthuonghieulon", "DANHSACHTHUONGHIEU"),
-    TOP_DT_VA_MTB_LIST("laydanhsachtopDTvaMTB", "TOPDTVAMTB"),
-    PHU_KIEN_LIST("laydanhsachphukien", "DANHSACHPHUKIEN"),
-    TIEN_ICH_LIST("laydanhsachtienich", "DANHSACHTIENICH"),
-    TOP_PHU_KIEN_LIST("laydanhsachtopphukien", "TOPPHUKIEN"),
-    TOP_TIEN_ICH_LIST("laydanhsachtoptienich", "TOPTIENICH");
+    THUONG_HIEU_LON("laydanhsachthuonghieulon", "DANHSACHTHUONGHIEU"),
+    TOP_DT_VA_MTB("laydanhsachtopDTvaMTB", "TOPDTVAMTB"),
+    PHU_KIEN("laydanhsachphukien", "DANHSACHPHUKIEN"),
+    TIEN_ICH("laydanhsachtienich", "DANHSACHTIENICH"),
+    TOP_PHU_KIEN("laydanhsachtopphukien", "TOPPHUKIEN"),
+    TOP_TIEN_ICH("laydanhsachtoptienich", "TOPTIENICH"),
+    LOGO_THUONG_HIEU("laylogothuonghieulon", "LOGOTHUONGHIEU"),
+    HANG_MOI_VE("laydanhsachhangmoive", "HANGMOIVE");
 
     private String action;
     private String parentNodeName;

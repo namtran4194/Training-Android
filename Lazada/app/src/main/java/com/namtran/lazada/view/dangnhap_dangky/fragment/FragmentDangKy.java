@@ -1,5 +1,7 @@
 package com.namtran.lazada.view.dangnhap_dangky.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -61,6 +63,7 @@ public class FragmentDangKy extends Fragment implements Validator.ValidationList
     private PresenterDangKy presenterDangKy;
     private boolean allowRegistration;
     private Internet internet;
+    public static final int SIGN_UP_CODE = 1;
 
     @Nullable
     @Override
@@ -148,6 +151,13 @@ public class FragmentDangKy extends Fragment implements Validator.ValidationList
     @Override
     public void dangKyThanhCong() {
         Toast.makeText(getContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+
+        SharedPreferences preferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("tenNV", mETFullName.getText().toString());
+        editor.apply();
+
+        getActivity().setResult(SIGN_UP_CODE);
         getActivity().finish();
     }
 

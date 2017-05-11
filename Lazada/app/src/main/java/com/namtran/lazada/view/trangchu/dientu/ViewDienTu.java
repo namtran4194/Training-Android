@@ -12,4 +12,8 @@ import java.util.List;
 
 public interface ViewDienTu {
     void hienThiThuongHieuLon(List<DienTu> dienTuList);
+
+    void hienThiLogoThuongHieu(List<ThuongHieu> thuongHieuList);
+
+    void hienThiDanhSachHangMoiVe(List<SanPham> sanPhamList);
 }

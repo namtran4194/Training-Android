@@ -63,12 +63,12 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
     private GoogleApiClient mGoogleApiClient;
     private CollapsingToolbarLayout mCollapsingToolbar;
     private LinearLayout mLayoutSearch;
-    private Internet internet;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trang_chu_activity);
+        Internet internet = new Internet(this);
 
         init();
 
@@ -79,18 +79,22 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mViewPager.setAdapter(new ViewPagerAdapterHome(getSupportFragmentManager()));
-        mTabs.setupWithViewPager(mViewPager);
-
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.openDescRes, R.string.closeDescRes);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
         mXuLyMenu = new PresenterXuLyMenu(this);
         mModelDangNhap = new ModelDangNhap();
-        internet = new Internet(this);
-
-        if (internet.isOnline()) mXuLyMenu.layDanhSachMenu();
         mGoogleApiClient = mModelDangNhap.layGoogleApiClient(this, this);
+
+        if (!internet.isOnline()) {
+            Toast.makeText(this, "Không có kết nối mạng!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        mViewPager.setAdapter(new ViewPagerAdapterHome(getSupportFragmentManager()));
+        mTabs.setupWithViewPager(mViewPager);
+
+        mXuLyMenu.layDanhSachMenu();
     }
 
     private void init() {
@@ -137,8 +141,10 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
                 @Override
                 public void onCompleted(JSONObject object, GraphResponse response) {
                     try {
-                        String name = object.getString("name");
-                        mMenuLogin.setTitle(String.valueOf("Hi, " + name));
+                        if (object != null) {
+                            String name = object.getString("name");
+                            mMenuLogin.setTitle(String.valueOf("Hi, " + name));
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

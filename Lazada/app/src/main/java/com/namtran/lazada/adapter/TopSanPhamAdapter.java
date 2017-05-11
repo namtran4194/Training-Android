@@ -20,11 +20,11 @@ import java.util.Locale;
  * Created by namtr on 09/05/2017.
  */
 
-class TopSPAdapter extends RecyclerView.Adapter<TopSPAdapter.ViewHolder> {
+public class TopSanPhamAdapter extends RecyclerView.Adapter<TopSanPhamAdapter.ViewHolder> {
     private Context context;
     private List<SanPham> sanPhamList;
 
-    TopSPAdapter(Context context, List<SanPham> sanPhamList) {
+    public TopSanPhamAdapter(Context context, List<SanPham> sanPhamList) {
         this.context = context;
         this.sanPhamList = sanPhamList;
     }
@@ -43,7 +43,7 @@ class TopSPAdapter extends RecyclerView.Adapter<TopSPAdapter.ViewHolder> {
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
         String giaFormatted = format.format(gia);
 
-        Picasso.with(context).load(sanPham.getAnhLon()).resize(150, 150).into(holder.mIVHinhSP);
+        Picasso.with(context).load(sanPham.getAnhLon()).resize(200, 200).into(holder.mIVHinhSP);
         holder.mTVTenSP.setText(sanPham.getTenSP());
         holder.mTVGia.setText(giaFormatted);
         holder.mTVGiamGia.setText(giaFormatted);
@@ -51,7 +51,6 @@ class TopSPAdapter extends RecyclerView.Adapter<TopSPAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (sanPhamList == null) return 0;
         return sanPhamList.size();
     }
 
@@ -61,7 +60,6 @@ class TopSPAdapter extends RecyclerView.Adapter<TopSPAdapter.ViewHolder> {
 
         ViewHolder(View itemView) {
             super(itemView);
-
             mIVHinhSP = (ImageView) itemView.findViewById(R.id.dientu_topdtvamtb_hinhanh);
             mTVGia = (TextView) itemView.findViewById(R.id.dientu_topdtvamtb_gia);
             mTVTenSP = (TextView) itemView.findViewById(R.id.dientu_topdtvamtb_tensp);

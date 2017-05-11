@@ -1,11 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#f6f7f4">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/dientu_recyclerRoot"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="?attr/actionBarSize" />
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/dientu_recycler_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/dientu_iv_khuyenmaiRoot"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background_splash_screen" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/background_splash_screen" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparentBlack"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Top 150 SKU Bán Chạy Trong Tháng"
+                    android:textColor="@color/white" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/background_splash_screen" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparentBlack"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Top Smartphone Chất Lượng Giá Rẻ"
+                    android:textColor="@color/white" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/background_splash_screen" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparentBlack"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Camera Hành Động Polaroid"
+                    android:textColor="@color/white" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/background_splash_screen" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparentBlack"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Tivi Đặc Biệt Cho Các Tỉnh Thành Lớn"
+                    android:textColor="@color/white" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/dientu_iv_sanpham1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/background_splash_screen" />
+
+                <TextView
+                    android:id="@+id/dientu_tv_tieude1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/transparentBlack"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/dientu_iv_sanpham2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/background_splash_screen" />
+
+                <TextView
+                    android:id="@+id/dientu_tv_tieude2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/transparentBlack"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/dientu_iv_sanpham3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/background_splash_screen" />
+
+                <TextView
+                    android:id="@+id/dientu_tv_tieude3"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/transparentBlack"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/dientu_txt_title_topthl"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/dientu_recycler_logoTHLon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/dientu_txt_title_hangmoive"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/dientu_recycler_hangmoive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

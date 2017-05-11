@@ -14,4 +14,5 @@
     <color name="facebook">#4a6ea9</color>
     <color name="goooglePlus">#da4835</color>
     <color name="forgetPW">#00CEFF</color>
+    <color name="transparentBlack">#b2000000</color>
 </resources>

@@ -6,4 +6,8 @@ package com.namtran.lazada.presenter.trangchu.dientu;
 
 interface IPresenterDienTu {
     void layDanhSachDienTu();
+
+    void layLogoThuongHieuLon();
+
+    void layDanhSachHangMoiVe();
 }

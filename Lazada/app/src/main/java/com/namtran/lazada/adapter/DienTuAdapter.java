@@ -40,7 +40,7 @@ public class DienTuAdapter extends RecyclerView.Adapter<DienTuAdapter.ViewHolder
         DienTu dienTu = dienTuList.get(position);
         // tạo adapter cho thương hiệu lớn, top điện thoại và máy tính bảng
         ThuongHieuLonAdapter thlAdapter = new ThuongHieuLonAdapter(context, dienTu.getThuongHieuList());
-        TopSPAdapter mtbAdapter = new TopSPAdapter(context, dienTu.getSanPhamList());
+        TopSanPhamAdapter mtbAdapter = new TopSanPhamAdapter(context, dienTu.getSanPhamList());
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 3, LinearLayoutManager.HORIZONTAL, false);
         holder.mRecyclerThuongHieuLon.setLayoutManager(layoutManager);
@@ -48,9 +48,9 @@ public class DienTuAdapter extends RecyclerView.Adapter<DienTuAdapter.ViewHolder
         holder.mRecyclerThuongHieuLon.setAdapter(thlAdapter);
 
         layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        holder.mRecyclerTopSP.setLayoutManager(layoutManager);
-        holder.mRecyclerTopSP.setNestedScrollingEnabled(false);
-        holder.mRecyclerTopSP.setAdapter(mtbAdapter);
+        holder.mRecyclerTopSanPham.setLayoutManager(layoutManager);
+        holder.mRecyclerTopSanPham.setNestedScrollingEnabled(false);
+        holder.mRecyclerTopSanPham.setAdapter(mtbAdapter);
 
         holder.mTVTieuDe.setText(dienTu.getTenTieuDe());
         holder.mTVTieuDeTop.setText(dienTu.getTenTieuDeTop());
@@ -58,20 +58,21 @@ public class DienTuAdapter extends RecyclerView.Adapter<DienTuAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        if (dienTuList == null) return 0;
         return dienTuList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mIVKhuyenMai;
-        RecyclerView mRecyclerThuongHieuLon, mRecyclerTopSP;
-        TextView mTVTieuDe, mTVTieuDeTop;
+        RecyclerView mRecyclerThuongHieuLon;
+        RecyclerView mRecyclerTopSanPham;
+        TextView mTVTieuDe;
+        TextView mTVTieuDeTop;
 
         ViewHolder(View itemView) {
             super(itemView);
             mIVKhuyenMai = (ImageView) itemView.findViewById(R.id.dientu_iv_khuyenmai);
             mRecyclerThuongHieuLon = (RecyclerView) itemView.findViewById(R.id.dientu_recycler_thuonghieulon);
-            mRecyclerTopSP = (RecyclerView) itemView.findViewById(R.id.dientu_recycler_topsp);
+            mRecyclerTopSanPham = (RecyclerView) itemView.findViewById(R.id.dientu_recycler_topsanpham);
             mTVTieuDe = (TextView) itemView.findViewById(R.id.dientu_tv_tieude);
             mTVTieuDeTop = (TextView) itemView.findViewById(R.id.dientu_tv_tieudetop);
         }
