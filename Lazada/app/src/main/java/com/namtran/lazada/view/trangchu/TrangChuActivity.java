@@ -1,5 +1,7 @@
 package com.namtran.lazada.view.trangchu;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -236,12 +238,35 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
         // ẩn LinearLayout chứa button tìm kiếm + camera khi scroll lên
         int height = mCollapsingToolbar.getHeight() + verticalOffset;
 
+        // ẩn search bar
         if (height <= ViewCompat.getMinimumHeight(mCollapsingToolbar)) {
-            mLayoutSearch.animate().alpha(0).setDuration(200);
+            mLayoutSearch.animate()
+                    .translationY(mLayoutSearch.getHeight())
+                    .alpha(0)
+                    .setDuration(300)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            mLayoutSearch.setVisibility(View.INVISIBLE);
+                        }
+                    });
             MenuItem menuSearch = mMenu.findItem(R.id.menu_seach);
             menuSearch.setVisible(true);
-        } else { // lần đầu chạy app sẽ vào trường hợp này
-            mLayoutSearch.animate().alpha(1).setDuration(200);
+        }
+        // hiển thị search bar
+        else { // lần đầu chạy app sẽ vào trường hợp này
+            mLayoutSearch.animate()
+                    .translationY(0)
+                    .alpha(1)
+                    .setDuration(300)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            mLayoutSearch.setVisibility(View.VISIBLE);
+                        }
+                    });
             // do ban đầu mMenu = null nên phải kiểm tra
             if (mMenu != null) {
                 MenuItem menuSearch = mMenu.findItem(R.id.menu_seach);
