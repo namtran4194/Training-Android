@@ -34,7 +34,7 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hien_thi_sp_theo_danh_muc_activity);
+        setContentView(R.layout.activity_hien_thi_sp_theo_danh_muc);
 
         Intent intent = getIntent();
         int code = intent.getIntExtra("MALOAI", -1);
@@ -53,8 +53,6 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
         mRecyclerSanPham = (RecyclerView) findViewById(R.id.htsptdm_recycler_sanpham);
         mButtonTypeView = (ImageButton) findViewById(R.id.htsptdm_btn_kieuxem);
         mButtonTypeView.setOnClickListener(this);
-//        FrameLayout layoutTypeView = (FrameLayout) findViewById(R.id.htsptdm_frameLayout_kieuxem);
-//        layoutTypeView.setOnClickListener(this);
 
         PresenterHTSPTheoDanhMuc danhMuc = new PresenterHTSPTheoDanhMuc(this);
         danhMuc.layDanhSachSanPham(code, check);
