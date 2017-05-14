@@ -96,11 +96,11 @@ public class ModelDangNhap {
                     return true;
                 }
             }
-            return false;
         } catch (JSONException | InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return false;
         }
+        return false;
     }
 
     // trả về tên người dùng được lưu trong cache

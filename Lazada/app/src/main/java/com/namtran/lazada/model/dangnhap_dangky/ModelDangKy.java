@@ -51,6 +51,7 @@ public class ModelDangKy {
                 return object.getBoolean("result");
             }
         } catch (InterruptedException | ExecutionException | JSONException e) {
+            e.printStackTrace();
             return false;
         }
         return false;

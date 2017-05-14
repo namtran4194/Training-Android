@@ -57,6 +57,7 @@ public class DownloadJSON extends AsyncTask<String, Void, String> {
     private String methodGET(HttpURLConnection connection) {
         StringBuilder data = new StringBuilder();
         try {
+            connection.setConnectTimeout(1000);
             connection.connect();
             InputStream stream = connection.getInputStream();
             InputStreamReader streamReader = new InputStreamReader(stream);
@@ -75,6 +76,7 @@ public class DownloadJSON extends AsyncTask<String, Void, String> {
 
     private String methodPOST(HttpURLConnection connection) {
         try {
+            connection.setConnectTimeout(1000);
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             connection.setDoInput(true);

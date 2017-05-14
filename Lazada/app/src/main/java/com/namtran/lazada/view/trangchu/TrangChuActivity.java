@@ -91,6 +91,10 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
             Toast.makeText(this, "Không có kết nối mạng!", Toast.LENGTH_LONG).show();
             return;
         }
+        if (!internet.isServerReachable()) {
+            Toast.makeText(this, "Không kết nối được đến server!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         mViewPager.setAdapter(new ViewPagerAdapterHome(getSupportFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);

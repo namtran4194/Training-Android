@@ -31,6 +31,8 @@ public class ModelDienTu {
 
         try {
             String json = downloadJSON.get();
+            if (json == null) return null;
+
             JSONObject object = new JSONObject(json);
             JSONArray arrayThuongHieu = object.getJSONArray(parentNodeName);
 
@@ -65,6 +67,8 @@ public class ModelDienTu {
 
         try {
             String json = downloadJSON.get();
+            if (json == null) return null;
+
             JSONObject object = new JSONObject(json);
             JSONArray arraySanPham = object.getJSONArray(parentNodeName);
 

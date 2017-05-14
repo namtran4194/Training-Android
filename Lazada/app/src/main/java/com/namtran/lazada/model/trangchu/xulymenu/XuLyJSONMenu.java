@@ -20,8 +20,9 @@ import java.util.concurrent.ExecutionException;
 public class XuLyJSONMenu {
     // lấy danh sách các loại sản phẩm từ chuỗi JSON
     public List<LoaiSanPham> parserJSONMenu(String jsonData) {
-        List<LoaiSanPham> datas = new ArrayList<>();
+        if (jsonData == null) return null;
 
+        List<LoaiSanPham> datas = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(jsonData);
             JSONArray array = jsonObject.getJSONArray("LOAISANPHAM");
