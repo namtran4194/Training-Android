@@ -45,4 +45,10 @@
     <string name="signUp_btn_gg">Google</string>
     <string name="dientu_txt_title_topthl">Top Những Thương Hiệu Lớn</string>
     <string name="dientu_txt_title_hangmoive">Hàng Mới Về</string>
+    <string name="htsptdm_btn_title_sapxep">Sắp xếp</string>
+    <string name="htsptdm_btn_title_loc">Lọc</string>
+    <string name="dientu_tv_topsp">Top 150 SKU Bán Chạy Trong Tháng</string>
+    <string name="dientu_tv_topSPGiaRe">Top Smartphone Chất Lượng Giá Rẻ</string>
+    <string name="dientu_tv_cameraHanhDong">Camera Hành Động Polaroid</string>
+    <string name="dientu_tv_tiviDacBiet">Tivi Đặc Biệt Cho Các Tỉnh Thành Lớn</string>
 </resources>

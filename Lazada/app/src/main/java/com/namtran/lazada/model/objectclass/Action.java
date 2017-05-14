@@ -12,7 +12,9 @@ public enum Action {
     TOP_PHU_KIEN("laydanhsachtopphukien", "TOPPHUKIEN"),
     TOP_TIEN_ICH("laydanhsachtoptienich", "TOPTIENICH"),
     LOGO_THUONG_HIEU("laylogothuonghieulon", "LOGOTHUONGHIEU"),
-    HANG_MOI_VE("laydanhsachhangmoive", "HANGMOIVE");
+    HANG_MOI_VE("laydanhsachhangmoive", "HANGMOIVE"),
+    SAN_PHAM_THEO_MA_LOAI("laydanhsachsanphamtheomaloai", "DANHSACHSANPHAM"),
+    SAN_PHAM_THEO_THUONG_HIEU("laydanhsachsanphamtheomathuonghieu", "DANHSACHSANPHAMTH");
 
     private String action;
     private String parentNodeName;

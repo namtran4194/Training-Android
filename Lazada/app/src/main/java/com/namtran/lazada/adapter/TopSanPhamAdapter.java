@@ -2,6 +2,7 @@ package com.namtran.lazada.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.namtran.lazada.R;
+import com.namtran.lazada.connection.internet.Converter;
 import com.namtran.lazada.model.objectclass.SanPham;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.Executors;
 
 /**
  * Created by namtr on 09/05/2017.
@@ -23,17 +24,25 @@ import java.util.concurrent.Executors;
 
 public class TopSanPhamAdapter extends RecyclerView.Adapter<TopSanPhamAdapter.ViewHolder> {
     private Context context;
+    private int mLayoutResId;
     private List<SanPham> sanPhamList;
+    private int mWidth;
 
-    public TopSanPhamAdapter(Context context, List<SanPham> sanPhamList) {
+    public TopSanPhamAdapter(Context context, int layoutResId, List<SanPham> sanPhamList) {
         this.context = context;
+        this.mLayoutResId = layoutResId;
         this.sanPhamList = sanPhamList;
+
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        mWidth = metrics.widthPixels;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View v = inflater.inflate(R.layout.custom_recycler_dientu_topsp, parent, false);
+        View v = inflater.inflate(mLayoutResId, parent, false);
+        if (mLayoutResId == R.layout.custom_recycler_dientu_gridview_topsp)
+            v.getLayoutParams().width = mWidth / 2 - 15;
         return new ViewHolder(v);
     }
 
@@ -44,7 +53,7 @@ public class TopSanPhamAdapter extends RecyclerView.Adapter<TopSanPhamAdapter.Vi
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
         String giaFormatted = format.format(gia);
 
-        Picasso.with(context).load(sanPham.getAnhLon()).resize(150, 150).into(holder.mIVHinhSP);
+        Picasso.with(context).load(sanPham.getAnhLon()).placeholder(R.drawable.ic_color_lens_black_24dp).resize(150, 150).into(holder.mIVHinhSP);
         holder.mTVTenSP.setText(sanPham.getTenSP());
         holder.mTVGia.setText(giaFormatted);
         holder.mTVGiamGia.setText(giaFormatted);

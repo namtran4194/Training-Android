@@ -11,6 +11,7 @@ public class DienTu {
     private List<SanPham> sanPhamList;
     private String tenTieuDe;
     private String tenTieuDeTop;
+    private boolean queryToThuongHieu;
 
     public List<ThuongHieu> getThuongHieuList() {
         return thuongHieuList;
@@ -42,5 +43,13 @@ public class DienTu {
 
     public void setTenTieuDeTop(String tenTieuDeTop) {
         this.tenTieuDeTop = tenTieuDeTop;
+    }
+
+    public boolean isQueryToThuongHieu() {
+        return queryToThuongHieu;
+    }
+
+    public void setQueryToThuongHieu(boolean queryToThuongHieu) {
+        this.queryToThuongHieu = queryToThuongHieu;
     }
 }

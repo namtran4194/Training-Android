@@ -14,7 +14,7 @@
             android:id="@+id/login_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:theme="@style/menuItemColor"
+            app:theme="@style/menuItem"
             app:title="Đăng nhập / Đăng ký"
             app:titleTextColor="@color/white" />
 

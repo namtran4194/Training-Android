@@ -68,7 +68,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.trang_chu_activity);
+        setContentView(R.layout.activity_trang_chu);
         Internet internet = new Internet(this);
 
         init();

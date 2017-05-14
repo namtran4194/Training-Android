@@ -38,6 +38,7 @@ public class PresenterDienTu implements IPresenterDienTu {
             dienTu.setSanPhamList(topDTVaMTBList);
             dienTu.setTenTieuDe("Danh sách thương hiệu lớn");
             dienTu.setTenTieuDeTop("Top điện thoại & máy tính bảng");
+            dienTu.setQueryToThuongHieu(true);
             dienTuList.add(dienTu);
 
             List<ThuongHieu> phuKienList = modelDienTu.layDanhSachThuongHieuLon(Action.PHU_KIEN.getAction(), Action.PHU_KIEN.getParentNodeName());
@@ -49,6 +50,7 @@ public class PresenterDienTu implements IPresenterDienTu {
                 dienTu.setSanPhamList(topPhuKienList);
                 dienTu.setTenTieuDe("Danh sách phụ kiện");
                 dienTu.setTenTieuDeTop("Top phụ kiện");
+                dienTu.setQueryToThuongHieu(false);
                 dienTuList.add(dienTu);
 
                 List<ThuongHieu> tienIchList = modelDienTu.layDanhSachThuongHieuLon(Action.TIEN_ICH.getAction(), Action.TIEN_ICH.getParentNodeName());
@@ -60,6 +62,7 @@ public class PresenterDienTu implements IPresenterDienTu {
                     dienTu.setSanPhamList(topTienIchList);
                     dienTu.setTenTieuDe("Danh sách tiện ích");
                     dienTu.setTenTieuDeTop("Top tiện ích");
+                    dienTu.setQueryToThuongHieu(false);
                     dienTuList.add(dienTu);
                 }
             }

@@ -39,8 +39,8 @@ public class DienTuAdapter extends RecyclerView.Adapter<DienTuAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         DienTu dienTu = dienTuList.get(position);
         // tạo adapter cho thương hiệu lớn, top điện thoại và máy tính bảng
-        ThuongHieuLonAdapter thlAdapter = new ThuongHieuLonAdapter(context, dienTu.getThuongHieuList());
-        TopSanPhamAdapter mtbAdapter = new TopSanPhamAdapter(context, dienTu.getSanPhamList());
+        ThuongHieuLonAdapter thlAdapter = new ThuongHieuLonAdapter(context, dienTu.getThuongHieuList(), dienTu.isQueryToThuongHieu());
+        TopSanPhamAdapter mtbAdapter = new TopSanPhamAdapter(context, R.layout.custom_recycler_dientu_gridview_topsp, dienTu.getSanPhamList());
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 3, LinearLayoutManager.HORIZONTAL, false);
         holder.mRecyclerThuongHieuLon.setLayoutManager(layoutManager);

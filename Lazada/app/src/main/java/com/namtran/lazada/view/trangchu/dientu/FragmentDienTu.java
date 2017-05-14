@@ -98,7 +98,7 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
     @Override
     public void hienThiDanhSachHangMoiVe(List<SanPham> sanPhamList) {
         if (sanPhamList != null) {
-            TopSanPhamAdapter adapter = new TopSanPhamAdapter(getContext(), sanPhamList);
+            TopSanPhamAdapter adapter = new TopSanPhamAdapter(getContext(), R.layout.custom_recycler_dientu_gridview_topsp, sanPhamList);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             mRecyclerHangMoiVe.setHasFixedSize(true);
             mRecyclerHangMoiVe.setNestedScrollingEnabled(false);

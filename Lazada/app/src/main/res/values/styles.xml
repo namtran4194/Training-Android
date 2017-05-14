@@ -19,11 +19,12 @@
         <item name="android:textColor">@color/darkGray</item>
     </style>
 
-    <style name="menuItemColor" parent="AppTheme">
+    <style name="menuItem" parent="AppTheme">
         <item name="drawerArrowStyle">@style/ChangeColorToggle</item>
     </style>
 
     <style name="ChangeColorToggle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@color/white</item>
     </style>
+
 </resources>

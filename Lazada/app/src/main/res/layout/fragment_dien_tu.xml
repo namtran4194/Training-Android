@@ -48,7 +48,7 @@
                     android:background="@color/transparentBlack"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Top 150 SKU Bán Chạy Trong Tháng"
+                    android:text="@string/dientu_tv_topsp"
                     android:textColor="@color/white" />
             </FrameLayout>
 
@@ -69,7 +69,7 @@
                     android:background="@color/transparentBlack"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Top Smartphone Chất Lượng Giá Rẻ"
+                    android:text="@string/dientu_tv_topSPGiaRe"
                     android:textColor="@color/white" />
             </FrameLayout>
         </LinearLayout>
@@ -98,7 +98,7 @@
                     android:background="@color/transparentBlack"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Camera Hành Động Polaroid"
+                    android:text="@string/dientu_tv_cameraHanhDong"
                     android:textColor="@color/white" />
             </FrameLayout>
 
@@ -119,7 +119,7 @@
                     android:background="@color/transparentBlack"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Tivi Đặc Biệt Cho Các Tỉnh Thành Lớn"
+                    android:text="@string/dientu_tv_tiviDacBiet"
                     android:textColor="@color/white" />
             </FrameLayout>
         </LinearLayout>
