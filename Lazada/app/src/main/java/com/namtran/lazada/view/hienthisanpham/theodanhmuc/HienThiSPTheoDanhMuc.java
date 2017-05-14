@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -35,16 +36,13 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hien_thi_sp_theo_danh_muc_activity);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.htsptdm_toolBar);
-        setSupportActionBar(toolbar);
-        mRecyclerSanPham = (RecyclerView) findViewById(R.id.htsptdm_recycler_sanpham);
-        mButtonTypeView = (ImageButton) findViewById(R.id.htsptdm_btn_kieuxem);
-        mButtonTypeView.setOnClickListener(this);
-
         Intent intent = getIntent();
         int code = intent.getIntExtra("MALOAI", -1);
         String productName = intent.getStringExtra("TENLOAI");
         boolean check = intent.getBooleanExtra("CHECK", false);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.htsptdm_toolBar);
+        setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(productName);
@@ -52,8 +50,20 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
         }
 
+        mRecyclerSanPham = (RecyclerView) findViewById(R.id.htsptdm_recycler_sanpham);
+        mButtonTypeView = (ImageButton) findViewById(R.id.htsptdm_btn_kieuxem);
+        mButtonTypeView.setOnClickListener(this);
+//        FrameLayout layoutTypeView = (FrameLayout) findViewById(R.id.htsptdm_frameLayout_kieuxem);
+//        layoutTypeView.setOnClickListener(this);
+
         PresenterHTSPTheoDanhMuc danhMuc = new PresenterHTSPTheoDanhMuc(this);
         danhMuc.layDanhSachSanPham(code, check);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+        return true;
     }
 
     @Override

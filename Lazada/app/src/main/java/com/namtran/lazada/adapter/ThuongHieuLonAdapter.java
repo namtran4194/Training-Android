@@ -2,6 +2,7 @@ package com.namtran.lazada.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,13 +67,13 @@ class ThuongHieuLonAdapter extends RecyclerView.Adapter<ThuongHieuLonAdapter.Vie
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView mTVTieuDe;
         ImageView mIVHinhAnh;
-        LinearLayout mItem;
+        CardView mItem;
 
         ViewHolder(View itemView) {
             super(itemView);
             mTVTieuDe = (TextView) itemView.findViewById(R.id.dientu_thuonghieulon_tenth);
             mIVHinhAnh = (ImageView) itemView.findViewById(R.id.dientu_thuonghieulon_hinhanh);
-            mItem = (LinearLayout) itemView.findViewById(R.id.dientu_thuonghieulon_item);
+            mItem = (CardView) itemView.findViewById(R.id.dientu_thuonghieulon_item);
         }
     }
 }
