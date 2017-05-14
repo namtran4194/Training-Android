@@ -16,7 +16,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Visibility;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,7 +50,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
     public static final String SERVER_NAME = "http://192.168.1.227:8000/lazada/"; // phải có dấu "/" ở cuối để tự redirect vào index.php
     private static final int REQUEST_CODE_LOGIN = 0;
     private Toolbar mToolbar;
-    private TabLayout mTabs;
+    private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -94,14 +93,14 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
         }
 
         mViewPager.setAdapter(new ViewPagerAdapterHome(getSupportFragmentManager()));
-        mTabs.setupWithViewPager(mViewPager);
+        mTabLayout.setupWithViewPager(mViewPager);
 
         mXuLyMenu.layDanhSachMenu();
     }
 
     private void init() {
         mToolbar = (Toolbar) findViewById(R.id.home_toolbar);
-        mTabs = (TabLayout) findViewById(R.id.home_tabLayout);
+        mTabLayout = (TabLayout) findViewById(R.id.home_tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.home_viewPager);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.home_drawerLayout);
         mExpandableListView = (ExpandableListView) findViewById(R.id.home_expandableLV);

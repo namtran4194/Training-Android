@@ -13,6 +13,7 @@ import com.namtran.lazada.model.objectclass.ThuongHieu;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 /**
  * Created by namtr on 08/05/2017.
@@ -38,7 +39,7 @@ class ThuongHieuLonAdapter extends RecyclerView.Adapter<ThuongHieuLonAdapter.Vie
     public void onBindViewHolder(ViewHolder holder, int position) {
         ThuongHieu thuongHieu = thuongHieuList.get(position);
         holder.mTVTieuDe.setText(thuongHieu.getTenThuongHieu());
-        Picasso.with(context).load(thuongHieu.getHinhThuongHieu()).resize(200, 200).into(holder.mIVHinhAnh);
+        Picasso.with(context).load(thuongHieu.getHinhThuongHieu()).resize(120, 120).into(holder.mIVHinhAnh);
     }
 
     @Override

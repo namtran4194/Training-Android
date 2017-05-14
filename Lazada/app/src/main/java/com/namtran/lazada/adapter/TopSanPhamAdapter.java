@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executors;
 
 /**
  * Created by namtr on 09/05/2017.
@@ -43,7 +44,7 @@ public class TopSanPhamAdapter extends RecyclerView.Adapter<TopSanPhamAdapter.Vi
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
         String giaFormatted = format.format(gia);
 
-        Picasso.with(context).load(sanPham.getAnhLon()).resize(200, 200).into(holder.mIVHinhSP);
+        Picasso.with(context).load(sanPham.getAnhLon()).resize(150, 150).into(holder.mIVHinhSP);
         holder.mTVTenSP.setText(sanPham.getTenSP());
         holder.mTVGia.setText(giaFormatted);
         holder.mTVGiamGia.setText(giaFormatted);
