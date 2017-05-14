@@ -24,7 +24,9 @@ import com.namtran.lazada.model.objectclass.ThuongHieu;
 import com.namtran.lazada.presenter.trangchu.dientu.PresenterDienTu;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -34,7 +36,7 @@ import java.util.Random;
 public class FragmentDienTu extends Fragment implements ViewDienTu {
     private RecyclerView mRecyclerDienTu, mRecyclerTopTHL, mRecyclerHangMoiVe;
     private ImageView mIV1, mIV2, mIV3;
-    private TextView mTV1, mTV2, mTV3;
+    private TextView mTV1, mTV2, mTV3, mTV4, mTV5, mTV6;
 
     @Nullable
     @Override
@@ -51,6 +53,9 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
         mTV1 = (TextView) v.findViewById(R.id.dientu_tv_tieude1);
         mTV2 = (TextView) v.findViewById(R.id.dientu_tv_tieude2);
         mTV3 = (TextView) v.findViewById(R.id.dientu_tv_tieude3);
+        mTV4 = (TextView) v.findViewById(R.id.dientu_tv_gia1);
+        mTV5 = (TextView) v.findViewById(R.id.dientu_tv_gia2);
+        mTV6 = (TextView) v.findViewById(R.id.dientu_tv_gia3);
 
         PresenterDienTu presenterDienTu = new PresenterDienTu(this);
         if (new Internet(getContext()).isOnline()) {
@@ -102,22 +107,26 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
 
             Random random = new Random();
             SanPham sanPham;
+            NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
             int position;
 
             position = random.nextInt(sanPhamList.size());
             sanPham = sanPhamList.get(position);
             Picasso.with(getContext()).load(sanPham.getAnhLon()).resize(200, 200).into(mIV1);
             mTV1.setText(sanPham.getTenSP());
+            mTV4.setText(format.format(sanPham.getGia()));
 
             position = random.nextInt(sanPhamList.size());
             sanPham = sanPhamList.get(position);
             Picasso.with(getContext()).load(sanPham.getAnhLon()).resize(200, 200).into(mIV2);
             mTV2.setText(sanPham.getTenSP());
+            mTV5.setText(format.format(sanPham.getGia()));
 
             position = random.nextInt(sanPhamList.size());
             sanPham = sanPhamList.get(position);
             Picasso.with(getContext()).load(sanPham.getAnhLon()).resize(200, 200).into(mIV3);
             mTV3.setText(sanPham.getTenSP());
+            mTV6.setText(format.format(sanPham.getGia()));
         } else {
             Toast.makeText(getContext(), "Không có dữ liệu", Toast.LENGTH_SHORT).show();
         }
