@@ -2,6 +2,7 @@ package com.namtran.lazada.connection.internet;
 
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -71,6 +72,7 @@ public class DownloadJSON extends AsyncTask<String, Void, String> {
             e.printStackTrace();
             return null;
         }
+        Log.d("DownloadJson", data.toString());
         return data.toString();
     }
 

@@ -3,8 +3,9 @@ package com.namtran.lazada.presenter.trangchu.xulymenu;
 import com.facebook.AccessToken;
 import com.namtran.lazada.connection.internet.DownloadJSON;
 import com.namtran.lazada.model.dangnhap_dangky.ModelDangNhap;
+import com.namtran.lazada.model.objectclass.Action;
 import com.namtran.lazada.model.objectclass.LoaiSanPham;
-import com.namtran.lazada.model.trangchu.xulymenu.XuLyJSONMenu;
+import com.namtran.lazada.model.trangchu.xulymenu.ModelXuLyJSONMenu;
 import com.namtran.lazada.view.trangchu.TrangChuActivity;
 import com.namtran.lazada.view.trangchu.ViewXuLyMenu;
 
@@ -28,7 +29,11 @@ public class PresenterXuLyMenu implements IPresenterXuLyMenu {
     public void layDanhSachMenu() {
         List<LoaiSanPham> loaiSanPhams;
         List<HashMap<String, String>> attrs = new ArrayList<>();
-        String url = TrangChuActivity.SERVER_NAME + "laydanhsachmenu.php";
+
+        Action action = Action.DANH_SACH_MENU;
+        String url = TrangChuActivity.SERVER_NAME + action.getAction();
+        if (!action.getAction().contains(".php"))
+            url += ".php";
 
         HashMap<String, String> maLoaiCha = new HashMap<>();
         maLoaiCha.put("parentCode", "0");
@@ -39,7 +44,7 @@ public class PresenterXuLyMenu implements IPresenterXuLyMenu {
 
         try {
             String jsonData = downloadJSON.get();
-            XuLyJSONMenu xuLyJSONMenu = new XuLyJSONMenu();
+            ModelXuLyJSONMenu xuLyJSONMenu = new ModelXuLyJSONMenu();
             loaiSanPhams = xuLyJSONMenu.parserJSONMenu(jsonData);
             if (loaiSanPhams != null && loaiSanPhams.size() > 0)
                 viewXuLyMenu.hienThiDanhSachMenu(loaiSanPhams); // trả danh sách các loại sản phẩm cho view

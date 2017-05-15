@@ -1,6 +1,7 @@
 package com.namtran.lazada.model.hienthisanpham.theodanhmuc;
 
 import com.namtran.lazada.connection.internet.DownloadJSON;
+import com.namtran.lazada.model.objectclass.Action;
 import com.namtran.lazada.model.objectclass.SanPham;
 import com.namtran.lazada.view.trangchu.TrangChuActivity;
 
@@ -19,17 +20,21 @@ import java.util.concurrent.ExecutionException;
 
 public class ModelHTSPTheoDanhMuc {
 
-    public List<SanPham> layDanhSachSanPhamTheoMaThuongHieu(String action, String parentNodeName, int brandCode) {
-        if (!action.contains(".php"))
-            action += ".php";
+    public List<SanPham> layDanhSachSanPhamTheoMaThuongHieu(Action action, int brandCode, int startIndex) {
+        String url = TrangChuActivity.SERVER_NAME + action.getAction();
+        if (!action.getAction().contains(".php"))
+            url += ".php";
 
         List<SanPham> sanPhamList = new ArrayList<>();
-        String url = TrangChuActivity.SERVER_NAME + action;
         List<HashMap<String, String>> attrs = new ArrayList<>();
 
         HashMap<String, String> maLoaiCha = new HashMap<>();
         maLoaiCha.put("brandCode", String.valueOf(brandCode));
         attrs.add(maLoaiCha);
+
+        HashMap<String, String> index = new HashMap<>();
+        index.put("startIndex", String.valueOf(startIndex));
+        attrs.add(index);
 
         DownloadJSON downloadJSON = new DownloadJSON(url, attrs);
         downloadJSON.execute();
@@ -39,7 +44,7 @@ public class ModelHTSPTheoDanhMuc {
             if (json == null) return null;
 
             JSONObject object = new JSONObject(json);
-            JSONArray arraySanPham = object.getJSONArray(parentNodeName);
+            JSONArray arraySanPham = object.getJSONArray(action.getNodeName());
 
             int len = arraySanPham.length();
             for (int i = 0; i < len; i++) {
@@ -61,17 +66,21 @@ public class ModelHTSPTheoDanhMuc {
         return sanPhamList;
     }
 
-    public List<SanPham> layDanhSachSanPhamTheoMaLoai(String action, String parentNodeName, int productCode) {
-        if (!action.contains(".php"))
-            action += ".php";
+    public List<SanPham> layDanhSachSanPhamTheoMaLoai(Action action, int productCode, int startIndex) {
+        String url = TrangChuActivity.SERVER_NAME + action.getAction();
+        if (!action.getAction().contains(".php"))
+            url += ".php";
 
         List<SanPham> sanPhamList = new ArrayList<>();
-        String url = TrangChuActivity.SERVER_NAME + action;
         List<HashMap<String, String>> attrs = new ArrayList<>();
 
         HashMap<String, String> maLoaiCha = new HashMap<>();
         maLoaiCha.put("productCode", String.valueOf(productCode));
         attrs.add(maLoaiCha);
+
+        HashMap<String, String> index = new HashMap<>();
+        index.put("startIndex", String.valueOf(startIndex));
+        attrs.add(index);
 
         DownloadJSON downloadJSON = new DownloadJSON(url, attrs);
         downloadJSON.execute();
@@ -81,7 +90,7 @@ public class ModelHTSPTheoDanhMuc {
             if (json == null) return null;
 
             JSONObject object = new JSONObject(json);
-            JSONArray arraySanPham = object.getJSONArray(parentNodeName);
+            JSONArray arraySanPham = object.getJSONArray(action.getNodeName());
 
             int len = arraySanPham.length();
             for (int i = 0; i < len; i++) {

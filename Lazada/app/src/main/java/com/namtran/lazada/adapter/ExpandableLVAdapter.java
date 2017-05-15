@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.namtran.lazada.R;
 import com.namtran.lazada.customview.DynamicExpandableLV;
 import com.namtran.lazada.model.objectclass.LoaiSanPham;
-import com.namtran.lazada.model.trangchu.xulymenu.XuLyJSONMenu;
+import com.namtran.lazada.model.trangchu.xulymenu.ModelXuLyJSONMenu;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class ExpandableLVAdapter extends BaseExpandableListAdapter {
 
     // lấy các item con
     private void getChilds() {
-        XuLyJSONMenu xuLyJSONMenu = new XuLyJSONMenu();
+        ModelXuLyJSONMenu xuLyJSONMenu = new ModelXuLyJSONMenu();
         int count = loaiSanPhams.size();
         for (int i = 0; i < count; i++) {
             int maLoaiSP = loaiSanPhams.get(i).getMaLoaiSP();

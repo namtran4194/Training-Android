@@ -5,16 +5,17 @@ package com.namtran.lazada.model.objectclass;
  */
 
 public enum Action {
-    THUONG_HIEU_LON("laydanhsachthuonghieulon", "DANHSACHTHUONGHIEU"),
-    TOP_DT_VA_MTB("laydanhsachtopDTvaMTB", "TOPDTVAMTB"),
-    PHU_KIEN("laydanhsachphukien", "DANHSACHPHUKIEN"),
-    TIEN_ICH("laydanhsachtienich", "DANHSACHTIENICH"),
-    TOP_PHU_KIEN("laydanhsachtopphukien", "TOPPHUKIEN"),
-    TOP_TIEN_ICH("laydanhsachtoptienich", "TOPTIENICH"),
-    LOGO_THUONG_HIEU("laylogothuonghieulon", "LOGOTHUONGHIEU"),
-    HANG_MOI_VE("laydanhsachhangmoive", "HANGMOIVE"),
-    SAN_PHAM_THEO_MA_LOAI("laydanhsachsanphamtheomaloai", "DANHSACHSANPHAM"),
-    SAN_PHAM_THEO_THUONG_HIEU("laydanhsachsanphamtheomathuonghieu", "DANHSACHSANPHAMTH");
+    DANH_SACH_MENU("danhsachmenu", "DANHSACHMENU"),
+    THUONG_HIEU_LON("thuonghieulon", "DANHSACHTHUONGHIEU"),
+    TOP_DT_VA_MTB("topDTvaMTB", "TOPDTVAMTB"),
+    PHU_KIEN("phukien", "DANHSACHPHUKIEN"),
+    TIEN_ICH("tienich", "DANHSACHTIENICH"),
+    TOP_PHU_KIEN("topphukien", "TOPPHUKIEN"),
+    TOP_TIEN_ICH("toptienich", "TOPTIENICH"),
+    LOGO_THUONG_HIEU("logothuonghieulon", "LOGOTHUONGHIEU"),
+    HANG_MOI_VE("hangmoive", "HANGMOIVE"),
+    SAN_PHAM_THEO_MA_LOAI("danhsachsanpham_MALOAISP", "DANHSACHSANPHAM"),
+    SAN_PHAM_THEO_THUONG_HIEU("danhsachsanpham_MATHUONGHIEU", "DANHSACHSANPHAMTH");
 
     private String action;
     private String parentNodeName;
@@ -28,7 +29,7 @@ public enum Action {
         return action;
     }
 
-    public String getParentNodeName() {
+    public String getNodeName() {
         return parentNodeName;
     }
 

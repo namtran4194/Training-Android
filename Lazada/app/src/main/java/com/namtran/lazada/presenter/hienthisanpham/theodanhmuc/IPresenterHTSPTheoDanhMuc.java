@@ -5,5 +5,5 @@ package com.namtran.lazada.presenter.hienthisanpham.theodanhmuc;
  */
 
 interface IPresenterHTSPTheoDanhMuc {
-    void layDanhSachSanPham(int code, boolean check);
+    void layDanhSachSanPham(int typeCode, boolean loadThuongHieu);
 }

@@ -1,6 +1,7 @@
 package com.namtran.lazada.model.trangchu.xulymenu;
 
 import com.namtran.lazada.connection.internet.DownloadJSON;
+import com.namtran.lazada.model.objectclass.Action;
 import com.namtran.lazada.model.objectclass.LoaiSanPham;
 import com.namtran.lazada.view.trangchu.TrangChuActivity;
 
@@ -17,7 +18,7 @@ import java.util.concurrent.ExecutionException;
  * Created by namtr on 26/04/2017.
  */
 
-public class XuLyJSONMenu {
+public class ModelXuLyJSONMenu {
     // lấy danh sách các loại sản phẩm từ chuỗi JSON
     public List<LoaiSanPham> parserJSONMenu(String jsonData) {
         if (jsonData == null) return null;
@@ -25,7 +26,7 @@ public class XuLyJSONMenu {
         List<LoaiSanPham> datas = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(jsonData);
-            JSONArray array = jsonObject.getJSONArray("LOAISANPHAM");
+            JSONArray array = jsonObject.getJSONArray(Action.DANH_SACH_MENU.getNodeName());
             int count = array.length();
             for (int i = 0; i < count; i++) {
                 JSONObject value = array.getJSONObject(i);
@@ -47,7 +48,11 @@ public class XuLyJSONMenu {
     public List<LoaiSanPham> getTypeOfProductById(int parentId) {
         List<LoaiSanPham> loaiSanPhams = new ArrayList<>();
         List<HashMap<String, String>> attrs = new ArrayList<>(); // các tham số truyền theo request
-        String url = TrangChuActivity.SERVER_NAME + "laydanhsachmenu.php";
+
+        Action action = Action.DANH_SACH_MENU;
+        String url = TrangChuActivity.SERVER_NAME + action.getAction();
+        if (!action.getAction().contains(".php"))
+            url += ".php";
 
         HashMap<String, String> maLoaiCha = new HashMap<>();
         maLoaiCha.put("parentCode", String.valueOf(parentId));

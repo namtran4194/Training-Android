@@ -8,6 +8,7 @@
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="0dp"
+    app:cardUseCompatPadding="true"
     app:cardElevation="3dp">
 
     <LinearLayout

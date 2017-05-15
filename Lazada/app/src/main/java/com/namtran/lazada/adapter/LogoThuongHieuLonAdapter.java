@@ -18,7 +18,6 @@ import com.namtran.lazada.tools.RippleMixer;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.concurrent.Executors;
 
 /**
  * Created by namtr on 11/05/2017.

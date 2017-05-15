@@ -29,8 +29,8 @@ public class PresenterDienTu implements IPresenterDienTu {
         List<DienTu> dienTuList = new ArrayList<>();
         DienTu dienTu;
 
-        List<ThuongHieu> thuongHieuList = modelDienTu.layDanhSachThuongHieuLon(Action.THUONG_HIEU_LON.getAction(), Action.THUONG_HIEU_LON.getParentNodeName());
-        List<SanPham> topDTVaMTBList = modelDienTu.layDanhSachTopSanPham(Action.TOP_DT_VA_MTB.getAction(), Action.TOP_DT_VA_MTB.getParentNodeName());
+        List<ThuongHieu> thuongHieuList = modelDienTu.layDanhSachThuongHieuLon(Action.THUONG_HIEU_LON.getAction(), Action.THUONG_HIEU_LON.getNodeName());
+        List<SanPham> topDTVaMTBList = modelDienTu.layDanhSachTopSanPham(Action.TOP_DT_VA_MTB.getAction(), Action.TOP_DT_VA_MTB.getNodeName());
         if (thuongHieuList == null || topDTVaMTBList == null) haveAllData = false;
         else {
             dienTu = new DienTu();
@@ -41,8 +41,8 @@ public class PresenterDienTu implements IPresenterDienTu {
             dienTu.setQueryToThuongHieu(true);
             dienTuList.add(dienTu);
 
-            List<ThuongHieu> phuKienList = modelDienTu.layDanhSachThuongHieuLon(Action.PHU_KIEN.getAction(), Action.PHU_KIEN.getParentNodeName());
-            List<SanPham> topPhuKienList = modelDienTu.layDanhSachTopSanPham(Action.TOP_PHU_KIEN.getAction(), Action.TOP_PHU_KIEN.getParentNodeName());
+            List<ThuongHieu> phuKienList = modelDienTu.layDanhSachThuongHieuLon(Action.PHU_KIEN.getAction(), Action.PHU_KIEN.getNodeName());
+            List<SanPham> topPhuKienList = modelDienTu.layDanhSachTopSanPham(Action.TOP_PHU_KIEN.getAction(), Action.TOP_PHU_KIEN.getNodeName());
             if (phuKienList == null || topPhuKienList == null) haveAllData = false;
             else {
                 dienTu = new DienTu();
@@ -53,8 +53,8 @@ public class PresenterDienTu implements IPresenterDienTu {
                 dienTu.setQueryToThuongHieu(false);
                 dienTuList.add(dienTu);
 
-                List<ThuongHieu> tienIchList = modelDienTu.layDanhSachThuongHieuLon(Action.TIEN_ICH.getAction(), Action.TIEN_ICH.getParentNodeName());
-                List<SanPham> topTienIchList = modelDienTu.layDanhSachTopSanPham(Action.TOP_TIEN_ICH.getAction(), Action.TOP_TIEN_ICH.getParentNodeName());
+                List<ThuongHieu> tienIchList = modelDienTu.layDanhSachThuongHieuLon(Action.TIEN_ICH.getAction(), Action.TIEN_ICH.getNodeName());
+                List<SanPham> topTienIchList = modelDienTu.layDanhSachTopSanPham(Action.TOP_TIEN_ICH.getAction(), Action.TOP_TIEN_ICH.getNodeName());
                 if (tienIchList == null || topTienIchList == null) haveAllData = false;
                 else {
                     dienTu = new DienTu();
@@ -73,13 +73,13 @@ public class PresenterDienTu implements IPresenterDienTu {
 
     @Override
     public void layLogoThuongHieuLon() {
-        List<ThuongHieu> thuongHieuList = modelDienTu.layDanhSachThuongHieuLon(Action.LOGO_THUONG_HIEU.getAction(), Action.LOGO_THUONG_HIEU.getParentNodeName());
+        List<ThuongHieu> thuongHieuList = modelDienTu.layDanhSachThuongHieuLon(Action.LOGO_THUONG_HIEU.getAction(), Action.LOGO_THUONG_HIEU.getNodeName());
         viewDienTu.hienThiLogoThuongHieu(thuongHieuList);
     }
 
     @Override
     public void layDanhSachHangMoiVe() {
-        List<SanPham> sanPhamList = modelDienTu.layDanhSachTopSanPham(Action.HANG_MOI_VE.getAction(), Action.HANG_MOI_VE.getParentNodeName());
+        List<SanPham> sanPhamList = modelDienTu.layDanhSachTopSanPham(Action.HANG_MOI_VE.getAction(), Action.HANG_MOI_VE.getNodeName());
         viewDienTu.hienThiDanhSachHangMoiVe(sanPhamList);
     }
 }

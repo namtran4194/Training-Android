@@ -1,5 +1,7 @@
 package com.namtran.lazada.presenter.hienthisanpham.theodanhmuc;
 
+import android.util.Log;
+
 import com.namtran.lazada.model.hienthisanpham.theodanhmuc.ModelHTSPTheoDanhMuc;
 import com.namtran.lazada.model.objectclass.Action;
 import com.namtran.lazada.model.objectclass.SanPham;
@@ -21,18 +23,23 @@ public class PresenterHTSPTheoDanhMuc implements IPresenterHTSPTheoDanhMuc {
     }
 
     @Override
-    public void layDanhSachSanPham(int code, boolean check) {
+    public void layDanhSachSanPham(int typeCode, boolean loadThuongHieu) {
+        List<SanPham> sanPhamList = loadMore(typeCode, loadThuongHieu, 0);
+        mHTSPTheoDanhMuc.hienThiDanhSachSanPham(sanPhamList);
+    }
+
+    public List<SanPham> loadMore(int typeCode, boolean loadThuongHieu, int startIndex) {
         List<SanPham> sanPhamList;
         Action action;
 
-        if (check) {
+        if (loadThuongHieu) {
             action = Action.SAN_PHAM_THEO_THUONG_HIEU;
-            sanPhamList = mModelHTSPTheoDanhMuc.layDanhSachSanPhamTheoMaThuongHieu(action.getAction(), action.getParentNodeName(), code);
+            sanPhamList = mModelHTSPTheoDanhMuc.layDanhSachSanPhamTheoMaThuongHieu(action, typeCode, startIndex);
         } else {
             action = Action.SAN_PHAM_THEO_MA_LOAI;
-            sanPhamList = mModelHTSPTheoDanhMuc.layDanhSachSanPhamTheoMaLoai(action.getAction(), action.getParentNodeName(), code);
+            sanPhamList = mModelHTSPTheoDanhMuc.layDanhSachSanPhamTheoMaLoai(action, typeCode, startIndex);
         }
-
-        mHTSPTheoDanhMuc.hienThiDanhSachSanPham(sanPhamList);
+//        Log.d("kiemtra", sanPhamList.size() + "");
+        return sanPhamList;
     }
 }
