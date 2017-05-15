@@ -1,4 +1,4 @@
-package com.namtran.lazada.connection.internet;
+package com.namtran.lazada.tools;
 
 import android.content.Context;
 import android.content.res.Resources;

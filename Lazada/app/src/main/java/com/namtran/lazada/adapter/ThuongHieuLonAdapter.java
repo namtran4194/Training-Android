@@ -2,6 +2,11 @@ package com.namtran.lazada.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +18,7 @@ import android.widget.TextView;
 
 import com.namtran.lazada.R;
 import com.namtran.lazada.model.objectclass.ThuongHieu;
+import com.namtran.lazada.tools.RippleMixer;
 import com.namtran.lazada.view.hienthisanpham.theodanhmuc.HienThiSPTheoDanhMuc;
 import com.namtran.lazada.view.hienthisanpham.theodanhmuc.ViewHienThiSPTheoDanhMuc;
 import com.squareup.picasso.Picasso;
@@ -38,6 +44,19 @@ class ThuongHieuLonAdapter extends RecyclerView.Adapter<ThuongHieuLonAdapter.Vie
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View v = inflater.inflate(R.layout.custom_recycler_dientu_thuonghieulon, parent, false);
+        // hiệu ứng khi nhấn vào một item
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            int color = Color.parseColor("#ffffff");
+            double fraction = 0.2;
+
+            ColorDrawable defaultColor = new ColorDrawable(color);
+            Drawable rippleColor = RippleMixer.getRippleColor(color);
+            ColorStateList pressedColor = ColorStateList.valueOf(RippleMixer.lightenOrDarken(color, fraction));
+
+            RippleDrawable drawable = new RippleDrawable(pressedColor, defaultColor, rippleColor);
+            v.setBackground(drawable);
+        }
+
         return new ViewHolder(v);
     }
 
