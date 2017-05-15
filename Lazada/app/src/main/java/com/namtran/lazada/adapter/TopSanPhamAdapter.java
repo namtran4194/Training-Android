@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.namtran.lazada.R;
@@ -27,71 +28,101 @@ import java.util.Locale;
  * Created by namtr on 09/05/2017.
  */
 
-public class TopSanPhamAdapter extends RecyclerView.Adapter<TopSanPhamAdapter.ViewHolder> {
+public class TopSanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
     private Context context;
     private int mLayoutResId;
-    private List<SanPham> sanPhamList;
+    private List<SanPham> mSanPhams;
     private int mWidth;
 
     public TopSanPhamAdapter(Context context, int layoutResId, List<SanPham> sanPhamList) {
         this.context = context;
         this.mLayoutResId = layoutResId;
-        this.sanPhamList = sanPhamList;
+        this.mSanPhams = sanPhamList;
 
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         mWidth = metrics.widthPixels;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View v = inflater.inflate(mLayoutResId, parent, false);
-        // hiệu ứng khi nhấn vào một item
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            int color = Color.parseColor("#ffffff");
-            double fraction = 0.2;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_ITEM) {
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View v = inflater.inflate(mLayoutResId, parent, false);
+            // hiệu ứng khi nhấn vào một item
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                int color = Color.parseColor("#ffffff");
+                double fraction = 0.2;
 
-            ColorDrawable defaultColor = new ColorDrawable(color);
-            Drawable rippleColor = RippleMixer.getRippleColor(color);
-            ColorStateList pressedColor = ColorStateList.valueOf(RippleMixer.lightenOrDarken(color, fraction));
+                ColorDrawable defaultColor = new ColorDrawable(color);
+                Drawable rippleColor = RippleMixer.getRippleColor(color);
+                ColorStateList pressedColor = ColorStateList.valueOf(RippleMixer.lightenOrDarken(color, fraction));
 
-            RippleDrawable drawable = new RippleDrawable(pressedColor, defaultColor, rippleColor);
-            v.setBackground(drawable);
+                RippleDrawable drawable = new RippleDrawable(pressedColor, defaultColor, rippleColor);
+                v.setBackground(drawable);
+            }
+
+            // chia một item chiếm một nửa chiều rộng màn hình
+            if (mLayoutResId == R.layout.custom_recycler_dientu_gridview_topsp)
+                v.getLayoutParams().width = mWidth / 2 - 15;
+            return new ItemViewHolder(v);
+        } else if (viewType == VIEW_TYPE_LOADING) {
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View v = inflater.inflate(R.layout.layout_loading_item, parent, false);
+            return new LoadingViewHolder(v);
         }
-
-        if (mLayoutResId == R.layout.custom_recycler_dientu_gridview_topsp)
-            v.getLayoutParams().width = mWidth / 2 - 15;
-        return new ViewHolder(v);
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        SanPham sanPham = sanPhamList.get(position);
-        int gia = sanPham.getGia();
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        String giaFormatted = format.format(gia);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof ItemViewHolder) {
+            ItemViewHolder viewHolder = (ItemViewHolder) holder;
+            SanPham sanPham = mSanPhams.get(position);
+            int gia = sanPham.getGia();
+            NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
+            String giaFormatted = format.format(gia);
 
-        Picasso.with(context).load(sanPham.getAnhLon()).placeholder(R.drawable.ic_color_lens_black_24dp).resize(150, 150).into(holder.mIVHinhSP);
-        holder.mTVTenSP.setText(sanPham.getTenSP());
-        holder.mTVGia.setText(giaFormatted);
-        holder.mTVGiamGia.setText(giaFormatted);
+            Picasso.with(context).load(sanPham.getAnhLon()).placeholder(R.drawable.ic_color_lens_black_24dp).resize(150, 150).into(viewHolder.mIVHinhSP);
+            viewHolder.mTVTenSP.setText(sanPham.getTenSP());
+            viewHolder.mTVGia.setText(giaFormatted);
+            viewHolder.mTVGiamGia.setText(giaFormatted);
+        } else if (holder instanceof LoadingViewHolder) {
+            LoadingViewHolder viewHolder = (LoadingViewHolder) holder;
+            viewHolder.mProgressBar.setIndeterminate(true);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mSanPhams.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     @Override
     public int getItemCount() {
-        return sanPhamList.size();
+        return mSanPhams.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    private class ItemViewHolder extends RecyclerView.ViewHolder {
         ImageView mIVHinhSP;
         TextView mTVGia, mTVTenSP, mTVGiamGia;
 
-        ViewHolder(View itemView) {
+        ItemViewHolder(View itemView) {
             super(itemView);
             mIVHinhSP = (ImageView) itemView.findViewById(R.id.dientu_topdtvamtb_hinhanh);
             mTVGia = (TextView) itemView.findViewById(R.id.dientu_topdtvamtb_gia);
             mTVTenSP = (TextView) itemView.findViewById(R.id.dientu_topdtvamtb_tensp);
             mTVGiamGia = (TextView) itemView.findViewById(R.id.dientu_topdtvamtb_giamgia);
+        }
+    }
+
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
+        ProgressBar mProgressBar;
+
+        LoadingViewHolder(View itemView) {
+            super(itemView);
+            mProgressBar = (ProgressBar) itemView.findViewById(R.id.loading_item_progressBar);
         }
     }
 }

@@ -12,13 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.namtran.lazada.R;
 import com.namtran.lazada.adapter.TopSanPhamAdapter;
 import com.namtran.lazada.model.objectclass.OnLoadMoreListener;
-import com.namtran.lazada.model.objectclass.LoadMoreRecycler;
+import com.namtran.lazada.model.objectclass.OnScrollRecyclerListener;
 import com.namtran.lazada.model.objectclass.SanPham;
 import com.namtran.lazada.presenter.hienthisanpham.theodanhmuc.PresenterHTSPTheoDanhMuc;
 
@@ -33,18 +32,20 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
     private ImageButton mButtonTypeView;
     private RecyclerView.LayoutManager mLinearLM, mGridLM;
     private TopSanPhamAdapter mVerticalAdapter, mGridViewAdapter;
-    private boolean mIsGridview = true, mIsDataNull = true;
+    private boolean mIsGridview = true;
+    private boolean mIsDataNull = true; // true nếu mSanPhams = null hoặc size() = 0
     private PresenterHTSPTheoDanhMuc mPresenterDanhMuc;
     private int mTypeCode;
     private boolean mLoadThuongHieu;
-    private boolean mIsLoading;
-    private List<SanPham> sanPhamList;
+    private List<SanPham> mSanPhams;
+    private OnScrollRecyclerListener mOnScrollListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hien_thi_sp_theo_danh_muc);
 
+        // lấy MALOAISP / MATHUONGHIEU, biến check để xác định mã truyền sang là cái nào và tên loại danh mục sản phẩm
         Intent intent = getIntent();
         mTypeCode = intent.getIntExtra("MALOAI", -1);
         mLoadThuongHieu = intent.getBooleanExtra("CHECK", false);
@@ -52,13 +53,16 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.htsptdm_toolBar);
         setSupportActionBar(toolbar);
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(productName);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
         }
 
+        // sự kiện scroll RecyclerView
+        mOnScrollListener = new OnScrollRecyclerListener(this);
+
+        // 2 loại adapter cho RecyclerView
         mGridLM = new GridLayoutManager(this, 2);
         mLinearLM = new LinearLayoutManager(this);
 
@@ -88,16 +92,17 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
     @Override
     public void hienThiDanhSachSanPham(List<SanPham> sanPhamList) {
         if (sanPhamList != null) {
-            this.sanPhamList = sanPhamList;
+            mSanPhams = sanPhamList;
             mIsDataNull = false;
-            // initial adapter
-            mGridViewAdapter = new TopSanPhamAdapter(this, R.layout.custom_recycler_dientu_gridview_topsp, this.sanPhamList);
-            mVerticalAdapter = new TopSanPhamAdapter(this, R.layout.custom_recycler_dientu_vertical_topsp, this.sanPhamList);
+            // khởi tạo adapter
+            mGridViewAdapter = new TopSanPhamAdapter(this, R.layout.custom_recycler_dientu_gridview_topsp, mSanPhams);
+            mVerticalAdapter = new TopSanPhamAdapter(this, R.layout.custom_recycler_dientu_vertical_topsp, mSanPhams);
 
             mRecyclerSanPham.setLayoutManager(getLayoutManager());
             mRecyclerSanPham.setAdapter(getAdapter());
 
-            mRecyclerSanPham.addOnScrollListener(new LoadMoreRecycler(getLayoutManager(), this));
+            mOnScrollListener.setmLayoutManager(getLayoutManager());
+            mRecyclerSanPham.addOnScrollListener(mOnScrollListener);
         } else {
             Toast.makeText(this, "Không có dữ liệu", Toast.LENGTH_SHORT).show();
         }
@@ -129,8 +134,9 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
                     mRecyclerSanPham.setLayoutManager(getLayoutManager());
                     mRecyclerSanPham.setAdapter(getAdapter());
                     // tạo mới Listener để truyền LayoutManager khác, cần xóa Listener hiện tại của View
+                    mOnScrollListener.setmLayoutManager(getLayoutManager());
                     mRecyclerSanPham.clearOnScrollListeners();
-                    mRecyclerSanPham.addOnScrollListener(new LoadMoreRecycler(getLayoutManager(), this));
+                    mRecyclerSanPham.addOnScrollListener(mOnScrollListener);
                 }
                 changeButtonImage();
                 break;
@@ -147,21 +153,23 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
 
     @Override
     public void onLoadMore(final int totalItems) {
-        if (!mIsLoading) {
-            mIsLoading = true;
+        // thêm item = null để hiển ProgressBar
+        mSanPhams.add(null);
+        mRecyclerSanPham.post(new Runnable() {
+            @Override
+            public void run() {
+                getAdapter().notifyItemInserted(mSanPhams.size() - 1);
+                // xóa loading item
+                mSanPhams.remove(mSanPhams.size() - 1);
+                getAdapter().notifyItemRemoved(mSanPhams.size());
 
-            final List<SanPham> sanPhamList = mPresenterDanhMuc.loadMore(mTypeCode, mLoadThuongHieu, totalItems);
-            if (sanPhamList != null && sanPhamList.size() > 0) {
-                this.sanPhamList.addAll(sanPhamList);
-                mRecyclerSanPham.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        getAdapter().notifyItemRangeInserted(totalItems - 1, sanPhamList.size());
-                    }
-                });
-                mIsLoading = false;
+                final List<SanPham> sanPhamList = mPresenterDanhMuc.loadMore(mTypeCode, mLoadThuongHieu, totalItems);
+                if (sanPhamList != null && sanPhamList.size() > 0) {
+                    mSanPhams.addAll(sanPhamList);
+                    getAdapter().notifyDataSetChanged();
+                    mOnScrollListener.setLoaded();
+                }
             }
-
-        }
+        });
     }
 }
