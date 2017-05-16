@@ -51,4 +51,14 @@
     <string name="dientu_tv_topSPGiaRe">Top Smartphone Chất Lượng Giá Rẻ</string>
     <string name="dientu_tv_cameraHanhDong">Camera Hành Động Polaroid</string>
     <string name="dientu_tv_tiviDacBiet">Tivi Đặc Biệt Cho Các Tỉnh Thành Lớn</string>
+    <string name="chitietsanpham_tv_nguoiban">Bán và đóng gói bởi</string>
+    <string name="chitietsanpham_tv_slogan1">Trả hàng miễn phí</string>
+    <string name="chitietsanpham_tv_slogan2">Đảm bảo chính hãng 100%</string>
+    <string name="chitietsanpham_btn_slogan1">Bảo vệ người mua hàng 100%</string>
+    <string name="chitietsanpham_btn_slogan2">Đảm bảo sự hài lòng</string>
+    <string name="chitietsanpham_tv_motasp">Mô tả sản phẩm</string>
+    <string name="chitietsanpham_tv_danhgia">Đánh giá và nhận xét</string>
+    <string name="chitietsanpham_btn_all_comments">Xem tất cả các nhận xét</string>
+    <string name="chitietsanpham_tv_bansethich">Bạn sẽ thích</string>
+    <string name="chitietsanpham_btn_muangay">Mua ngay</string>
 </resources>

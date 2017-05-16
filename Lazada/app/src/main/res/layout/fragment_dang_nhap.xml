@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_facebook"
+                android:background="@drawable/ripple_btn_facebook"
                 android:drawableStart="@drawable/facebook_small"
                 android:text="@string/btn_txt_fb"
                 android:textColor="@color/facebook" />
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/btn_google_plus"
+                android:background="@drawable/ripple_btn_google_plus"
                 android:drawableStart="@drawable/google_plus_small"
                 android:text="@string/btn_txt_gg"
                 android:textColor="@color/goooglePlus" />

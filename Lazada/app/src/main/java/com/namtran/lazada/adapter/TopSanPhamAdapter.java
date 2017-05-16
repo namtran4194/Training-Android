@@ -1,11 +1,13 @@
 package com.namtran.lazada.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import com.namtran.lazada.R;
 import com.namtran.lazada.model.objectclass.SanPham;
 import com.namtran.lazada.tools.RippleMixer;
+import com.namtran.lazada.view.hienthisanpham.chitietsanpham.ChiTietSanPhamActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
@@ -88,6 +91,14 @@ public class TopSanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             viewHolder.mTVTenSP.setText(sanPham.getTenSP());
             viewHolder.mTVGia.setText(giaFormatted);
             viewHolder.mTVGiamGia.setText(giaFormatted);
+
+            viewHolder.mItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent chitietsanpham = new Intent(context, ChiTietSanPhamActivity.class);
+                    context.startActivity(chitietsanpham);
+                }
+            });
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder viewHolder = (LoadingViewHolder) holder;
             viewHolder.mProgressBar.setIndeterminate(true);
@@ -107,6 +118,7 @@ public class TopSanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private class ItemViewHolder extends RecyclerView.ViewHolder {
         ImageView mIVHinhSP;
         TextView mTVGia, mTVTenSP, mTVGiamGia;
+        CardView mItem;
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -114,6 +126,7 @@ public class TopSanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mTVGia = (TextView) itemView.findViewById(R.id.dientu_topdtvamtb_gia);
             mTVTenSP = (TextView) itemView.findViewById(R.id.dientu_topdtvamtb_tensp);
             mTVGiamGia = (TextView) itemView.findViewById(R.id.dientu_topdtvamtb_giamgia);
+            mItem = (CardView) itemView.findViewById(R.id.dientu_topdtvamtb_cardview);
         }
     }
 

@@ -27,7 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:background="@drawable/background_button"
+                android:background="@drawable/ripple_btn"
                 android:clickable="true">
 
                 <Button
@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/background_button"
+                    android:background="@drawable/ripple_btn"
                     android:clickable="false"
                     android:drawableStart="@drawable/ic_filter_list_black_24dp"
                     android:text="@string/htsptdm_btn_title_loc"
@@ -48,7 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:background="@drawable/background_button"
+                android:background="@drawable/ripple_btn"
                 android:clickable="true">
 
                 <Button
@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/background_button"
+                    android:background="@drawable/ripple_btn"
                     android:clickable="false"
                     android:drawableStart="@drawable/ic_swap_vert_black_24dp"
                     android:text="@string/htsptdm_btn_title_sapxep"
@@ -74,7 +74,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@drawable/background_button"
+                android:background="@drawable/ripple_btn"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_view_list_black_24dp" />
 

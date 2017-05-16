@@ -41,6 +41,10 @@
             android:name=".view.hienthisanpham.theodanhmuc.HienThiSPTheoDanhMuc"
             android:parentActivityName="com.namtran.lazada.view.trangchu.TrangChuActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.hienthisanpham.chitietsanpham.ChiTietSanPhamActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

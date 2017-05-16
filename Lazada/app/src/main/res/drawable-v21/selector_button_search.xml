@@ -3,5 +3,5 @@
     android:color="@color/darkGray"
     android:radius="3dp">
 
-    <item android:drawable="@drawable/background_search" />
+    <item android:drawable="@drawable/ripple_btn_search" />
 </ripple>

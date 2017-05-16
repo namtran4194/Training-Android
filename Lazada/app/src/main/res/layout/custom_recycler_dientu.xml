@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/background_splash_screen" />
+        android:src="@drawable/bg_splash_screen" />
 
     <TextView
         android:id="@+id/dientu_tv_tieude"
