@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.namtran.lazada.R;
+import com.namtran.lazada.customview.ButtonRippleDrawable;
 import com.namtran.lazada.model.objectclass.ThuongHieu;
 import com.namtran.lazada.tools.RippleMixer;
 import com.squareup.picasso.Picasso;
@@ -26,10 +27,12 @@ import java.util.List;
 public class LogoThuongHieuLonAdapter extends RecyclerView.Adapter<LogoThuongHieuLonAdapter.ViewHolder> {
     private Context context;
     private List<ThuongHieu> thuongHieuList;
+    private ButtonRippleDrawable rippleDrawable;
 
     public LogoThuongHieuLonAdapter(Context context, List<ThuongHieu> thuongHieuList) {
         this.context = context;
         this.thuongHieuList = thuongHieuList;
+        rippleDrawable = new ButtonRippleDrawable(Color.parseColor("#ffffff"), 0.2);
     }
 
     @Override
@@ -37,17 +40,7 @@ public class LogoThuongHieuLonAdapter extends RecyclerView.Adapter<LogoThuongHie
         LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.custom_recycler_logothuonghieulon, parent, false);
         // hiệu ứng khi nhấn vào một item
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            int color = Color.parseColor("#ffffff");
-            double fraction = 0.2;
-
-            ColorDrawable defaultColor = new ColorDrawable(color);
-            Drawable rippleColor = RippleMixer.getRippleColor(color);
-            ColorStateList pressedColor = ColorStateList.valueOf(RippleMixer.lightenOrDarken(color, fraction));
-
-            RippleDrawable drawable = new RippleDrawable(pressedColor, defaultColor, rippleColor);
-            v.setBackground(drawable);
-        }
+        v.setBackground(rippleDrawable.getRipple());
 
         return new ViewHolder(v);
     }

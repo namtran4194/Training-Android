@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.namtran.lazada.R;
+import com.namtran.lazada.customview.ButtonRippleDrawable;
 import com.namtran.lazada.model.objectclass.SanPham;
 import com.namtran.lazada.tools.RippleMixer;
 import com.namtran.lazada.view.hienthisanpham.chitietsanpham.ChiTietSanPhamActivity;
@@ -36,6 +37,7 @@ public class TopSanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private final int VIEW_TYPE_LOADING = 1;
     private Context context;
     private int mLayoutResId;
+    private ButtonRippleDrawable rippleDrawable;
     private List<SanPham> mSanPhams;
     private int mWidth;
 
@@ -43,6 +45,7 @@ public class TopSanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.context = context;
         this.mLayoutResId = layoutResId;
         this.mSanPhams = sanPhamList;
+        rippleDrawable = new ButtonRippleDrawable(Color.parseColor("#ffffff"), 0.2);
 
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         mWidth = metrics.widthPixels;
@@ -54,17 +57,7 @@ public class TopSanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             LayoutInflater inflater = LayoutInflater.from(context);
             View v = inflater.inflate(mLayoutResId, parent, false);
             // hiệu ứng khi nhấn vào một item
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                int color = Color.parseColor("#ffffff");
-                double fraction = 0.2;
-
-                ColorDrawable defaultColor = new ColorDrawable(color);
-                Drawable rippleColor = RippleMixer.getRippleColor(color);
-                ColorStateList pressedColor = ColorStateList.valueOf(RippleMixer.lightenOrDarken(color, fraction));
-
-                RippleDrawable drawable = new RippleDrawable(pressedColor, defaultColor, rippleColor);
-                v.setBackground(drawable);
-            }
+            v.setBackground(rippleDrawable.getRipple());
 
             // chia một item chiếm một nửa chiều rộng màn hình
             if (mLayoutResId == R.layout.custom_recycler_dientu_gridview_topsp)
