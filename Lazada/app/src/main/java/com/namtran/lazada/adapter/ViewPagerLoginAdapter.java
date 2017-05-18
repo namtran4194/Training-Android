@@ -11,10 +11,10 @@ import com.namtran.lazada.view.dangnhap_dangky.fragment.FragmentDangNhap;
  * Created by namtr on 01/05/2017.
  */
 
-public class ViewPagerAdapterLogin extends FragmentPagerAdapter {
+public class ViewPagerLoginAdapter extends FragmentPagerAdapter {
     private static final String[] TITLE = {"Đăng nhập", "Đăng ký"};
 
-    public ViewPagerAdapterLogin(FragmentManager fm) {
+    public ViewPagerLoginAdapter(FragmentManager fm) {
         super(fm);
     }
 

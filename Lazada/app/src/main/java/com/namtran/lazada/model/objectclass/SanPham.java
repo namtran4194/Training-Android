@@ -1,5 +1,7 @@
 package com.namtran.lazada.model.objectclass;
 
+import java.util.List;
+
 /**
  * Created by namtr on 07/05/2017.
  */
@@ -16,6 +18,7 @@ public class SanPham {
     private String anhLon;
     private String anhNho;
     private String thongTin;
+    private List<ChiTietSanPham> chiTietSanPhams;
 
     public int getMaSP() {
         return maSP;
@@ -103,5 +106,13 @@ public class SanPham {
 
     public void setThongTin(String thongTin) {
         this.thongTin = thongTin;
+    }
+
+    public List<ChiTietSanPham> getChiTietSanPhams() {
+        return chiTietSanPhams;
+    }
+
+    public void setChiTietSanPhams(List<ChiTietSanPham> chiTietSanPhams) {
+        this.chiTietSanPhams = chiTietSanPhams;
     }
 }

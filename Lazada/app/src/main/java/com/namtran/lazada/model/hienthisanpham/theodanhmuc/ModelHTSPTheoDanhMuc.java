@@ -22,7 +22,7 @@ public class ModelHTSPTheoDanhMuc {
 
     public List<SanPham> layDanhSachSanPhamTheoMaThuongHieu(Action action, int brandCode, int startIndex) {
         String url = TrangChuActivity.SERVER_NAME + action.getAction();
-        if (!action.getAction().contains(".php"))
+        if (!url.contains(".php"))
             url += ".php";
 
         List<SanPham> sanPhamList = new ArrayList<>();
@@ -68,7 +68,7 @@ public class ModelHTSPTheoDanhMuc {
 
     public List<SanPham> layDanhSachSanPhamTheoMaLoai(Action action, int productCode, int startIndex) {
         String url = TrangChuActivity.SERVER_NAME + action.getAction();
-        if (!action.getAction().contains(".php"))
+        if (!url.contains(".php"))
             url += ".php";
 
         List<SanPham> sanPhamList = new ArrayList<>();

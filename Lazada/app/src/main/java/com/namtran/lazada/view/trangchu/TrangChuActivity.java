@@ -33,7 +33,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.namtran.lazada.R;
 import com.namtran.lazada.adapter.ExpandableLVAdapter;
-import com.namtran.lazada.adapter.ViewPagerAdapterHome;
+import com.namtran.lazada.adapter.ViewPagerHomeAdapter;
 import com.namtran.lazada.connection.internet.Internet;
 import com.namtran.lazada.model.dangnhap_dangky.ModelDangNhap;
 import com.namtran.lazada.model.objectclass.LoaiSanPham;
@@ -47,7 +47,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu, GoogleApiClient.OnConnectionFailedListener, AppBarLayout.OnOffsetChangedListener {
-    public static final String SERVER_NAME = "http://memoryoftomorrow.tk/lazada/";
+    public static final String SERVER_NAME = "http://192.168.1.227:8000/lazada/";
     private static final int REQUEST_CODE_LOGIN = 0;
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
@@ -96,7 +96,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
             return;
         }
 
-        mViewPager.setAdapter(new ViewPagerAdapterHome(getSupportFragmentManager()));
+        mViewPager.setAdapter(new ViewPagerHomeAdapter(getSupportFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);
 
         mXuLyMenu.layDanhSachMenu();

@@ -48,7 +48,7 @@ public class LogoThuongHieuLonAdapter extends RecyclerView.Adapter<LogoThuongHie
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ThuongHieu thuongHieu = thuongHieuList.get(position);
-        Picasso.with(context).load(thuongHieu.getHinhThuongHieu()).placeholder(R.drawable.ic_color_lens_black_24dp).resize(150, 150).into(holder.mIVLogo);
+        Picasso.with(context).load(thuongHieu.getHinhThuongHieu()).placeholder(R.drawable.ic_image_black_24dp).resize(150, 150).into(holder.mIVLogo);
     }
 
     @Override

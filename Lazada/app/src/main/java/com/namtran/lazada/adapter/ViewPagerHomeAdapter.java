@@ -21,12 +21,12 @@ import java.util.List;
  * Created by namtr on 25/04/2017.
  */
 
-public class ViewPagerAdapterHome extends FragmentPagerAdapter {
+public class ViewPagerHomeAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments = new ArrayList<>();
     private static final String[] TITLE_PAGE = new String[]{"Nổi Bật", "Khuyến Mãi", "Điện Tử", "Nhà Cửa & Đời Sống", "Mẹ & Bé",
                                                 "Làm Đẹp", "Thời Trang", "Thể Thao & Du Lịch", "Thương Hiệu"};
 
-    public ViewPagerAdapterHome(FragmentManager fm) {
+    public ViewPagerHomeAdapter(FragmentManager fm) {
         super(fm);
         fragments.add(new FragmentNoiBat());
         fragments.add(new FragmentKhuyenMai());

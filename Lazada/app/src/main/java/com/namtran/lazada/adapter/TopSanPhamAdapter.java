@@ -80,15 +80,17 @@ public class TopSanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
             String giaFormatted = format.format(gia);
 
-            Picasso.with(context).load(sanPham.getAnhLon()).placeholder(R.drawable.ic_color_lens_black_24dp).resize(150, 150).into(viewHolder.mIVHinhSP);
+            Picasso.with(context).load(sanPham.getAnhLon()).placeholder(R.drawable.ic_image_black_24dp).resize(150, 150).into(viewHolder.mIVHinhSP);
             viewHolder.mTVTenSP.setText(sanPham.getTenSP());
             viewHolder.mTVGia.setText(giaFormatted);
             viewHolder.mTVGiamGia.setText(giaFormatted);
+            viewHolder.mItem.setTag(sanPham.getMaSP()); // setTag cho cardview
 
             viewHolder.mItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent chitietsanpham = new Intent(context, ChiTietSanPhamActivity.class);
+                    chitietsanpham.putExtra("MASP", (int) v.getTag());
                     context.startActivity(chitietsanpham);
                 }
             });

@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.namtran.lazada.R;
-import com.namtran.lazada.adapter.ViewPagerAdapterLogin;
+import com.namtran.lazada.adapter.ViewPagerLoginAdapter;
 
 /**
  * Created by namtr on 01/05/2017.
@@ -31,7 +31,7 @@ public class DangNhapVaDangKyActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        ViewPagerAdapterLogin adapter = new ViewPagerAdapterLogin(getSupportFragmentManager());
+        ViewPagerLoginAdapter adapter = new ViewPagerLoginAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }

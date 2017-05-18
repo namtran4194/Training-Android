@@ -57,7 +57,7 @@ class ThuongHieuLonAdapter extends RecyclerView.Adapter<ThuongHieuLonAdapter.Vie
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ThuongHieu thuongHieu = thuongHieuList.get(position);
         holder.mTVTieuDe.setText(thuongHieu.getTenThuongHieu());
-        Picasso.with(mContext).load(thuongHieu.getHinhThuongHieu()).placeholder(R.drawable.ic_color_lens_black_24dp).resize(120, 120).into(holder.mIVHinhAnh);
+        Picasso.with(mContext).load(thuongHieu.getHinhThuongHieu()).placeholder(R.drawable.ic_image_black_24dp).resize(120, 120).into(holder.mIVHinhAnh);
 
         holder.mItem.setOnClickListener(new View.OnClickListener() {
             @Override

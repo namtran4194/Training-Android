@@ -26,7 +26,8 @@ public class ModelXuLyJSONMenu {
         List<LoaiSanPham> datas = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(jsonData);
-            JSONArray array = jsonObject.getJSONArray(Action.DANH_SACH_MENU.getNodeName());
+            Action action = Action.DANH_SACH_MENU;
+            JSONArray array = jsonObject.getJSONArray(action.getNodeName());
             int count = array.length();
             for (int i = 0; i < count; i++) {
                 JSONObject value = array.getJSONObject(i);
