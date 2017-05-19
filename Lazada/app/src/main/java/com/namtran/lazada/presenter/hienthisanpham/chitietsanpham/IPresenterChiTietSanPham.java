@@ -8,4 +8,6 @@ import com.namtran.lazada.model.objectclass.Action;
 
 interface IPresenterChiTietSanPham {
     void layChiTietSanPham(Action action, int maSP);
+
+    void layDanhSachDanhGia(Action action, int maSP, int limit);
 }

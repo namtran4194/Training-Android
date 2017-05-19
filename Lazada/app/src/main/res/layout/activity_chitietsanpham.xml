@@ -296,16 +296,17 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray" />
-
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/chitietsanpham_recycler_danhgia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lightGray" />
 
                 <Button
                     android:id="@+id/chitietsanpham_btn_xemtatca_danhgia"

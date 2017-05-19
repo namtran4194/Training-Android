@@ -5,6 +5,7 @@ import android.util.Log;
 import com.namtran.lazada.connection.internet.DownloadJSON;
 import com.namtran.lazada.model.objectclass.Action;
 import com.namtran.lazada.model.objectclass.ChiTietSanPham;
+import com.namtran.lazada.model.objectclass.DanhGia;
 import com.namtran.lazada.model.objectclass.SanPham;
 import com.namtran.lazada.view.trangchu.TrangChuActivity;
 
@@ -78,5 +79,54 @@ public class ModelChiTietSanPham {
             return null;
         }
         return sanPham;
+    }
+
+    // limit <= 0 nghĩa là lấy tất các đánh giá
+    public List<DanhGia> layDanhSachDanhGia(Action action, int maSP, int limit) {
+        List<DanhGia> danhGiaList = new ArrayList<>();
+        String url = TrangChuActivity.SERVER_NAME + action.getAction();
+        if (!url.contains(".php")) url += ".php";
+
+        List<HashMap<String, String>> attrs = new ArrayList<>();
+
+        HashMap<String, String> attr1 = new HashMap<>();
+        attr1.put("masp", String.valueOf(maSP));
+        attrs.add(attr1);
+
+        HashMap<String, String> attr2 = new HashMap<>();
+        attr2.put("limit", String.valueOf(limit));
+        attrs.add(attr2);
+
+        DownloadJSON downloadJSON = new DownloadJSON(url, attrs);
+        downloadJSON.execute();
+
+        try {
+            String json = downloadJSON.get();
+            if (json == null) return null;
+
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray array = jsonObject.getJSONArray(action.getNodeName());
+
+            int len = array.length();
+            for (int i = 0; i < len; i++) {
+                DanhGia danhGia = new DanhGia();
+                JSONObject object = array.getJSONObject(i);
+
+                danhGia.setMaSP(object.getInt("MASP"));
+                String tieuDe = object.getString("TIEUDE");
+                danhGia.setTieuDe(tieuDe.substring(0, 1).toUpperCase() + tieuDe.substring(1));
+                danhGia.setNoiDung(object.getString("NOIDUNG"));
+                danhGia.setTenThietBi(object.getString("TENTHIETBI"));
+                danhGia.setSoSao(object.getInt("SOSAO"));
+                danhGia.setMaDG("MADG");
+                danhGia.setNgayDanhGia(object.getString("NGAYDANHGIA"));
+
+                danhGiaList.add(danhGia);
+            }
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return danhGiaList;
     }
 }

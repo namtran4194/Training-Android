@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,9 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.namtran.lazada.R;
+import com.namtran.lazada.adapter.DanhGiaAdapter;
 import com.namtran.lazada.adapter.ViewPagerCTSPAdapter;
 import com.namtran.lazada.model.objectclass.Action;
 import com.namtran.lazada.model.objectclass.ChiTietSanPham;
+import com.namtran.lazada.model.objectclass.DanhGia;
 import com.namtran.lazada.model.objectclass.SanPham;
 import com.namtran.lazada.presenter.hienthisanpham.chitietsanpham.PresenterChiTietSanPham;
 import com.namtran.lazada.tools.Converter;
@@ -46,6 +50,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     private boolean mIsExpanded; // lưu trạng thái mButtonXemThemThongTin
     private LinearLayout mLayoutThongSoKyThuat;
     private int masp;
+    private RecyclerView mRecyclerDanhGia;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +65,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         int masp = getIntent().getIntExtra("MASP", -1);
         PresenterChiTietSanPham presenterChiTiet = new PresenterChiTietSanPham(this);
         presenterChiTiet.layChiTietSanPham(Action.CHI_TIET_SAN_PHAM, masp);
+        presenterChiTiet.layDanhSachDanhGia(Action.DANH_SACH_DANH_GIA, masp, 0);
 
         setupDotLayout(0);
     }
@@ -90,6 +96,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         mLayoutThongSoKyThuat = (LinearLayout) findViewById(R.id.chitietsanpham_layout_thongsokythuat);
         TextView tvVietDanhGia = (TextView) findViewById(R.id.chitietsanpham_tv_danhgia);
         tvVietDanhGia.setOnClickListener(this);
+        mRecyclerDanhGia = (RecyclerView) findViewById(R.id.chitietsanpham_recycler_danhgia);
     }
 
     @Override
@@ -151,6 +158,17 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
             mSlider.setAdapter(adapter);
 
             mFragment = fragments;
+        }
+    }
+
+    @Override
+    public void hienThiDanhGia(List<DanhGia> danhGias) {
+        if (danhGias != null && danhGias.size() > 0) {
+            DanhGiaAdapter adapter = new DanhGiaAdapter(this, danhGias, 3);
+            mRecyclerDanhGia.setNestedScrollingEnabled(false);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+            mRecyclerDanhGia.setLayoutManager(layoutManager);
+            mRecyclerDanhGia.setAdapter(adapter);
         }
     }
 
