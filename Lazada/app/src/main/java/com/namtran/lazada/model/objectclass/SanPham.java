@@ -8,16 +8,17 @@ import java.util.List;
 
 public class SanPham {
     private int maSP;
+    private String tenSP;
     private int gia;
     private int soLuong;
-    private int maLoaiSP;
-    private int maThuongHieu;
-    private int maNV;
-    private int luotMua;
-    private String tenSP;
     private String anhLon;
     private String anhNho;
     private String thongTin;
+    private int maLoaiSP;
+    private int maThuongHieu;
+    private int maNV;
+    private String tenNV;
+    private int luotMua;
     private List<ChiTietSanPham> chiTietSanPhams;
 
     public int getMaSP() {
@@ -66,6 +67,14 @@ public class SanPham {
 
     public void setMaNV(int maNV) {
         this.maNV = maNV;
+    }
+
+    public String getTenNV() {
+        return tenNV;
+    }
+
+    public void setTenNV(String tenNV) {
+        this.tenNV = tenNV;
     }
 
     public int getLuotMua() {

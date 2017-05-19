@@ -1,5 +1,6 @@
 package com.namtran.lazada.view.hienthisanpham.chitietsanpham;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,10 +18,12 @@ import android.widget.TextView;
 import com.namtran.lazada.R;
 import com.namtran.lazada.adapter.ViewPagerCTSPAdapter;
 import com.namtran.lazada.model.objectclass.Action;
+import com.namtran.lazada.model.objectclass.ChiTietSanPham;
 import com.namtran.lazada.model.objectclass.SanPham;
 import com.namtran.lazada.presenter.hienthisanpham.chitietsanpham.PresenterChiTietSanPham;
 import com.namtran.lazada.tools.Converter;
 import com.namtran.lazada.view.hienthisanpham.chitietsanpham.fragment.FragmentChiTietSP;
+import com.namtran.lazada.view.hienthisanpham.danhgia.DanhGiaActivity;
 import com.namtran.lazada.view.trangchu.TrangChuActivity;
 
 import java.util.ArrayList;
@@ -36,7 +39,13 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     private LinearLayout mDotLayout;
     private TextView mTVTenSP, mTVGia;
     private ImageButton mButtonFavorite;
-    private boolean mIsFavorite;
+    private boolean mIsFavorite; // lưu trạng thái mButtonFavorite
+    private TextView mTVNguoiBan;
+    private TextView mTVThongTinChiTiet;
+    private ImageButton mButtonXemThemThongTin;
+    private boolean mIsExpanded; // lưu trạng thái mButtonXemThemThongTin
+    private LinearLayout mLayoutThongSoKyThuat;
+    private int masp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +61,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         PresenterChiTietSanPham presenterChiTiet = new PresenterChiTietSanPham(this);
         presenterChiTiet.layChiTietSanPham(Action.CHI_TIET_SAN_PHAM, masp);
 
-        setUpDotLayout(0);
+        setupDotLayout(0);
     }
 
     private void init() {
@@ -67,7 +76,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         mSlider.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                setUpDotLayout(position);
+                setupDotLayout(position);
             }
         });
         mDotLayout = (LinearLayout) findViewById(R.id.chitietsanpham_layout_dot);
@@ -75,6 +84,12 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         mTVGia = (TextView) findViewById(R.id.chitietsanpham_tv_gia);
         mButtonFavorite = (ImageButton) findViewById(R.id.chitietsanpham_btn_yeuthich);
         mButtonFavorite.setOnClickListener(this);
+        mTVNguoiBan = (TextView) findViewById(R.id.chitietsanpham_tv_nguoiban);
+        mTVThongTinChiTiet = (TextView) findViewById(R.id.chitietsanpham_tv_chitietsp);
+        mButtonXemThemThongTin = (ImageButton) findViewById(R.id.chitietsanpham_btn_xemthem_thongtin);
+        mLayoutThongSoKyThuat = (LinearLayout) findViewById(R.id.chitietsanpham_layout_thongsokythuat);
+        TextView tvVietDanhGia = (TextView) findViewById(R.id.chitietsanpham_tv_danhgia);
+        tvVietDanhGia.setOnClickListener(this);
     }
 
     @Override
@@ -95,6 +110,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     @Override
     public void hienThiChiTietSanPham(SanPham sanPham) {
         if (sanPham != null) {
+            masp = sanPham.getMaSP();
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setTitle(sanPham.getTenSP());
             }
@@ -102,6 +118,21 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
             // hiển thị thông tin sản phẩm
             mTVTenSP.setText(sanPham.getTenSP());
             mTVGia.setText(Converter.formatCurrency(sanPham.getGia()));
+            mTVNguoiBan.setText(sanPham.getTenNV());
+
+            // hiển thị chi tiết sản phẩm, mặc định cho hiển thị 100 ký tự
+            String chitietsanpham = sanPham.getThongTin();
+            mTVThongTinChiTiet.setText(chitietsanpham.substring(0, 100));
+
+            // setup button xem thêm
+            if (chitietsanpham.length() <= 100) mButtonXemThemThongTin.setVisibility(View.GONE);
+            else {
+                mButtonXemThemThongTin.setVisibility(View.VISIBLE);
+                mButtonXemThemThongTin.setTag(chitietsanpham);
+                mButtonXemThemThongTin.setOnClickListener(this);
+            }
+
+            setupChiTietSPLayout(sanPham.getChiTietSanPhams());
         }
     }
 
@@ -124,7 +155,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     }
 
     // thêm dấu chấm biểu thị số trang cho viewpager
-    private void setUpDotLayout(int position) {
+    private void setupDotLayout(int position) {
         mDotLayout.removeAllViews();
 
         for (int i = 0; i < mFragment.size(); i++) {
@@ -140,19 +171,57 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
 
     }
 
+    private void setupChiTietSPLayout(List<ChiTietSanPham> chiTietSanPhams) {
+        int len = chiTietSanPhams.size();
+        for (int i = 0; i < len; i++) {
+            ChiTietSanPham chiTietSanPham = chiTietSanPhams.get(i);
+            String row = chiTietSanPham.getTen() + ": " + chiTietSanPham.getGiaTri();
+            TextView thongso = new TextView(this);
+            thongso.setText(row);
+            mLayoutThongSoKyThuat.addView(thongso);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
             case R.id.chitietsanpham_btn_yeuthich:
                 mIsFavorite = !mIsFavorite;
-                setImageResourceButton();
+                setImageResourceButton(id);
+                break;
+            case R.id.chitietsanpham_btn_xemthem_thongtin:
+                mIsExpanded = !mIsExpanded;
+                setImageResourceButton(id);
+                break;
+            case R.id.chitietsanpham_tv_danhgia:
+                Intent danhGia = new Intent(this, DanhGiaActivity.class);
+                danhGia.putExtra("MASP", masp);
+                startActivity(danhGia);
                 break;
         }
     }
 
-    private void setImageResourceButton() {
-        if (mIsFavorite) mButtonFavorite.setImageResource(R.drawable.ic_favorite_orange_24dp);
-        else mButtonFavorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+    private void setImageResourceButton(int id) {
+        switch (id) {
+            case R.id.chitietsanpham_btn_yeuthich:
+                if (mIsFavorite)
+                    mButtonFavorite.setImageResource(R.drawable.ic_favorite_orange_24dp);
+                else
+                    mButtonFavorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                break;
+            case R.id.chitietsanpham_btn_xemthem_thongtin:
+                if (mIsExpanded) {
+                    mButtonXemThemThongTin.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
+                    mTVThongTinChiTiet.setText((String) mButtonXemThemThongTin.getTag());
+                    mLayoutThongSoKyThuat.setVisibility(View.VISIBLE);
+                } else {
+                    mButtonXemThemThongTin.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
+                    mTVThongTinChiTiet.setText(((String) mButtonXemThemThongTin.getTag()).substring(0, 100));
+                    mLayoutThongSoKyThuat.setVisibility(View.GONE);
+                }
+                break;
+        }
+
     }
 }

@@ -53,17 +53,17 @@ public class ModelChiTietSanPham {
             sanPham.setAnhLon(object.getString("ANHLON"));
             sanPham.setAnhNho(object.getString("ANHNHO"));
             sanPham.setMaLoaiSP(object.getInt("MALOAISP"));
+            sanPham.setThongTin(object.getString("THONGTIN"));
             sanPham.setMaThuongHieu(object.getInt("MATHUONGHIEU"));
             sanPham.setMaNV(object.getInt("MANV"));
+            sanPham.setTenNV(object.getString("TENNV"));
             sanPham.setLuotMua(object.getInt("LUOTMUA"));
 
             List<ChiTietSanPham> chiTietSanPhams = new ArrayList<>();
             JSONArray thongsokythuat = object.getJSONArray("THONGSOKYTHUAT");
             int count = thongsokythuat.length();
-            Log.d("kiemtra", count + "");
             for (int i = 0; i < count; i++) {
                 JSONObject chitiet = thongsokythuat.getJSONObject(i);
-                Log.d("kiemtra", chitiet.names().length() + "");
                 for (int j = 0; j < chitiet.names().length(); j++) {
                     ChiTietSanPham chiTietSanPham = new ChiTietSanPham();
                     String tenChiTiet = chitiet.names().getString(j);

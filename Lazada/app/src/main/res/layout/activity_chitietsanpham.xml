@@ -126,7 +126,7 @@
                     android:background="@color/gray" />
 
                 <Button
-                    android:id="@+id/chitietsanpham_btn_xemthem"
+                    android:id="@+id/chitietsanpham_btn_xemthem_sanpham"
                     style="?borderlessButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -155,10 +155,9 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/chitietsanpham_nguoiban"
+                    android:id="@+id/chitietsanpham_tv_nguoiban"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lazada"
                     android:textColor="@color/green"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -212,14 +211,54 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/chitietsanpham_tv_motasp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/chitietsanpham_tv_title_chitietsp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/chitietsanpham_tv_chitietsp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp" />
+
+                <LinearLayout
+                    android:id="@+id/chitietsanpham_layout_thongsokythuat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/chitietsanpham_tv_title_thongsokythuat"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/lightGray" />
+
+                <ImageButton
+                    android:id="@+id/chitietsanpham_btn_xemthem_thongtin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple_btn_rectangle"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
             </LinearLayout>
 
             <View
@@ -233,20 +272,37 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/chitietsanpham_tv_danhgia"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/chitietsanpham_tv_danhgia"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/chitietsanpham_tv_danhgia"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/chitietsanpham_btn_title_danhgia"
+                        android:textColor="@color/green"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/gray" />
 
-                <ListView
-                    android:id="@+id/chitietsanpham_listview_danhgia"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/chitietsanpham_recycler_danhgia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp" />

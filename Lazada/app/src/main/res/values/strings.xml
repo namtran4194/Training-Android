@@ -56,10 +56,16 @@
     <string name="chitietsanpham_tv_slogan2">Đảm bảo chính hãng 100%</string>
     <string name="chitietsanpham_btn_slogan1">Bảo vệ người mua hàng 100%</string>
     <string name="chitietsanpham_btn_slogan2">Đảm bảo sự hài lòng</string>
-    <string name="chitietsanpham_tv_motasp">Mô tả sản phẩm</string>
+    <string name="chitietsanpham_tv_title_chitietsp">Chi tiết sản phẩm</string>
     <string name="chitietsanpham_tv_danhgia">Đánh giá và nhận xét</string>
     <string name="chitietsanpham_btn_all_comments">Xem tất cả các nhận xét</string>
     <string name="chitietsanpham_tv_bansethich">Bạn sẽ thích</string>
     <string name="chitietsanpham_btn_muangay">Mua ngay</string>
     <string name="chitietsanpham_btn_title_xemthem">Các sản phẩm khác của Flash</string>
+    <string name="chitietsanpham_tv_title_thongsokythuat">Thông số kỹ thuật</string>
+    <string name="chitietsanpham_btn_title_danhgia">Viết đánh giá</string>
+    <string name="danhgia_tv_title_nhanxet">Nhận xét về sản phẩm này</string>
+    <string name="danhgia_et_hint_tieude">Tiêu đề</string>
+    <string name="danhgia_et_hint_noidung">Nội dung</string>
+    <string name="danhgia_btn_dongy">Đồng ý</string>
 </resources>

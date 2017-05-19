@@ -16,7 +16,8 @@ public enum Action {
     HANG_MOI_VE("hangmoive", "HANGMOIVE"),
     SAN_PHAM_THEO_MA_LOAI("danhsachsanpham_MALOAISP", "DANHSACHSANPHAM"),
     SAN_PHAM_THEO_THUONG_HIEU("danhsachsanpham_MATHUONGHIEU", "DANHSACHSANPHAMTH"),
-    CHI_TIET_SAN_PHAM("chitietsanpham", "CHITIETSANPHAM");
+    CHI_TIET_SAN_PHAM("chitietsanpham", "CHITIETSANPHAM"),
+    THEM_DANH_GIA("themdanhgia", "");
 
     private String action;
     private String parentNodeName;

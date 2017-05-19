@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/danhgia_tv_title_nhanxet" />
+
+    <RatingBar
+        android:id="@+id/danhgia_rb_sosao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:theme="@style/ColorRatingBar"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/danhgia_et_tieude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/danhgia_et_hint_tieude"
+            android:lines="1"
+            android:maxLength="50" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/danhgia_et_noidung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/danhgia_et_hint_noidung"
+            android:maxLines="3"
+            android:scrollbars="vertical" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/danhgia_btn_dongy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/bgLogo"
+        android:foreground="?selectableItemBackground"
+        android:text="@string/danhgia_btn_dongy"
+        android:textColor="@color/white" />
+</LinearLayout>
