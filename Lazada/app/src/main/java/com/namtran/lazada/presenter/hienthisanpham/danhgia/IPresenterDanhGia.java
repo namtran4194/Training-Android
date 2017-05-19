@@ -1,5 +1,6 @@
 package com.namtran.lazada.presenter.hienthisanpham.danhgia;
 
+import com.namtran.lazada.model.objectclass.Action;
 import com.namtran.lazada.model.objectclass.DanhGia;
 
 /**
@@ -8,4 +9,6 @@ import com.namtran.lazada.model.objectclass.DanhGia;
 
 interface IPresenterDanhGia {
     void themDanhGia(DanhGia danhGia);
+
+    void layDanhSachDanhGiaTheoMaSP(Action action, int maSP, int startIndex);
 }

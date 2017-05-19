@@ -17,6 +17,11 @@ public class OnScrollRecyclerListener extends RecyclerView.OnScrollListener {
         this.mOnLoadMoreListener = onLoadMoreListener;
     }
 
+    public OnScrollRecyclerListener(OnLoadMoreListener mOnLoadMoreListener, RecyclerView.LayoutManager mLayoutManager) {
+        this.mLayoutManager = mLayoutManager;
+        this.mOnLoadMoreListener = mOnLoadMoreListener;
+    }
+
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);

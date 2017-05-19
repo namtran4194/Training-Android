@@ -31,8 +31,8 @@ public class PresenterChiTietSanPham implements IPresenterChiTietSanPham {
     }
 
     @Override
-    public void layDanhSachDanhGia(Action action, int maSP, int limit) {
-        List<DanhGia> danhGiaList = mModelChiTietSP.layDanhSachDanhGia(action, maSP, limit);
+    public void layDanhSachDanhGia(Action action, int maSP, int startIndex) {
+        List<DanhGia> danhGiaList = mModelChiTietSP.layDanhSachDanhGia(action, maSP, startIndex);
         mViewChiTietSP.hienThiDanhGia(danhGiaList);
     }
 }

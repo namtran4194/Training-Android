@@ -81,8 +81,7 @@ public class ModelChiTietSanPham {
         return sanPham;
     }
 
-    // limit <= 0 nghĩa là lấy tất các đánh giá
-    public List<DanhGia> layDanhSachDanhGia(Action action, int maSP, int limit) {
+    public List<DanhGia> layDanhSachDanhGia(Action action, int maSP, int startIndex) {
         List<DanhGia> danhGiaList = new ArrayList<>();
         String url = TrangChuActivity.SERVER_NAME + action.getAction();
         if (!url.contains(".php")) url += ".php";
@@ -94,7 +93,7 @@ public class ModelChiTietSanPham {
         attrs.add(attr1);
 
         HashMap<String, String> attr2 = new HashMap<>();
-        attr2.put("limit", String.valueOf(limit));
+        attr2.put("startIndex", String.valueOf(startIndex));
         attrs.add(attr2);
 
         DownloadJSON downloadJSON = new DownloadJSON(url, attrs);

@@ -16,6 +16,8 @@ import com.namtran.lazada.R;
 import com.namtran.lazada.model.objectclass.DanhGia;
 import com.namtran.lazada.presenter.hienthisanpham.danhgia.PresenterDanhGia;
 
+import java.util.List;
+
 /**
  * Created by namtr on 5/19/2017.
  */
@@ -30,7 +32,7 @@ public class DanhGiaActivity extends AppCompatActivity implements RatingBar.OnRa
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_danhgia);
+        setContentView(R.layout.activity_themdanhgia);
 
         init();
         masp = getIntent().getIntExtra("MASP", -1);
@@ -109,5 +111,10 @@ public class DanhGiaActivity extends AppCompatActivity implements RatingBar.OnRa
             finish();
         } else
             Toast.makeText(this, "Đánh giá thất bại", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hienThiDanhSachDanhGia(List<DanhGia> danhGias) {
+
     }
 }

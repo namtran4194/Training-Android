@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.namtran.lazada.presenter.hienthisanpham.chitietsanpham.PresenterChiTi
 import com.namtran.lazada.tools.Converter;
 import com.namtran.lazada.view.hienthisanpham.chitietsanpham.fragment.FragmentChiTietSP;
 import com.namtran.lazada.view.hienthisanpham.danhgia.DanhGiaActivity;
+import com.namtran.lazada.view.hienthisanpham.danhgia.DanhSachDanhGiaActivity;
 import com.namtran.lazada.view.trangchu.TrangChuActivity;
 
 import java.util.ArrayList;
@@ -62,7 +64,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         mFragment = new ArrayList<>();
 
         // retrieve data
-        int masp = getIntent().getIntExtra("MASP", -1);
+        masp = getIntent().getIntExtra("MASP", -1);
         PresenterChiTietSanPham presenterChiTiet = new PresenterChiTietSanPham(this);
         presenterChiTiet.layChiTietSanPham(Action.CHI_TIET_SAN_PHAM, masp);
         presenterChiTiet.layDanhSachDanhGia(Action.DANH_SACH_DANH_GIA, masp, 0);
@@ -97,6 +99,8 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         TextView tvVietDanhGia = (TextView) findViewById(R.id.chitietsanpham_tv_danhgia);
         tvVietDanhGia.setOnClickListener(this);
         mRecyclerDanhGia = (RecyclerView) findViewById(R.id.chitietsanpham_recycler_danhgia);
+        Button btnXemTatCaDanhGia = (Button) findViewById(R.id.chitietsanpham_btn_xemtatca_danhgia);
+        btnXemTatCaDanhGia.setOnClickListener(this);
     }
 
     @Override
@@ -117,7 +121,6 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     @Override
     public void hienThiChiTietSanPham(SanPham sanPham) {
         if (sanPham != null) {
-            masp = sanPham.getMaSP();
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setTitle(sanPham.getTenSP());
             }
@@ -216,6 +219,11 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
                 Intent danhGia = new Intent(this, DanhGiaActivity.class);
                 danhGia.putExtra("MASP", masp);
                 startActivity(danhGia);
+                break;
+            case R.id.chitietsanpham_btn_xemtatca_danhgia:
+                Intent danhSachDanhGia = new Intent(this, DanhSachDanhGiaActivity.class);
+                danhSachDanhGia.putExtra("MASP", masp);
+                startActivity(danhSachDanhGia);
                 break;
         }
     }
