@@ -6,22 +6,18 @@ import android.text.Html;
 import android.text.Spanned;
 import android.util.DisplayMetrics;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * Created by namtr on 5/15/2017.
  */
 
 public class Converter {
 
-    public static int pixelToDp(Context context, float pixel) {
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        return (int) (pixel / metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-    }
-
-    public static int DpToPixel(Context context, float dp) {
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        return (int) (dp * metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    public static String formatCurrency(int price) {
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        return format.format(price);
     }
 
     @SuppressWarnings("deprecation")
@@ -33,5 +29,17 @@ public class Converter {
             result = Html.fromHtml(html);
         }
         return result;
+    }
+
+    public static int pixelToDp(Context context, float pixel) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        return (int) (pixel / metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
+    public static int DpToPixel(Context context, float dp) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        return (int) (dp * metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 }

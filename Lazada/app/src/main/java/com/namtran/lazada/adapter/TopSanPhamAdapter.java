@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.namtran.lazada.R;
 import com.namtran.lazada.customview.ButtonRippleDrawable;
 import com.namtran.lazada.model.objectclass.SanPham;
+import com.namtran.lazada.tools.Converter;
 import com.namtran.lazada.tools.RippleMixer;
 import com.namtran.lazada.view.hienthisanpham.chitietsanpham.ChiTietSanPhamActivity;
 import com.squareup.picasso.Picasso;
@@ -77,13 +78,11 @@ public class TopSanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ItemViewHolder viewHolder = (ItemViewHolder) holder;
             SanPham sanPham = mSanPhams.get(position);
             int gia = sanPham.getGia();
-            NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
-            String giaFormatted = format.format(gia);
 
             Picasso.with(context).load(sanPham.getAnhLon()).placeholder(R.drawable.ic_image_black_24dp).resize(150, 150).into(viewHolder.mIVHinhSP);
             viewHolder.mTVTenSP.setText(sanPham.getTenSP());
-            viewHolder.mTVGia.setText(giaFormatted);
-            viewHolder.mTVGiamGia.setText(giaFormatted);
+            viewHolder.mTVGia.setText(Converter.formatCurrency(gia));
+            viewHolder.mTVGiamGia.setText(Converter.formatCurrency(gia));
             viewHolder.mItem.setTag(sanPham.getMaSP()); // setTag cho cardview
 
             viewHolder.mItem.setOnClickListener(new View.OnClickListener() {
