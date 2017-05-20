@@ -22,7 +22,7 @@ import java.util.List;
  * Created by namtr on 5/19/2017.
  */
 
-public class DanhGiaActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener, View.OnClickListener, ViewDanhGia {
+public class ThemDanhGiaActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener, View.OnClickListener, ViewDanhGia {
     private TextInputEditText mETTieuDe, mETNoiDung;
     private Button mButtonDongY;
     private int soSao;
