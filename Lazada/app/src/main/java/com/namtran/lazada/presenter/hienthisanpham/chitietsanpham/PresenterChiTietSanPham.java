@@ -1,5 +1,8 @@
 package com.namtran.lazada.presenter.hienthisanpham.chitietsanpham;
 
+import android.content.Context;
+
+import com.namtran.lazada.model.giohang.ModelGioHang;
 import com.namtran.lazada.model.hienthisanpham.chitietsanpham.ModelChiTietSanPham;
 import com.namtran.lazada.model.objectclass.Action;
 import com.namtran.lazada.model.objectclass.DanhGia;
@@ -15,10 +18,12 @@ import java.util.List;
 public class PresenterChiTietSanPham implements IPresenterChiTietSanPham {
     private ViewChiTietSanPham mViewChiTietSP;
     private ModelChiTietSanPham mModelChiTietSP;
+    private ModelGioHang mModelGioHang;
 
     public PresenterChiTietSanPham(ViewChiTietSanPham viewChiTietSP) {
         this.mViewChiTietSP = viewChiTietSP;
         this.mModelChiTietSP = new ModelChiTietSanPham();
+        mModelGioHang = new ModelGioHang();
     }
 
     @Override
@@ -34,5 +39,12 @@ public class PresenterChiTietSanPham implements IPresenterChiTietSanPham {
     public void layDanhSachDanhGia(Action action, int maSP, int startIndex) {
         List<DanhGia> danhGiaList = mModelChiTietSP.layDanhSachDanhGia(action, maSP, startIndex);
         mViewChiTietSP.hienThiDanhGia(danhGiaList);
+    }
+
+    @Override
+    public void themGioHang(Context context, SanPham sanPham) {
+        mModelGioHang.moKetNoi(context);
+        boolean result = mModelGioHang.themGioHang(sanPham);
+        mViewChiTietSP.ketQuaThemGiohang(result);
     }
 }

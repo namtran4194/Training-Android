@@ -2,10 +2,14 @@ package com.namtran.lazada.tools;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.DisplayMetrics;
 
+import java.io.ByteArrayOutputStream;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -14,6 +18,17 @@ import java.util.Locale;
  */
 
 public class Converter {
+
+    public static byte[] bitmapToByteArray(Bitmap bitmap){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
+
+    public static byte[] drawableToByteArray(Drawable drawable){
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        return bitmapToByteArray(bitmap);
+    }
 
     public static String formatCurrency(int price) {
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());

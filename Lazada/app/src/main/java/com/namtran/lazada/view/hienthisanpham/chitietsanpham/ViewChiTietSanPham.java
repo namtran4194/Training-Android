@@ -15,4 +15,6 @@ public interface ViewChiTietSanPham {
     void hienThiSlider(String... link);
 
     void hienThiDanhGia(List<DanhGia> danhGias);
+
+    void ketQuaThemGiohang(boolean result);
 }

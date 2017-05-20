@@ -95,7 +95,7 @@ public class ModelDanhGia {
                 DanhGia danhGia = new DanhGia();
                 JSONObject object = array.getJSONObject(i);
 
-                danhGia.setMaSP(object.getInt("MASP"));
+                danhGia.setMaSP(object.getInt("GIOHANG_MASP"));
                 String tieuDe = object.getString("TIEUDE");
                 danhGia.setTieuDe(tieuDe.substring(0, 1).toUpperCase() + tieuDe.substring(1));
                 danhGia.setNoiDung(object.getString("NOIDUNG"));

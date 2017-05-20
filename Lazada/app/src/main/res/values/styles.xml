@@ -19,8 +19,9 @@
         <item name="android:textColor">@color/darkGray</item>
     </style>
 
-    <style name="menuItem" parent="AppTheme">
+    <style name="ToolbarTheme" parent="AppTheme">
         <item name="drawerArrowStyle">@style/ChangeColorToggle</item>
+        <item name="colorControlHighlight">@color/lightGray</item>
     </style>
 
     <style name="ChangeColorToggle" parent="Widget.AppCompat.DrawerArrowToggle">

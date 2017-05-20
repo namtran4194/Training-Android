@@ -351,6 +351,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/chitietsanpham_btn_muangay"
             style="?borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -361,6 +362,7 @@
             android:textColor="@color/white" />
 
         <ImageButton
+            android:id="@+id/chitietsanpham_btn_giohang"
             style="?borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

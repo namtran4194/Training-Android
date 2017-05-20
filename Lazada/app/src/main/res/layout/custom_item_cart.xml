@@ -2,7 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/bgToolbar">
+    android:background="@drawable/ripple_btn_oval"
+    android:clickable="true"
+    android:padding="8dp">
 
     <ImageView
         android:layout_width="wrap_content"

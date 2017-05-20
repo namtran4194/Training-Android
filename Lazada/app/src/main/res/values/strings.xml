@@ -9,7 +9,7 @@
     <string name="mn_title_search">Search</string>
     <string name="mn_title_cart">Giỏ hàng</string>
     <string name="txt_des_camera">Camera</string>
-    <string name="mn_title_more">More</string>
+    <string name="mn_title_more">Menu</string>
     <string name="openDescRes">openDrawerContentDescRes</string>
     <string name="closeDescRes">closeDrawerContentDescRes</string>
     <string name="btn_txt_fb">Facebook</string>

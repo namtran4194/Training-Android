@@ -6,7 +6,7 @@
 
     <color name="bgToolbar">#183545</color>
     <color name="black">#000000</color>
-    <color name="white">#fff</color>
+    <color name="white">#ffffff</color>
     <color name="bgLogo">#f67122</color>
     <color name="gray">#c0c0c0</color>
     <color name="lightGray">#ebe7e7</color>
@@ -15,6 +15,7 @@
     <color name="goooglePlus">#da4835</color>
     <color name="forgetPW">#00CEFF</color>
     <color name="transparentBlack">#b2000000</color>
+    <color name="transparentGray">#d9dad5d5</color>
     <color name="green">#00e28c</color>
     <color name="dotInactive">#8095a1</color>
 </resources>

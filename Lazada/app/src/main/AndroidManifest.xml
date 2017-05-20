@@ -48,7 +48,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".view.hienthisanpham.danhgia.DanhGiaActivity"
+            android:name=".view.hienthisanpham.danhgia.ThemDanhGiaActivity"
             android:label="Đánh giá của bạn"
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat.Dialog" />

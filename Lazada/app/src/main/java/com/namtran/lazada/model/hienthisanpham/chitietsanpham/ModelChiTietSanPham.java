@@ -1,7 +1,5 @@
 package com.namtran.lazada.model.hienthisanpham.chitietsanpham;
 
-import android.util.Log;
-
 import com.namtran.lazada.connection.internet.DownloadJSON;
 import com.namtran.lazada.model.objectclass.Action;
 import com.namtran.lazada.model.objectclass.ChiTietSanPham;
@@ -34,7 +32,7 @@ public class ModelChiTietSanPham {
         List<HashMap<String, String>> attrs = new ArrayList<>();
 
         HashMap<String, String> attr = new HashMap<>();
-        attr.put("MASP", String.valueOf(maSP));
+        attr.put("masp", String.valueOf(maSP));
         attrs.add(attr);
 
         DownloadJSON downloadJSON = new DownloadJSON(url, attrs);
@@ -47,33 +45,35 @@ public class ModelChiTietSanPham {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray array = jsonObject.getJSONArray(action.getNodeName());
 
-            JSONObject object = array.getJSONObject(0);
-            sanPham.setMaSP(object.getInt("MASP"));
-            sanPham.setTenSP(object.getString("TENSP"));
-            sanPham.setGia(object.getInt("GIA"));
-            sanPham.setAnhLon(object.getString("ANHLON"));
-            sanPham.setAnhNho(object.getString("ANHNHO"));
-            sanPham.setMaLoaiSP(object.getInt("MALOAISP"));
-            sanPham.setThongTin(object.getString("THONGTIN"));
-            sanPham.setMaThuongHieu(object.getInt("MATHUONGHIEU"));
-            sanPham.setMaNV(object.getInt("MANV"));
-            sanPham.setTenNV(object.getString("TENNV"));
-            sanPham.setLuotMua(object.getInt("LUOTMUA"));
+            for (int k = 0; k < array.length(); k++) {
+                JSONObject object = array.getJSONObject(k);
+                sanPham.setMaSP(object.getInt("MASP"));
+                sanPham.setTenSP(object.getString("TENSP"));
+                sanPham.setGia(object.getInt("GIA"));
+                sanPham.setAnhLon(object.getString("ANHLON"));
+                sanPham.setAnhNho(object.getString("ANHNHO"));
+                sanPham.setMaLoaiSP(object.getInt("MALOAISP"));
+                sanPham.setThongTin(object.getString("THONGTIN"));
+                sanPham.setMaThuongHieu(object.getInt("MATHUONGHIEU"));
+                sanPham.setMaNV(object.getInt("MANV"));
+                sanPham.setTenNV(object.getString("TENNV"));
+                sanPham.setLuotMua(object.getInt("LUOTMUA"));
 
-            List<ChiTietSanPham> chiTietSanPhams = new ArrayList<>();
-            JSONArray thongsokythuat = object.getJSONArray("THONGSOKYTHUAT");
-            int count = thongsokythuat.length();
-            for (int i = 0; i < count; i++) {
-                JSONObject chitiet = thongsokythuat.getJSONObject(i);
-                for (int j = 0; j < chitiet.names().length(); j++) {
-                    ChiTietSanPham chiTietSanPham = new ChiTietSanPham();
-                    String tenChiTiet = chitiet.names().getString(j);
-                    chiTietSanPham.setTen(tenChiTiet);
-                    chiTietSanPham.setGiaTri(chitiet.getString(tenChiTiet));
-                    chiTietSanPhams.add(chiTietSanPham);
+                List<ChiTietSanPham> chiTietSanPhams = new ArrayList<>();
+                JSONArray thongsokythuat = object.getJSONArray("THONGSOKYTHUAT");
+                int count = thongsokythuat.length();
+                for (int i = 0; i < count; i++) {
+                    JSONObject chitiet = thongsokythuat.getJSONObject(i);
+                    for (int j = 0; j < chitiet.names().length(); j++) {
+                        ChiTietSanPham chiTietSanPham = new ChiTietSanPham();
+                        String tenChiTiet = chitiet.names().getString(j);
+                        chiTietSanPham.setTen(tenChiTiet);
+                        chiTietSanPham.setGiaTri(chitiet.getString(tenChiTiet));
+                        chiTietSanPhams.add(chiTietSanPham);
+                    }
                 }
+                sanPham.setChiTietSanPhams(chiTietSanPhams);
             }
-            sanPham.setChiTietSanPhams(chiTietSanPhams);
         } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
             return null;

@@ -19,6 +19,7 @@ public class SanPham {
     private int maNV;
     private String tenNV;
     private int luotMua;
+    private byte[] hinhAnh;
     private List<ChiTietSanPham> chiTietSanPhams;
 
     public int getMaSP() {
@@ -83,6 +84,14 @@ public class SanPham {
 
     public void setLuotMua(int luotMua) {
         this.luotMua = luotMua;
+    }
+
+    public byte[] getHinhAnh() {
+        return hinhAnh;
+    }
+
+    public void setHinhAnh(byte[] hinhAnh) {
+        this.hinhAnh = hinhAnh;
     }
 
     public String getTenSP() {

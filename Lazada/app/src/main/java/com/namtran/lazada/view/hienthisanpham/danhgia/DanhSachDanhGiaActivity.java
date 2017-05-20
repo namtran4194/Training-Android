@@ -95,12 +95,10 @@ public class DanhSachDanhGiaActivity extends AppCompatActivity implements ViewDa
     }
 
     private void showProgressBar() {
-        if (!mProgress.isShown())
-            mProgress.setVisibility(View.VISIBLE);
+        mProgress.setVisibility(View.VISIBLE);
     }
 
     private void hideProgressBar() {
-        if (mProgress.isShown())
-            mProgress.setVisibility(View.GONE);
+        mProgress.setVisibility(View.GONE);
     }
 }

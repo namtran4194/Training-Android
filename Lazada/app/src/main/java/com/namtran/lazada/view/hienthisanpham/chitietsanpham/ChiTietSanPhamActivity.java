@@ -1,6 +1,7 @@
 package com.namtran.lazada.view.hienthisanpham.chitietsanpham;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,8 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.namtran.lazada.R;
 import com.namtran.lazada.adapter.DanhGiaAdapter;
@@ -28,8 +32,8 @@ import com.namtran.lazada.model.objectclass.SanPham;
 import com.namtran.lazada.presenter.hienthisanpham.chitietsanpham.PresenterChiTietSanPham;
 import com.namtran.lazada.tools.Converter;
 import com.namtran.lazada.view.hienthisanpham.chitietsanpham.fragment.FragmentChiTietSP;
-import com.namtran.lazada.view.hienthisanpham.danhgia.DanhGiaActivity;
 import com.namtran.lazada.view.hienthisanpham.danhgia.DanhSachDanhGiaActivity;
+import com.namtran.lazada.view.hienthisanpham.danhgia.ThemDanhGiaActivity;
 import com.namtran.lazada.view.trangchu.TrangChuActivity;
 
 import java.util.ArrayList;
@@ -51,8 +55,11 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     private ImageButton mButtonXemThemThongTin;
     private boolean mIsExpanded; // lưu trạng thái mButtonXemThemThongTin
     private LinearLayout mLayoutThongSoKyThuat;
+    private SanPham mSanPhamGioHang;
     private int masp;
     private RecyclerView mRecyclerDanhGia;
+    private RatingBar mRating;
+    private PresenterChiTietSanPham mPresenterChiTietSanPham;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,9 +72,9 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
 
         // retrieve data
         masp = getIntent().getIntExtra("MASP", -1);
-        PresenterChiTietSanPham presenterChiTiet = new PresenterChiTietSanPham(this);
-        presenterChiTiet.layChiTietSanPham(Action.CHI_TIET_SAN_PHAM, masp);
-        presenterChiTiet.layDanhSachDanhGia(Action.DANH_SACH_DANH_GIA, masp, 0);
+        mPresenterChiTietSanPham = new PresenterChiTietSanPham(this);
+        mPresenterChiTietSanPham.layChiTietSanPham(Action.CHI_TIET_SAN_PHAM, masp);
+        mPresenterChiTietSanPham.layDanhSachDanhGia(Action.DANH_SACH_DANH_GIA, masp, 0);
 
         setupDotLayout(0);
     }
@@ -96,11 +103,16 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         mTVThongTinChiTiet = (TextView) findViewById(R.id.chitietsanpham_tv_chitietsp);
         mButtonXemThemThongTin = (ImageButton) findViewById(R.id.chitietsanpham_btn_xemthem_thongtin);
         mLayoutThongSoKyThuat = (LinearLayout) findViewById(R.id.chitietsanpham_layout_thongsokythuat);
+
         TextView tvVietDanhGia = (TextView) findViewById(R.id.chitietsanpham_tv_danhgia);
         tvVietDanhGia.setOnClickListener(this);
         mRecyclerDanhGia = (RecyclerView) findViewById(R.id.chitietsanpham_recycler_danhgia);
         Button btnXemTatCaDanhGia = (Button) findViewById(R.id.chitietsanpham_btn_xemtatca_danhgia);
         btnXemTatCaDanhGia.setOnClickListener(this);
+        mRating = (RatingBar) findViewById(R.id.chitietsanpham_ratingbar_danhgia);
+
+        ImageButton btnThemGioHang = (ImageButton) findViewById(R.id.chitietsanpham_btn_giohang);
+        btnThemGioHang.setOnClickListener(this);
     }
 
     @Override
@@ -121,6 +133,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     @Override
     public void hienThiChiTietSanPham(SanPham sanPham) {
         if (sanPham != null) {
+            mSanPhamGioHang = sanPham; // lưu sản phẩm hiện tại để xử lý khi thêm vào giỏ hàng
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setTitle(sanPham.getTenSP());
             }
@@ -172,7 +185,21 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
             mRecyclerDanhGia.setLayoutManager(layoutManager);
             mRecyclerDanhGia.setAdapter(adapter);
+
+            // tính toán số sao cho ratingbar
+            float rating = 0.0f;
+            for (int i = 0; i < danhGias.size(); i++) {
+                rating += danhGias.get(i).getSoSao();
+            }
+            rating /= danhGias.size();
+            mRating.setRating(rating);
         }
+    }
+
+    @Override
+    public void ketQuaThemGiohang(boolean result) {
+        if (result) Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(this, "Sản phẩm đã có trong giỏ hàng", Toast.LENGTH_SHORT).show();
     }
 
     // thêm dấu chấm biểu thị số trang cho viewpager
@@ -216,7 +243,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
                 setImageResourceButton(id);
                 break;
             case R.id.chitietsanpham_tv_danhgia:
-                Intent danhGia = new Intent(this, DanhGiaActivity.class);
+                Intent danhGia = new Intent(this, ThemDanhGiaActivity.class);
                 danhGia.putExtra("MASP", masp);
                 startActivity(danhGia);
                 break;
@@ -224,6 +251,21 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
                 Intent danhSachDanhGia = new Intent(this, DanhSachDanhGiaActivity.class);
                 danhSachDanhGia.putExtra("MASP", masp);
                 startActivity(danhSachDanhGia);
+                break;
+            case R.id.chitietsanpham_btn_giohang:
+                Fragment fragment = mFragment.get(mSlider.getCurrentItem());
+                View view = fragment.getView();
+                BitmapDrawable drawable;
+                if (view != null) {
+                    ImageView imageView = (ImageView) view.findViewById(R.id.fragment_chitietsanpham_hinhanh);
+                    drawable = (BitmapDrawable) imageView.getDrawable();
+                } else {
+                    // lấy hình mặc định
+                    drawable = (BitmapDrawable) ContextCompat.getDrawable(this, R.drawable.ic_image_black_24dp);
+                }
+                byte[] hinhAnh = Converter.drawableToByteArray(drawable);
+                mSanPhamGioHang.setHinhAnh(hinhAnh);
+                mPresenterChiTietSanPham.themGioHang(this, mSanPhamGioHang);
                 break;
         }
     }
