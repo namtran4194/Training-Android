@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -114,7 +113,7 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
         getMenuInflater().inflate(R.menu.home_menu, menu);
         mLoginItem = menu.findItem(R.id.menu_login);
         MenuItem item = menu.findItem(R.id.menu_cart);
-        View actionLayout = MenuItemCompat.getActionView(item);
+        View actionLayout = item.getActionView();
         mTVSoLuongSPTrongGioHang = (TextView) actionLayout.findViewById(R.id.item_cart_tv_numberOfItems);
 
         capNhatGioHang();

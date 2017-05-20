@@ -10,7 +10,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -140,7 +139,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
         getMenuInflater().inflate(R.menu.home_menu, menu);
         mLoginItem = menu.findItem(R.id.menu_login);
         MenuItem item = menu.findItem(R.id.menu_cart);
-        View actionLayout = MenuItemCompat.getActionView(item);
+        View actionLayout = item.getActionView();
         mTVSoLuongSPTrongGioHang = (TextView) actionLayout.findViewById(R.id.item_cart_tv_numberOfItems);
 
         capNhatGioHang();
