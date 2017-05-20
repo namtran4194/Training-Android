@@ -1,5 +1,6 @@
 package com.namtran.lazada.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -23,6 +24,7 @@ import com.namtran.lazada.model.objectclass.SanPham;
 import com.namtran.lazada.tools.Converter;
 import com.namtran.lazada.tools.RippleMixer;
 import com.namtran.lazada.view.hienthisanpham.chitietsanpham.ChiTietSanPhamActivity;
+import com.namtran.lazada.view.hienthisanpham.theodanhmuc.HienThiSPTheoDanhMuc;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
@@ -90,7 +92,7 @@ public class TopSanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onClick(View v) {
                     Intent chitietsanpham = new Intent(context, ChiTietSanPhamActivity.class);
                     chitietsanpham.putExtra("MASP", (int) v.getTag());
-                    context.startActivity(chitietsanpham);
+                    ((Activity) context).startActivityForResult(chitietsanpham, HienThiSPTheoDanhMuc.REQUEST_CODE_GIO_HANG);
                 }
             });
         } else if (holder instanceof LoadingViewHolder) {

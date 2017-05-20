@@ -10,6 +10,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -37,6 +39,7 @@ import com.namtran.lazada.adapter.ViewPagerHomeAdapter;
 import com.namtran.lazada.connection.internet.Internet;
 import com.namtran.lazada.model.dangnhap_dangky.ModelDangNhap;
 import com.namtran.lazada.model.objectclass.LoaiSanPham;
+import com.namtran.lazada.presenter.hienthisanpham.chitietsanpham.PresenterChiTietSanPham;
 import com.namtran.lazada.presenter.trangchu.xulymenu.PresenterXuLyMenu;
 import com.namtran.lazada.view.dangnhap_dangky.DangNhapVaDangKyActivity;
 import com.namtran.lazada.view.dangnhap_dangky.fragment.FragmentDangNhap;
@@ -48,28 +51,30 @@ import java.util.List;
 
 public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu, GoogleApiClient.OnConnectionFailedListener, AppBarLayout.OnOffsetChangedListener {
     public static final String SERVER_NAME = "http://192.168.1.227:8000/lazada/";
-    private static final int REQUEST_CODE_LOGIN = 0;
+    public static final int REQUEST_CODE_LOGIN = 0;
+    public static final int REQUEST_CODE_GIO_HANG = 9;
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ExpandableListView mExpandableListView;
+    private PresenterXuLyMenu mPresenterXuLyMenu;
+    private TextView mTVSoLuongSPTrongGioHang;
     private AccessToken mFbToken;
     private GoogleSignInResult mGgToken;
     private Menu mMenu;
-    private MenuItem mMenuLogin;
-    private PresenterXuLyMenu mXuLyMenu;
+    private MenuItem mLoginItem;
     private ModelDangNhap mModelDangNhap;
     private GoogleApiClient mGoogleApiClient;
     private CollapsingToolbarLayout mCollapsingToolbar;
     private LinearLayout mLayoutSearch;
+    private PresenterChiTietSanPham mPresenterChiTietSanPham;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trang_chu);
-        Internet internet = new Internet(this);
 
         init();
 
@@ -83,10 +88,11 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.openDescRes, R.string.closeDescRes);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        mXuLyMenu = new PresenterXuLyMenu(this);
+        mPresenterXuLyMenu = new PresenterXuLyMenu(this);
         mModelDangNhap = new ModelDangNhap();
         mGoogleApiClient = mModelDangNhap.layGoogleApiClient(this, this);
 
+        Internet internet = new Internet(this);
         if (!internet.isOnline()) {
             Toast.makeText(this, "Không có kết nối mạng!", Toast.LENGTH_LONG).show();
             return;
@@ -99,7 +105,8 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
         mViewPager.setAdapter(new ViewPagerHomeAdapter(getSupportFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);
 
-        mXuLyMenu.layDanhSachMenu();
+        mPresenterXuLyMenu.layDanhSachMenu();
+        mPresenterChiTietSanPham = new PresenterChiTietSanPham();
     }
 
     private void init() {
@@ -130,69 +137,31 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        menu.clear(); // xóa menu hiện tại
         getMenuInflater().inflate(R.menu.home_menu, menu);
-        mMenuLogin = menu.findItem(R.id.menu_login);
-        MenuItem menuLogout = menu.findItem(R.id.menu_logout);
+        mLoginItem = menu.findItem(R.id.menu_login);
+        MenuItem item = menu.findItem(R.id.menu_cart);
+        View actionLayout = MenuItemCompat.getActionView(item);
+        mTVSoLuongSPTrongGioHang = (TextView) actionLayout.findViewById(R.id.item_cart_tv_numberOfItems);
 
-        // lấy fbToken, ggToken và tenNV trong cache
-        mFbToken = mXuLyMenu.layTokenNguoiDungFB();
-        mGgToken = mModelDangNhap.layKetQuaDangNhapGoogle(mGoogleApiClient);
-        String tenNV = mModelDangNhap.layCacheDangNhap(this);
-
-        // lấy thông tin người dùng từ facebookToken
-        if (mFbToken != null) {
-            GraphRequest request = GraphRequest.newMeRequest(mFbToken, new GraphRequest.GraphJSONObjectCallback() {
-                @Override
-                public void onCompleted(JSONObject object, GraphResponse response) {
-                    try {
-                        if (object != null) {
-                            String name = object.getString("name");
-                            mMenuLogin.setTitle(String.valueOf("Hi, " + name));
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            // truyền các tham số cần lấy
-            Bundle parameter = new Bundle();
-            parameter.putString("fields", "name");
-            request.setParameters(parameter);
-            request.executeAsync();
-        }
-        // lấy thông tin người dùng từ googleToken
-        else if (mGgToken != null && mGgToken.getSignInAccount() != null) {
-            String name = mGgToken.getSignInAccount().getDisplayName();
-            mMenuLogin.setTitle(String.valueOf("Hi, " + name));
-        }
-        // tên người dùng lưu trong cache
-        else if (!tenNV.equals("")) {
-            mMenuLogin.setTitle(String.valueOf("Hi, " + tenNV));
-        }
-
-        if (mFbToken != null || mGgToken != null || !tenNV.equals("")) {
-            // hiển thị mMenu Đăng xuất
-            menuLogout.setVisible(true);
-        }
-
-        // lưu mMenu hiện tại
+        capNhatGioHang();
+        capNhatMenu(menu);
+        // lưu menu hiện tại
         this.mMenu = menu;
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item))
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
-
+        }
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_login:
                 String tenNV = mModelDangNhap.layCacheDangNhap(this);
                 if (mFbToken == null && mGgToken == null && tenNV.equals("")) { // chưa đăng nhập
                     Intent loginIntent = new Intent(this, DangNhapVaDangKyActivity.class);
-                    startActivityForResult(loginIntent, REQUEST_CODE_LOGIN);
+                    startActivityForResult(loginIntent, TrangChuActivity.REQUEST_CODE_LOGIN);
                 }
                 break;
             case R.id.menu_logout:
@@ -206,10 +175,78 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
                     mModelDangNhap.capNhatCacheDangNhap(this, "");
                 }
                 Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
-                this.onCreateOptionsMenu(mMenu);
+                capNhatMenu(mMenu);
                 break;
         }
         return true;
+    }
+
+    private void capNhatMenu(Menu menu) {
+        MenuItem logoutItem = menu.findItem(R.id.menu_logout);
+
+        kiemTraDangNhapFB();
+        kiemTraDangNhapGG();
+        kiemTraDangNhapEmail();
+
+        String tenNV = mModelDangNhap.layCacheDangNhap(this);
+        // nếu đã đăng nhập thì hiển thị menu đăng xuất
+        if (mFbToken != null || mGgToken != null || !tenNV.equals("")) {
+            logoutItem.setVisible(true);
+        } else {
+            logoutItem.setVisible(false);
+        }
+    }
+
+    // kiểm tra xem có đăng nhập bằng fb ko, nếu có thì hiển thị tên người dùng ra menu
+    private void kiemTraDangNhapFB() {
+        mFbToken = mPresenterXuLyMenu.layTokenNguoiDungFB();
+        // lấy thông tin người dùng từ facebookToken
+        if (mFbToken != null) {
+            GraphRequest request = GraphRequest.newMeRequest(mFbToken, new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(JSONObject object, GraphResponse response) {
+                    try {
+                        if (object != null) {
+                            String name = object.getString("name");
+                            mLoginItem.setTitle(String.valueOf("Hi, " + name));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            // truyền các tham số cần lấy
+            Bundle parameter = new Bundle();
+            parameter.putString("fields", "name");
+            request.setParameters(parameter);
+            request.executeAsync();
+        }
+    }
+
+    // kiểm tra xem có đăng nhập bằng gg ko, nếu có thì hiển thị tên người dùng ra menu
+    private void kiemTraDangNhapGG() {
+        mGgToken = mModelDangNhap.layKetQuaDangNhapGoogle(mGoogleApiClient);
+        if (mGgToken != null && mGgToken.getSignInAccount() != null) {
+            String name = mGgToken.getSignInAccount().getDisplayName();
+            mLoginItem.setTitle(String.valueOf("Hi, " + name));
+        }
+    }
+
+    // kiểm tra xem có đăng nhập bằng email ko, nếu có thì hiển thị tên người dùng ra menu
+    private void kiemTraDangNhapEmail() {
+        String tenNV = mModelDangNhap.layCacheDangNhap(this);
+        if (!tenNV.equals("")) {
+            mLoginItem.setTitle(String.valueOf("Hi, " + tenNV));
+        }
+    }
+
+    private void capNhatGioHang() {
+        long soLuong = mPresenterChiTietSanPham.soLuongSPCoTrongGioHang(this);
+        if (soLuong == 0)
+            mTVSoLuongSPTrongGioHang.setVisibility(View.GONE);
+        else
+            mTVSoLuongSPTrongGioHang.setVisibility(View.VISIBLE);
+        mTVSoLuongSPTrongGioHang.setText(String.valueOf(soLuong));
     }
 
     @Override
@@ -217,10 +254,12 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
         if (requestCode == REQUEST_CODE_LOGIN) {
             // resultCode từ FragmentDangNhap
             if (resultCode == FragmentDangNhap.LOGIN_WITH_SOCIAL_NETWORK) {
-                this.onCreateOptionsMenu(mMenu);
+                capNhatMenu(mMenu);
             } else if (resultCode == FragmentDangNhap.LOGIN_WITH_EMAIL) {
-                this.onCreateOptionsMenu(mMenu);
+                capNhatMenu(mMenu);
             }
+        } else if (requestCode == REQUEST_CODE_GIO_HANG) {
+            capNhatGioHang();
         }
     }
 

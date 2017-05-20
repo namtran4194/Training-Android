@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by namtr on 26/04/2017.
  */
 
-public class DownloadJSON extends AsyncTask<String, Void, String> {
+public class DownloadJSON extends AsyncTask<Void, Void, String> {
     private String mUrl;
     private List<HashMap<String, String>> mAttrs;
     private boolean mMethod;
@@ -38,7 +38,7 @@ public class DownloadJSON extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    protected String doInBackground(Void... params) {
         try {
             URL url = new URL(mUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();

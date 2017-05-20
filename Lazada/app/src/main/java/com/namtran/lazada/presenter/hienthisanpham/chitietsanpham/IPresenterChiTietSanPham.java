@@ -15,4 +15,6 @@ interface IPresenterChiTietSanPham {
     void layDanhSachDanhGia(Action action, int maSP, int startIndex);
 
     void themGioHang(Context context, SanPham sanPham);
+
+    long soLuongSPCoTrongGioHang(Context context);
 }

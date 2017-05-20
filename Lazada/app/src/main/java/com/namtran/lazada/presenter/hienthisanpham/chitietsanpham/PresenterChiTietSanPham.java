@@ -20,9 +20,14 @@ public class PresenterChiTietSanPham implements IPresenterChiTietSanPham {
     private ModelChiTietSanPham mModelChiTietSP;
     private ModelGioHang mModelGioHang;
 
+    public PresenterChiTietSanPham() {
+        mModelChiTietSP = new ModelChiTietSanPham();
+        mModelGioHang = new ModelGioHang();
+    }
+
     public PresenterChiTietSanPham(ViewChiTietSanPham viewChiTietSP) {
         this.mViewChiTietSP = viewChiTietSP;
-        this.mModelChiTietSP = new ModelChiTietSanPham();
+        mModelChiTietSP = new ModelChiTietSanPham();
         mModelGioHang = new ModelGioHang();
     }
 
@@ -46,5 +51,11 @@ public class PresenterChiTietSanPham implements IPresenterChiTietSanPham {
         mModelGioHang.moKetNoi(context);
         boolean result = mModelGioHang.themGioHang(sanPham);
         mViewChiTietSP.ketQuaThemGiohang(result);
+    }
+
+    @Override
+    public long soLuongSPCoTrongGioHang(Context context) {
+        mModelGioHang.moKetNoi(context);
+        return mModelGioHang.getRowsCount();
     }
 }

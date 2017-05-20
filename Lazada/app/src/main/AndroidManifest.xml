@@ -40,7 +40,6 @@
 
         <activity
             android:name=".view.hienthisanpham.theodanhmuc.HienThiSPTheoDanhMuc"
-            android:parentActivityName="com.namtran.lazada.view.trangchu.TrangChuActivity"
             android:screenOrientation="portrait" />
 
         <activity

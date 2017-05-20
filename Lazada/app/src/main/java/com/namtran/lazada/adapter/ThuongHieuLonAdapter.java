@@ -1,5 +1,6 @@
 package com.namtran.lazada.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -22,6 +23,7 @@ import com.namtran.lazada.model.objectclass.ThuongHieu;
 import com.namtran.lazada.tools.RippleMixer;
 import com.namtran.lazada.view.hienthisanpham.theodanhmuc.HienThiSPTheoDanhMuc;
 import com.namtran.lazada.view.hienthisanpham.theodanhmuc.ViewHienThiSPTheoDanhMuc;
+import com.namtran.lazada.view.trangchu.TrangChuActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -66,7 +68,7 @@ class ThuongHieuLonAdapter extends RecyclerView.Adapter<ThuongHieuLonAdapter.Vie
                 detailItemActivity.putExtra("MALOAI", thuongHieu.getMaThuongHieu());
                 detailItemActivity.putExtra("TENLOAI", thuongHieu.getTenThuongHieu());
                 detailItemActivity.putExtra("CHECK", mCheck);
-                mContext.startActivity(detailItemActivity);
+                ((Activity) mContext).startActivityForResult(detailItemActivity, TrangChuActivity.REQUEST_CODE_GIO_HANG);
             }
         });
     }

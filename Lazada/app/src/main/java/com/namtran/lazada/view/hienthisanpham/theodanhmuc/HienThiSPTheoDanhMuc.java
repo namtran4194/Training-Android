@@ -2,7 +2,9 @@ package com.namtran.lazada.view.hienthisanpham.theodanhmuc;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,14 +14,31 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.namtran.lazada.R;
 import com.namtran.lazada.adapter.TopSanPhamAdapter;
+import com.namtran.lazada.model.dangnhap_dangky.ModelDangNhap;
 import com.namtran.lazada.model.objectclass.OnLoadMoreListener;
 import com.namtran.lazada.model.objectclass.OnScrollRecyclerListener;
 import com.namtran.lazada.model.objectclass.SanPham;
+import com.namtran.lazada.presenter.hienthisanpham.chitietsanpham.PresenterChiTietSanPham;
 import com.namtran.lazada.presenter.hienthisanpham.theodanhmuc.PresenterHTSPTheoDanhMuc;
+import com.namtran.lazada.presenter.trangchu.xulymenu.PresenterXuLyMenu;
+import com.namtran.lazada.view.dangnhap_dangky.DangNhapVaDangKyActivity;
+import com.namtran.lazada.view.trangchu.TrangChuActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -27,7 +46,8 @@ import java.util.List;
  * Created by namtr on 5/14/2017.
  */
 
-public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienThiSPTheoDanhMuc, View.OnClickListener, OnLoadMoreListener {
+public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienThiSPTheoDanhMuc, View.OnClickListener, OnLoadMoreListener, GoogleApiClient.OnConnectionFailedListener {
+    public static final int REQUEST_CODE_GIO_HANG = 9;
     private RecyclerView mRecyclerSanPham;
     private ImageButton mButtonTypeView;
     private RecyclerView.LayoutManager mLinearLM, mGridLM;
@@ -39,6 +59,15 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
     private boolean mLoadThuongHieu;
     private List<SanPham> mSanPhams;
     private OnScrollRecyclerListener mOnScrollListener;
+    private PresenterChiTietSanPham mPresenterChiTietSanPham;
+    private TextView mTVSoLuongSPTrongGioHang;
+    private PresenterXuLyMenu mPresenterXuLyMenu;
+    private AccessToken mFbToken;
+    private GoogleSignInResult mGgToken;
+    private Menu mMenu;
+    private MenuItem mLoginItem;
+    private ModelDangNhap mModelDangNhap;
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +88,10 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
         }
 
+        mPresenterXuLyMenu = new PresenterXuLyMenu();
+        mModelDangNhap = new ModelDangNhap();
+        mGoogleApiClient = mModelDangNhap.layGoogleApiClient(this, this);
+
         // sự kiện scroll RecyclerView
         mOnScrollListener = new OnScrollRecyclerListener(this);
 
@@ -72,21 +105,129 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
 
         mPresenterDanhMuc = new PresenterHTSPTheoDanhMuc(this);
         mPresenterDanhMuc.layDanhSachSanPham(mTypeCode, mLoadThuongHieu);
+        mPresenterChiTietSanPham = new PresenterChiTietSanPham();
+
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
+        mLoginItem = menu.findItem(R.id.menu_login);
+        MenuItem item = menu.findItem(R.id.menu_cart);
+        View actionLayout = MenuItemCompat.getActionView(item);
+        mTVSoLuongSPTrongGioHang = (TextView) actionLayout.findViewById(R.id.item_cart_tv_numberOfItems);
+
+        capNhatGioHang();
+        capNhatMenu(menu);
+        // lưu menu hiện tại
+        this.mMenu = menu;
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.menu_login:
+                String tenNV = mModelDangNhap.layCacheDangNhap(this);
+                if (mFbToken == null && mGgToken == null && tenNV.equals("")) { // chưa đăng nhập
+                    Intent loginIntent = new Intent(this, DangNhapVaDangKyActivity.class);
+                    startActivityForResult(loginIntent, TrangChuActivity.REQUEST_CODE_LOGIN);
+                }
+                break;
+            case R.id.menu_logout:
+                // đăng xuất
+                if (mFbToken != null) {
+                    LoginManager.getInstance().logOut();
+                } else if (mGgToken != null) {
+                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                } else {
+                    // xóa tên người dùng lưu trong cache
+                    mModelDangNhap.capNhatCacheDangNhap(this, "");
+                }
+                Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+                capNhatMenu(mMenu);
+                break;
         }
-        return super.onOptionsItemSelected(item);
+        return true;
+    }
+
+    private void capNhatMenu(Menu menu) {
+        MenuItem logoutItem = menu.findItem(R.id.menu_logout);
+
+        kiemTraDangNhapFB();
+        kiemTraDangNhapGG();
+        kiemTraDangNhapEmail();
+
+        String tenNV = mModelDangNhap.layCacheDangNhap(this);
+        // nếu đã đăng nhập thì hiển thị menu đăng xuất
+        if (mFbToken != null || mGgToken != null || !tenNV.equals("")) {
+            logoutItem.setVisible(true);
+        } else {
+            logoutItem.setVisible(false);
+        }
+    }
+
+    // kiểm tra xem có đăng nhập bằng fb ko, nếu có thì hiển thị tên người dùng ra menu
+    private void kiemTraDangNhapFB() {
+        mFbToken = mPresenterXuLyMenu.layTokenNguoiDungFB();
+        // lấy thông tin người dùng từ facebookToken
+        if (mFbToken != null) {
+            GraphRequest request = GraphRequest.newMeRequest(mFbToken, new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(JSONObject object, GraphResponse response) {
+                    try {
+                        if (object != null) {
+                            String name = object.getString("name");
+                            mLoginItem.setTitle(String.valueOf("Hi, " + name));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            // truyền các tham số cần lấy
+            Bundle parameter = new Bundle();
+            parameter.putString("fields", "name");
+            request.setParameters(parameter);
+            request.executeAsync();
+        }
+    }
+
+    // kiểm tra xem có đăng nhập bằng gg ko, nếu có thì hiển thị tên người dùng ra menu
+    private void kiemTraDangNhapGG() {
+        mGgToken = mModelDangNhap.layKetQuaDangNhapGoogle(mGoogleApiClient);
+        if (mGgToken != null && mGgToken.getSignInAccount() != null) {
+            String name = mGgToken.getSignInAccount().getDisplayName();
+            mLoginItem.setTitle(String.valueOf("Hi, " + name));
+        }
+    }
+
+    // kiểm tra xem có đăng nhập bằng email ko, nếu có thì hiển thị tên người dùng ra menu
+    private void kiemTraDangNhapEmail() {
+        String tenNV = mModelDangNhap.layCacheDangNhap(this);
+        if (!tenNV.equals("")) {
+            mLoginItem.setTitle(String.valueOf("Hi, " + tenNV));
+        }
+    }
+
+    private void capNhatGioHang() {
+        long soLuong = mPresenterChiTietSanPham.soLuongSPCoTrongGioHang(this);
+        if (soLuong == 0)
+            mTVSoLuongSPTrongGioHang.setVisibility(View.GONE);
+        else
+            mTVSoLuongSPTrongGioHang.setVisibility(View.VISIBLE);
+        mTVSoLuongSPTrongGioHang.setText(String.valueOf(soLuong));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_GIO_HANG) {
+            capNhatGioHang();
+        }
     }
 
     @Override
@@ -171,5 +312,10 @@ public class HienThiSPTheoDanhMuc extends AppCompatActivity implements ViewHienT
                 }
             }
         });
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(this, connectionResult.getErrorMessage(), Toast.LENGTH_LONG).show();
     }
 }
