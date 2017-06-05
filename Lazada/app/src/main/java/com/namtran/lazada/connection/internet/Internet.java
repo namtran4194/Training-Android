@@ -5,7 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
-import com.namtran.lazada.view.trangchu.TrangChuActivity;
+import com.namtran.lazada.view.home.HomeActivity;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -38,7 +38,7 @@ public class Internet {
             protected Boolean doInBackground(Void... params) {
                 if (isOnline()) {
                     try {
-                        URL urlServer = new URL(TrangChuActivity.SERVER_NAME);
+                        URL urlServer = new URL(HomeActivity.SERVER_NAME);
                         HttpURLConnection connection = (HttpURLConnection) urlServer.openConnection();
                         connection.setConnectTimeout(2000);
                         connection.connect();

@@ -5,20 +5,20 @@ package com.namtran.lazada.model.objectclass;
  */
 
 public enum Action {
-    DANH_SACH_MENU("danhsachmenu", "DANHSACHMENU"),
-    THUONG_HIEU_LON("thuonghieulon", "DANHSACHTHUONGHIEU"),
-    TOP_DT_VA_MTB("topDTvaMTB", "TOPDTVAMTB"),
-    PHU_KIEN("phukien", "DANHSACHPHUKIEN"),
-    TIEN_ICH("tienich", "DANHSACHTIENICH"),
-    TOP_PHU_KIEN("topphukien", "TOPPHUKIEN"),
-    TOP_TIEN_ICH("toptienich", "TOPTIENICH"),
-    LOGO_THUONG_HIEU("logothuonghieulon", "LOGOTHUONGHIEU"),
-    HANG_MOI_VE("hangmoive", "HANGMOIVE"),
-    SAN_PHAM_THEO_MA_LOAI("danhsachsanpham_MALOAISP", "DANHSACHSANPHAM"),
-    SAN_PHAM_THEO_THUONG_HIEU("danhsachsanpham_MATHUONGHIEU", "DANHSACHSANPHAMTH"),
-    CHI_TIET_SAN_PHAM("chitietsanpham", "CHITIETSANPHAM"),
-    THEM_DANH_GIA("themdanhgia", ""),
-    DANH_SACH_DANH_GIA("danhgiatheomasp", "DANHSACHDANHGIA");
+    MENU_LIST("danhsachmenu", "DANHSACHMENU"),
+    BRAND_LIST("thuonghieulon", "DANHSACHTHUONGHIEU"),
+    TOP_PHONE_TABLET("topDTvaMTB", "TOPDTVAMTB"),
+    ACCESSORIES("phukien", "DANHSACHPHUKIEN"),
+    UTILITIES("tienich", "DANHSACHTIENICH"),
+    TOP_ACCESSORIES("topphukien", "TOPPHUKIEN"),
+    TOP_ULTILITIES("toptienich", "TOPTIENICH"),
+    BRAND_LOGO("logothuonghieulon", "LOGOTHUONGHIEU"),
+    NEW_PRODUCT("hangmoive", "HANGMOIVE"),
+    PRODUCT_LIST_BY_PTYPE_CODE("danhsachsanpham_MALOAISP", "DANHSACHSANPHAM"),
+    PRODUCT_LIST_BY_BRAND_CODE("danhsachsanpham_MATHUONGHIEU", "DANHSACHSANPHAMTH"),
+    PRODUCT_DETAIL("chitietsanpham", "CHITIETSANPHAM"),
+    ADD_COMMENTARY("themdanhgia", ""),
+    COMMENTARY_LIST("danhgiatheomasp", "DANHSACHDANHGIA");
 
     private String action;
     private String parentNodeName;

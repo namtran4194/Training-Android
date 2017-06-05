@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView;
 public class OnScrollRecyclerListener extends RecyclerView.OnScrollListener {
     private RecyclerView.LayoutManager mLayoutManager;
     private OnLoadMoreListener mOnLoadMoreListener;
-    private boolean isLoading;
+    private boolean mIsLoading;
 
     public OnScrollRecyclerListener(OnLoadMoreListener onLoadMoreListener) {
         this.mOnLoadMoreListener = onLoadMoreListener;
@@ -37,9 +37,9 @@ public class OnScrollRecyclerListener extends RecyclerView.OnScrollListener {
 
         int visibleThreshold = 10;
         // dy > 0: scroll down
-        if (dy > 0 && !isLoading && totalItems <= (lastVisibleItem + visibleThreshold)) {
+        if (dy > 0 && !mIsLoading && totalItems <= (lastVisibleItem + visibleThreshold)) {
             mOnLoadMoreListener.onLoadMore(totalItems);
-            isLoading = true;
+            mIsLoading = true;
         }
     }
 
@@ -48,7 +48,7 @@ public class OnScrollRecyclerListener extends RecyclerView.OnScrollListener {
     }
 
     public void setLoaded() {
-        isLoading = false;
+        mIsLoading = false;
     }
 
 }

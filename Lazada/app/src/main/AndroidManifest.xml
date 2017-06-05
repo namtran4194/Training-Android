@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.namtran.lazada.view.manhinhchao.SplashScreen"
+            android:name="com.namtran.lazada.view.splashscreen.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,30 +30,30 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name="com.namtran.lazada.view.trangchu.TrangChuActivity"
+            android:name="com.namtran.lazada.view.home.HomeActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.namtran.lazada.view.dangnhap_dangky.DangNhapVaDangKyActivity"
-            android:parentActivityName="com.namtran.lazada.view.trangchu.TrangChuActivity"
+            android:name="com.namtran.lazada.view.signin_signup.SignInAndSignUpActivity"
+            android:parentActivityName="com.namtran.lazada.view.home.HomeActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".view.hienthisanpham.theodanhmuc.HienThiSPTheoDanhMuc"
+            android:name=".view.showproduct.bycategory.ShowProductByCategory"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".view.hienthisanpham.chitietsanpham.ChiTietSanPhamActivity"
+            android:name=".view.showproduct.productdetail.ProductDetailActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".view.hienthisanpham.danhgia.ThemDanhGiaActivity"
+            android:name=".view.showproduct.comment.AddCommentActivity"
             android:label="Đánh giá của bạn"
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat.Dialog" />
 
         <activity
-            android:name=".view.hienthisanpham.danhgia.DanhSachDanhGiaActivity"
+            android:name=".view.showproduct.comment.CommentListActivity"
             android:screenOrientation="portrait" />
     </application>
 

@@ -125,7 +125,7 @@
             </FrameLayout>
         </LinearLayout>
 
-        <include layout="@layout/custom_child_dientu" />
+        <include layout="@layout/custom_child_electronics" />
 
         <TextView
             android:layout_width="match_parent"
