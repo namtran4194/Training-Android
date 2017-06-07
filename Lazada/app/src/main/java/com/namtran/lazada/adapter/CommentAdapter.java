@@ -18,26 +18,26 @@ import java.util.List;
  */
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
-    private Context mContext;
-    private List<Comment> mCommentList;
-    private int mLimit;
+    private Context context;
+    private List<Comment> commentList;
+    private int limit;
 
     public CommentAdapter(Context context, List<Comment> commentList, int limit) {
-        this.mContext = context;
-        this.mCommentList = commentList;
-        this.mLimit = limit;
+        this.context = context;
+        this.commentList = commentList;
+        this.limit = limit;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.custom_recycler_comment_product, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Comment comment = mCommentList.get(position);
+        Comment comment = commentList.get(position);
         holder.mTVTitle.setText(comment.getTitle());
         holder.mTVContent.setText(comment.getContent());
         String commenter = "Được đăng bởi " + comment.getPhoneName() + " ngày " + comment.getDate();
@@ -47,8 +47,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        if (mCommentList.size() > mLimit) return mLimit <= 0 ? mCommentList.size() : mLimit;
-        return mCommentList.size();
+        if (commentList.size() > limit) return limit <= 0 ? commentList.size() : limit;
+        return commentList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

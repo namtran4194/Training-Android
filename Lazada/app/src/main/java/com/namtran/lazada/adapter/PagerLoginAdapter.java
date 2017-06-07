@@ -12,6 +12,7 @@ import com.namtran.lazada.view.signin_signup.fragment.SignInFragment;
  */
 
 public class PagerLoginAdapter extends FragmentPagerAdapter {
+
     private static final String[] PAGE_TITLES = {"Đăng nhập", "Đăng ký"};
 
     public PagerLoginAdapter(FragmentManager fm) {

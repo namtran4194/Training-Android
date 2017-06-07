@@ -11,20 +11,21 @@ import java.util.List;
  */
 
 public class PagerProductDetailAdapter extends FragmentPagerAdapter {
-    private List<Fragment> mFragments;
 
-    public PagerProductDetailAdapter(FragmentManager fm, List<Fragment> fragments) {
+    private List<Fragment> fragmentList;
+
+    public PagerProductDetailAdapter(FragmentManager fm, List<Fragment> fragmentList) {
         super(fm);
-        mFragments = fragments;
+        this.fragmentList = fragmentList;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return mFragments.get(position);
+        return fragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return mFragments.size();
+        return fragmentList.size();
     }
 }

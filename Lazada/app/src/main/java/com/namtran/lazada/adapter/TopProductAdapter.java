@@ -31,36 +31,36 @@ import java.util.List;
 public class TopProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
-    private Context mContext;
-    private int mLayoutResId;
-    private List<Product> mProducts;
+    private Context context;
+    private int layoutResId;
+    private List<Product> productList;
     private ButtonRippleDrawable rippleDrawable;
-    private int mWidth;
+    private int width;
 
     public TopProductAdapter(Context context, int layoutResId, List<Product> productList) {
-        this.mContext = context;
-        this.mLayoutResId = layoutResId;
-        this.mProducts = productList;
+        this.context = context;
+        this.layoutResId = layoutResId;
+        this.productList = productList;
         rippleDrawable = new ButtonRippleDrawable(Color.parseColor("#ffffff"), 0.2);
 
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        mWidth = metrics.widthPixels;
+        width = metrics.widthPixels;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ITEM) {
-            LayoutInflater inflater = LayoutInflater.from(mContext);
-            View v = inflater.inflate(mLayoutResId, parent, false);
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View v = inflater.inflate(layoutResId, parent, false);
             // hiệu ứng khi nhấn vào một item
             v.setBackground(rippleDrawable.getRipple());
 
             // chia một item chiếm một nửa chiều rộng màn hình
-            if (mLayoutResId == R.layout.custom_recycler_electronics_gridview_top_product)
-                v.getLayoutParams().width = mWidth / 2 - 15;
+            if (layoutResId == R.layout.custom_recycler_electronics_gridview_top_product)
+                v.getLayoutParams().width = width / 2 - 15;
             return new ItemViewHolder(v);
         } else if (viewType == VIEW_TYPE_LOADING) {
-            LayoutInflater inflater = LayoutInflater.from(mContext);
+            LayoutInflater inflater = LayoutInflater.from(context);
             View v = inflater.inflate(R.layout.layout_loading_item, parent, false);
             return new LoadingViewHolder(v);
         }
@@ -71,10 +71,10 @@ public class TopProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
             ItemViewHolder viewHolder = (ItemViewHolder) holder;
-            Product product = mProducts.get(position);
+            Product product = productList.get(position);
             int gia = product.getPrice();
 
-            Picasso.with(mContext).load(product.getBigImageUrl()).placeholder(R.drawable.ic_image_black_24dp).resize(150, 150).into(viewHolder.mIVProductImage);
+            Picasso.with(context).load(product.getBigImageUrl()).placeholder(R.drawable.ic_image_black_24dp).resize(150, 150).into(viewHolder.mIVProductImage);
             viewHolder.mTVProductName.setText(product.getProductName());
             viewHolder.mTVPrice.setText(Converter.formatCurrency(gia));
             viewHolder.mTVDiscount.setText(Converter.formatCurrency(gia));
@@ -83,9 +83,9 @@ public class TopProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             viewHolder.mCVItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent chitietsanpham = new Intent(mContext, ProductDetailActivity.class);
+                    Intent chitietsanpham = new Intent(context, ProductDetailActivity.class);
                     chitietsanpham.putExtra("MASP", (int) v.getTag());
-                    ((Activity) mContext).startActivityForResult(chitietsanpham, ShowProductByCategory.REQUEST_CODE_CART);
+                    ((Activity) context).startActivityForResult(chitietsanpham, ShowProductByCategory.REQUEST_CODE_CART);
                 }
             });
         } else if (holder instanceof LoadingViewHolder) {
@@ -96,12 +96,12 @@ public class TopProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemViewType(int position) {
-        return mProducts.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+        return productList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     @Override
     public int getItemCount() {
-        return mProducts.size();
+        return productList.size();
     }
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {

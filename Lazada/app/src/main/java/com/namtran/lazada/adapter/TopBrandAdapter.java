@@ -26,21 +26,21 @@ import java.util.List;
  */
 
 class TopBrandAdapter extends RecyclerView.Adapter<TopBrandAdapter.ViewHolder> {
-    private Context mContext;
-    private boolean mCheck;
+    private Context context;
+    private boolean check;
     private List<Brand> brandList;
     private ButtonRippleDrawable rippleDrawable;
 
     TopBrandAdapter(Context context, List<Brand> brandList, boolean check) {
-        this.mContext = context;
-        this.mCheck = check;
+        this.context = context;
+        this.check = check;
         this.brandList = brandList;
         rippleDrawable = new ButtonRippleDrawable(Color.parseColor("#ffffff"), 0.2);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.custom_recycler_electronics_top_brand, parent, false);
         // hiệu ứng khi nhấn vào một item
         v.setBackground(rippleDrawable.getRipple());
@@ -52,16 +52,16 @@ class TopBrandAdapter extends RecyclerView.Adapter<TopBrandAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Brand brand = brandList.get(position);
         holder.mTVTitle.setText(brand.getBrandName());
-        Picasso.with(mContext).load(brand.getBrandLogo()).placeholder(R.drawable.ic_image_black_24dp).resize(120, 120).into(holder.mIVImage);
+        Picasso.with(context).load(brand.getBrandLogo()).placeholder(R.drawable.ic_image_black_24dp).resize(120, 120).into(holder.mIVImage);
 
         holder.mCVItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent detailItemActivity = new Intent(mContext, ShowProductByCategory.class);
+                Intent detailItemActivity = new Intent(context, ShowProductByCategory.class);
                 detailItemActivity.putExtra("MALOAI", brand.getBrandCode());
                 detailItemActivity.putExtra("TENLOAI", brand.getBrandName());
-                detailItemActivity.putExtra("CHECK", mCheck);
-                ((Activity) mContext).startActivityForResult(detailItemActivity, HomeActivity.REQUEST_CODE_CART);
+                detailItemActivity.putExtra("CHECK", check);
+                ((Activity) context).startActivityForResult(detailItemActivity, HomeActivity.REQUEST_CODE_CART);
             }
         });
     }
