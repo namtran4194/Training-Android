@@ -142,7 +142,7 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
         View actionLayout = item.getActionView();
         mTVNumOfProductInCart = (TextView) actionLayout.findViewById(R.id.item_cart_tv_numberOfItems);
 
-        updateCart();
+        updateCartStatus();
         updateMenu(menu);
         // lưu menu hiện tại
         this.mMenu = menu;
@@ -239,7 +239,7 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
         }
     }
 
-    private void updateCart() {
+    private void updateCartStatus() {
         long soLuong = productDetailPresenter.numOfproductsInCart(this);
         if (soLuong == 0)
             mTVNumOfProductInCart.setVisibility(View.GONE);
@@ -258,7 +258,7 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
                 updateMenu(mMenu);
             }
         } else if (requestCode == REQUEST_CODE_CART) {
-            updateCart();
+            updateCartStatus();
         }
     }
 
