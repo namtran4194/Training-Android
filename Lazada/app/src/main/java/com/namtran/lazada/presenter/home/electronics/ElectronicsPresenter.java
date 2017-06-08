@@ -24,13 +24,13 @@ public class ElectronicsPresenter implements IElectronics {
     }
 
     @Override
-    public void layDanhSachDienTu() {
+    public void getElectronicsList() {
         boolean haveAllData = true;
         List<Electronics> electronicsList = new ArrayList<>();
         Electronics electronics;
 
-        List<Brand> brandList = electronicsModel.layDanhSachThuongHieuLon(Action.BRAND_LIST.getAction(), Action.BRAND_LIST.getNodeName());
-        List<Product> topDTVaMTBList = electronicsModel.layDanhSachTopSanPham(Action.TOP_PHONE_TABLET.getAction(), Action.TOP_PHONE_TABLET.getNodeName());
+        List<Brand> brandList = electronicsModel.getBrandList(Action.BRAND_LIST.getAction(), Action.BRAND_LIST.getNodeName());
+        List<Product> topDTVaMTBList = electronicsModel.getProducts(Action.TOP_PHONE_TABLET.getAction(), Action.TOP_PHONE_TABLET.getNodeName());
         if (brandList == null || topDTVaMTBList == null) haveAllData = false;
         else {
             electronics = new Electronics();
@@ -41,8 +41,8 @@ public class ElectronicsPresenter implements IElectronics {
             electronics.setQueryToBrand(true);
             electronicsList.add(electronics);
 
-            List<Brand> phuKienList = electronicsModel.layDanhSachThuongHieuLon(Action.ACCESSORIES.getAction(), Action.ACCESSORIES.getNodeName());
-            List<Product> topPhuKienList = electronicsModel.layDanhSachTopSanPham(Action.TOP_ACCESSORIES.getAction(), Action.TOP_ACCESSORIES.getNodeName());
+            List<Brand> phuKienList = electronicsModel.getBrandList(Action.ACCESSORIES.getAction(), Action.ACCESSORIES.getNodeName());
+            List<Product> topPhuKienList = electronicsModel.getProducts(Action.TOP_ACCESSORIES.getAction(), Action.TOP_ACCESSORIES.getNodeName());
             if (phuKienList == null || topPhuKienList == null) haveAllData = false;
             else {
                 electronics = new Electronics();
@@ -53,8 +53,8 @@ public class ElectronicsPresenter implements IElectronics {
                 electronics.setQueryToBrand(false);
                 electronicsList.add(electronics);
 
-                List<Brand> tienIchList = electronicsModel.layDanhSachThuongHieuLon(Action.UTILITIES.getAction(), Action.UTILITIES.getNodeName());
-                List<Product> topTienIchList = electronicsModel.layDanhSachTopSanPham(Action.TOP_ULTILITIES.getAction(), Action.TOP_ULTILITIES.getNodeName());
+                List<Brand> tienIchList = electronicsModel.getBrandList(Action.UTILITIES.getAction(), Action.UTILITIES.getNodeName());
+                List<Product> topTienIchList = electronicsModel.getProducts(Action.TOP_ULTILITIES.getAction(), Action.TOP_ULTILITIES.getNodeName());
                 if (tienIchList == null || topTienIchList == null) haveAllData = false;
                 else {
                     electronics = new Electronics();
@@ -68,18 +68,18 @@ public class ElectronicsPresenter implements IElectronics {
             }
         }
 
-        if (haveAllData) electronicsView.hienThiThuongHieuLon(electronicsList);
+        if (haveAllData) electronicsView.showTopBrands(electronicsList);
     }
 
     @Override
-    public void layLogoThuongHieuLon() {
-        List<Brand> brandList = electronicsModel.layDanhSachThuongHieuLon(Action.BRAND_LOGO.getAction(), Action.BRAND_LOGO.getNodeName());
-        electronicsView.hienThiLogoThuongHieu(brandList);
+    public void getTopBrandLogo() {
+        List<Brand> brandList = electronicsModel.getBrandList(Action.BRAND_LOGO.getAction(), Action.BRAND_LOGO.getNodeName());
+        electronicsView.showTopBrandLogo(brandList);
     }
 
     @Override
-    public void layDanhSachHangMoiVe() {
-        List<Product> productList = electronicsModel.layDanhSachTopSanPham(Action.NEW_PRODUCT.getAction(), Action.NEW_PRODUCT.getNodeName());
-        electronicsView.hienThiDanhSachHangMoiVe(productList);
+    public void getnewProducts() {
+        List<Product> productList = electronicsModel.getProducts(Action.NEW_PRODUCT.getAction(), Action.NEW_PRODUCT.getNodeName());
+        electronicsView.showNewProducts(productList);
     }
 }

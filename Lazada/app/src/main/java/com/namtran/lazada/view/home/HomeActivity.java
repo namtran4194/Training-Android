@@ -89,7 +89,7 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
 
         mHandlingMenuPresenter = new HandlingMenuPresenter(this);
         mSignInModel = new SignInModel();
-        mGoogleApiClient = mSignInModel.layGoogleApiClient(this, this);
+        mGoogleApiClient = mSignInModel.getApi(this, this);
 
         Internet internet = new Internet(this);
         if (!internet.isOnline()) {
@@ -104,7 +104,7 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
         mViewPager.setAdapter(new PagerHomeAdapter(getSupportFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);
 
-        mHandlingMenuPresenter.layDanhSachMenu();
+        mHandlingMenuPresenter.getMenu();
         productDetailPresenter = new ProductDetailPresenter();
     }
 
@@ -142,8 +142,8 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
         View actionLayout = item.getActionView();
         mTVNumOfProductInCart = (TextView) actionLayout.findViewById(R.id.item_cart_tv_numberOfItems);
 
-        capNhatGioHang();
-        capNhatMenu(menu);
+        updateCart();
+        updateMenu(menu);
         // lưu menu hiện tại
         this.mMenu = menu;
         return true;
@@ -157,7 +157,7 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_login:
-                String tenNV = mSignInModel.layCacheDangNhap(this);
+                String tenNV = mSignInModel.getLoginCache(this);
                 if (mFbToken == null && mGgToken == null && tenNV.equals("")) { // chưa đăng nhập
                     Intent loginIntent = new Intent(this, SignInAndSignUpActivity.class);
                     startActivityForResult(loginIntent, HomeActivity.REQUEST_CODE_LOGIN);
@@ -171,23 +171,23 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient);
                 } else {
                     // xóa tên người dùng lưu trong cache
-                    mSignInModel.capNhatCacheDangNhap(this, "");
+                    mSignInModel.updateLoginCache(this, "");
                 }
                 Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
-                capNhatMenu(mMenu);
+                updateMenu(mMenu);
                 break;
         }
         return true;
     }
 
-    private void capNhatMenu(Menu menu) {
+    private void updateMenu(Menu menu) {
         MenuItem logoutItem = menu.findItem(R.id.menu_logout);
 
-        kiemTraDangNhapFB();
-        kiemTraDangNhapGG();
-        kiemTraDangNhapEmail();
+        checkingFacebookLogin();
+        checkingGoogleLogin();
+        checkingEmailLogin();
 
-        String tenNV = mSignInModel.layCacheDangNhap(this);
+        String tenNV = mSignInModel.getLoginCache(this);
         // nếu đã đăng nhập thì hiển thị menu đăng xuất
         if (mFbToken != null || mGgToken != null || !tenNV.equals("")) {
             logoutItem.setVisible(true);
@@ -197,8 +197,8 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
     }
 
     // kiểm tra xem có đăng nhập bằng fb ko, nếu có thì hiển thị tên người dùng ra menu
-    private void kiemTraDangNhapFB() {
-        mFbToken = mHandlingMenuPresenter.layTokenNguoiDungFB();
+    private void checkingFacebookLogin() {
+        mFbToken = mHandlingMenuPresenter.getFacebookAccessToken();
         // lấy thông tin người dùng từ facebookToken
         if (mFbToken != null) {
             GraphRequest request = GraphRequest.newMeRequest(mFbToken, new GraphRequest.GraphJSONObjectCallback() {
@@ -223,8 +223,8 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
     }
 
     // kiểm tra xem có đăng nhập bằng gg ko, nếu có thì hiển thị tên người dùng ra menu
-    private void kiemTraDangNhapGG() {
-        mGgToken = mSignInModel.layKetQuaDangNhapGoogle(mGoogleApiClient);
+    private void checkingGoogleLogin() {
+        mGgToken = mSignInModel.getResult(mGoogleApiClient);
         if (mGgToken != null && mGgToken.getSignInAccount() != null) {
             String name = mGgToken.getSignInAccount().getDisplayName();
             mLoginItem.setTitle(String.valueOf("Hi, " + name));
@@ -232,15 +232,15 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
     }
 
     // kiểm tra xem có đăng nhập bằng email ko, nếu có thì hiển thị tên người dùng ra menu
-    private void kiemTraDangNhapEmail() {
-        String tenNV = mSignInModel.layCacheDangNhap(this);
+    private void checkingEmailLogin() {
+        String tenNV = mSignInModel.getLoginCache(this);
         if (!tenNV.equals("")) {
             mLoginItem.setTitle(String.valueOf("Hi, " + tenNV));
         }
     }
 
-    private void capNhatGioHang() {
-        long soLuong = productDetailPresenter.soLuongSPCoTrongGioHang(this);
+    private void updateCart() {
+        long soLuong = productDetailPresenter.numOfproductsInCart(this);
         if (soLuong == 0)
             mTVNumOfProductInCart.setVisibility(View.GONE);
         else
@@ -253,17 +253,17 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
         if (requestCode == REQUEST_CODE_LOGIN) {
             // resultCode từ SignInFragment
             if (resultCode == SignInFragment.LOGIN_WITH_SOCIAL_NETWORK) {
-                capNhatMenu(mMenu);
+                updateMenu(mMenu);
             } else if (resultCode == SignInFragment.LOGIN_WITH_EMAIL) {
-                capNhatMenu(mMenu);
+                updateMenu(mMenu);
             }
         } else if (requestCode == REQUEST_CODE_CART) {
-            capNhatGioHang();
+            updateCart();
         }
     }
 
     @Override
-    public void hienThiDanhSachMenu(List<ProductType> productTypes) {
+    public void showMenu(List<ProductType> productTypes) {
         ExpandableListViewAdapter adapter = new ExpandableListViewAdapter(this, productTypes);
         mExpandableListView.setAdapter(adapter);
     }

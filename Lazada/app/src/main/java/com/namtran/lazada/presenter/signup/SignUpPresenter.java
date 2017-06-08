@@ -18,11 +18,11 @@ public class SignUpPresenter implements ISignUp {
     }
 
     @Override
-    public void thucHienDangKy(Staff staff) {
-        boolean isSuccessed = signUpModel.dangKyThanhVIen(staff);
+    public void doSigningUp(Staff staff) {
+        boolean isSuccessed = signUpModel.signUp(staff);
         if (isSuccessed)
-            signUpView.dangKyThanhCong();
+            signUpView.signUpSuccess();
         else
-            signUpView.dangKyThatBai();
+            signUpView.signUpFailure();
     }
 }

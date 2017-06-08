@@ -56,11 +56,11 @@ public class AddCommentActivity extends AppCompatActivity implements RatingBar.O
     @Override
     public void onClick(View v) {
         if (v == mButtonOK) {
-            thucHienThemDG();
+            doAddingComment();
         }
     }
 
-    private void thucHienThemDG() {
+    private void doAddingComment() {
         Comment comment = new Comment();
         TelephonyManager manager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         String madg = manager.getDeviceId();
@@ -100,12 +100,12 @@ public class AddCommentActivity extends AppCompatActivity implements RatingBar.O
             comment.setTitle(tieuDe);
             comment.setContent(noiDung);
             comment.setNumOfStars(numOfStars);
-            commentPresenter.themDanhGia(comment);
+            commentPresenter.addComment(comment);
         }
     }
 
     @Override
-    public void ketQuaThemDanhGia(boolean result) {
+    public void addCommentResult(boolean result) {
         if (result) {
             Toast.makeText(this, "Đánh giá thành công", Toast.LENGTH_SHORT).show();
             finish();
@@ -114,7 +114,7 @@ public class AddCommentActivity extends AppCompatActivity implements RatingBar.O
     }
 
     @Override
-    public void hienThiDanhSachDanhGia(List<Comment> commentaries) {
+    public void showComments(List<Comment> commentList) {
 
     }
 }

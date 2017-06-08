@@ -18,10 +18,10 @@ import java.util.concurrent.ExecutionException;
  * Created by namtr on 26/04/2017.
  */
 
-public class ParseJsonMenuModel {
+public class JsonParser {
 
     // lấy danh sách các loại sản phẩm từ chuỗi JSON
-    public List<ProductType> parserJSONMenu(String jsonData) {
+    public List<ProductType> parseJsonMenu(String jsonData) {
         if (jsonData == null) return null;
 
         List<ProductType> datas = new ArrayList<>();
@@ -47,7 +47,7 @@ public class ParseJsonMenuModel {
     }
 
     // lấy danh sách các loại sản phẩm theo mã loại cha
-    public List<ProductType> getTypeOfProductById(int parentId) {
+    public List<ProductType> getProductTypesList(int parentId) {
         List<ProductType> productTypes = new ArrayList<>();
         List<HashMap<String, String>> attrs = new ArrayList<>(); // các tham số truyền theo request
 
@@ -65,7 +65,7 @@ public class ParseJsonMenuModel {
         try {
             String json = downloadJson.get();
             if (json != null)
-                productTypes = parserJSONMenu(json);
+                productTypes = parseJsonMenu(json);
         } catch (InterruptedException | ExecutionException e) {
             return null;
         }

@@ -54,7 +54,7 @@ public class CommentListActivity extends AppCompatActivity implements CommentVie
         mCommentPresenter = new CommentPresenter(this);
 
         showProgressBar();
-        mCommentPresenter.layDanhSachDanhGiaTheoMaSP(Action.COMMENTARY_LIST, productCode, 0);
+        mCommentPresenter.getCommentsByProductCode(Action.COMMENTARY_LIST, productCode, 0);
     }
 
     @Override
@@ -67,15 +67,15 @@ public class CommentListActivity extends AppCompatActivity implements CommentVie
     }
 
     @Override
-    public void ketQuaThemDanhGia(boolean result) {
+    public void addCommentResult(boolean result) {
 
     }
 
     @Override
-    public void hienThiDanhSachDanhGia(List<Comment> commentaries) {
+    public void showComments(List<Comment> commentList) {
         hideProgressBar();
-        if (commentaries != null && commentaries.size() > 0) {
-            mCommentList.addAll(commentaries);
+        if (commentList != null && commentList.size() > 0) {
+            mCommentList.addAll(commentList);
             CommentAdapter adapter = new CommentAdapter(this, mCommentList, 0);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
             mRecyclerComment.setLayoutManager(layoutManager);
@@ -90,7 +90,7 @@ public class CommentListActivity extends AppCompatActivity implements CommentVie
     @Override
     public void onLoadMore(int totalItems) {
         showProgressBar();
-        mCommentPresenter.layDanhSachDanhGiaTheoMaSP(Action.COMMENTARY_LIST, productCode, totalItems);
+        mCommentPresenter.getCommentsByProductCode(Action.COMMENTARY_LIST, productCode, totalItems);
         listener.setLoaded();
     }
 

@@ -89,7 +89,7 @@ public class ShowProductByCategory extends AppCompatActivity implements ShowProd
 
         handlingMenuPresenter = new HandlingMenuPresenter();
         mSignInModel = new SignInModel();
-        mGoogleApiClient = mSignInModel.layGoogleApiClient(this, this);
+        mGoogleApiClient = mSignInModel.getApi(this, this);
 
         // sự kiện scroll RecyclerView
         mOnScrollListener = new OnScrollRecyclerListener(this);
@@ -103,7 +103,7 @@ public class ShowProductByCategory extends AppCompatActivity implements ShowProd
         mButtonTypeView.setOnClickListener(this);
 
         byCategoryPresenter = new ShowProductByCategoryPresenter(this);
-        byCategoryPresenter.layDanhSachSanPham(mTypeCode, isQueryToBrand);
+        byCategoryPresenter.getProducts(mTypeCode, isQueryToBrand);
         productDetailPresenter = new ProductDetailPresenter();
 
     }
@@ -131,7 +131,7 @@ public class ShowProductByCategory extends AppCompatActivity implements ShowProd
                 onBackPressed();
                 break;
             case R.id.menu_login:
-                String tenNV = mSignInModel.layCacheDangNhap(this);
+                String tenNV = mSignInModel.getLoginCache(this);
                 if (mFbToken == null && mGgToken == null && tenNV.equals("")) { // chưa đăng nhập
                     Intent loginIntent = new Intent(this, SignInAndSignUpActivity.class);
                     startActivityForResult(loginIntent, HomeActivity.REQUEST_CODE_LOGIN);
@@ -145,7 +145,7 @@ public class ShowProductByCategory extends AppCompatActivity implements ShowProd
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient);
                 } else {
                     // xóa tên người dùng lưu trong cache
-                    mSignInModel.capNhatCacheDangNhap(this, "");
+                    mSignInModel.updateLoginCache(this, "");
                 }
                 Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
                 capNhatMenu(mMenu);
@@ -161,7 +161,7 @@ public class ShowProductByCategory extends AppCompatActivity implements ShowProd
         kiemTraDangNhapGG();
         kiemTraDangNhapEmail();
 
-        String tenNV = mSignInModel.layCacheDangNhap(this);
+        String tenNV = mSignInModel.getLoginCache(this);
         // nếu đã đăng nhập thì hiển thị menu đăng xuất
         if (mFbToken != null || mGgToken != null || !tenNV.equals("")) {
             logoutItem.setVisible(true);
@@ -172,7 +172,7 @@ public class ShowProductByCategory extends AppCompatActivity implements ShowProd
 
     // kiểm tra xem có đăng nhập bằng fb ko, nếu có thì hiển thị tên người dùng ra menu
     private void kiemTraDangNhapFB() {
-        mFbToken = handlingMenuPresenter.layTokenNguoiDungFB();
+        mFbToken = handlingMenuPresenter.getFacebookAccessToken();
         // lấy thông tin người dùng từ facebookToken
         if (mFbToken != null) {
             GraphRequest request = GraphRequest.newMeRequest(mFbToken, new GraphRequest.GraphJSONObjectCallback() {
@@ -198,7 +198,7 @@ public class ShowProductByCategory extends AppCompatActivity implements ShowProd
 
     // kiểm tra xem có đăng nhập bằng gg ko, nếu có thì hiển thị tên người dùng ra menu
     private void kiemTraDangNhapGG() {
-        mGgToken = mSignInModel.layKetQuaDangNhapGoogle(mGoogleApiClient);
+        mGgToken = mSignInModel.getResult(mGoogleApiClient);
         if (mGgToken != null && mGgToken.getSignInAccount() != null) {
             String name = mGgToken.getSignInAccount().getDisplayName();
             mLoginItem.setTitle(String.valueOf("Hi, " + name));
@@ -207,14 +207,14 @@ public class ShowProductByCategory extends AppCompatActivity implements ShowProd
 
     // kiểm tra xem có đăng nhập bằng email ko, nếu có thì hiển thị tên người dùng ra menu
     private void kiemTraDangNhapEmail() {
-        String tenNV = mSignInModel.layCacheDangNhap(this);
+        String tenNV = mSignInModel.getLoginCache(this);
         if (!tenNV.equals("")) {
             mLoginItem.setTitle(String.valueOf("Hi, " + tenNV));
         }
     }
 
     private void capNhatGioHang() {
-        long soLuong = productDetailPresenter.soLuongSPCoTrongGioHang(this);
+        long soLuong = productDetailPresenter.numOfproductsInCart(this);
         if (soLuong == 0)
             mTVNumOfProductsInCart.setVisibility(View.GONE);
         else
@@ -230,7 +230,7 @@ public class ShowProductByCategory extends AppCompatActivity implements ShowProd
     }
 
     @Override
-    public void hienThiDanhSachSanPham(List<Product> productList) {
+    public void showProducts(List<Product> productList) {
         if (productList != null) {
             this.productList = productList;
             mIsDataNull = false;

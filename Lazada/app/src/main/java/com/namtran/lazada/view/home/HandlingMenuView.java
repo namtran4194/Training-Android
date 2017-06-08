@@ -9,5 +9,7 @@ import java.util.List;
  */
 
 public interface HandlingMenuView {
-    void hienThiDanhSachMenu(List<ProductType> productTypes);
+
+    // hiển thị menu
+    void showMenu(List<ProductType> productTypes);
 }

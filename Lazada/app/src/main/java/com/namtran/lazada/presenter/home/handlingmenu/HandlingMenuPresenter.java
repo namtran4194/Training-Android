@@ -5,7 +5,7 @@ import com.namtran.lazada.connection.internet.DownloadJson;
 import com.namtran.lazada.model.signin_signup.SignInModel;
 import com.namtran.lazada.model.objectclass.Action;
 import com.namtran.lazada.model.objectclass.ProductType;
-import com.namtran.lazada.model.home.handlingmenu.ParseJsonMenuModel;
+import com.namtran.lazada.model.home.handlingmenu.JsonParser;
 import com.namtran.lazada.view.home.HomeActivity;
 import com.namtran.lazada.view.home.HandlingMenuView;
 
@@ -29,7 +29,7 @@ public class HandlingMenuPresenter implements IHandlingMenu {
     }
 
     @Override
-    public void layDanhSachMenu() {
+    public void getMenu() {
         List<ProductType> productTypes;
         List<HashMap<String, String>> attrs = new ArrayList<>();
 
@@ -47,17 +47,17 @@ public class HandlingMenuPresenter implements IHandlingMenu {
 
         try {
             String jsonData = downloadJson.get();
-            ParseJsonMenuModel xuLyJSONMenu = new ParseJsonMenuModel();
-            productTypes = xuLyJSONMenu.parserJSONMenu(jsonData);
+            JsonParser xuLyJSONMenu = new JsonParser();
+            productTypes = xuLyJSONMenu.parseJsonMenu(jsonData);
             if (productTypes != null && productTypes.size() > 0)
-                handlingMenuView.hienThiDanhSachMenu(productTypes); // trả danh sách các loại sản phẩm cho view
+                handlingMenuView.showMenu(productTypes); // trả danh sách các loại sản phẩm cho view
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public AccessToken layTokenNguoiDungFB() {
+    public AccessToken getFacebookAccessToken() {
         SignInModel signInModel = new SignInModel();
         return signInModel.layAccessTokenFB();
     }

@@ -95,13 +95,13 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
 
         mHandlingMenuPresenter = new HandlingMenuPresenter();
         mSignInModel = new SignInModel();
-        mGoogleApiClient = mSignInModel.layGoogleApiClient(this, this);
+        mGoogleApiClient = mSignInModel.getApi(this, this);
 
         // retrieve data
         productCode = getIntent().getIntExtra("MASP", -1);
         productDetailPresenter = new ProductDetailPresenter(this);
-        productDetailPresenter.layChiTietSanPham(Action.PRODUCT_DETAIL, productCode);
-        productDetailPresenter.layDanhSachDanhGia(Action.COMMENTARY_LIST, productCode, 0);
+        productDetailPresenter.getProductDetail(Action.PRODUCT_DETAIL, productCode);
+        productDetailPresenter.getComments(Action.COMMENTARY_LIST, productCode, 0);
 
         setupDotLayout(0);
     }
@@ -150,8 +150,8 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         View actionLayout = item.getActionView();
         mTVNumOfProductInCart = (TextView) actionLayout.findViewById(R.id.item_cart_tv_numberOfItems);
 
-        capNhatGioHang();
-        capNhatMenu(menu);
+        updateCart();
+        updateMenu(menu);
         // lưu menu hiện tại
         this.mMenu = menu;
         return true;
@@ -165,7 +165,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
                 onBackPressed();
                 break;
             case R.id.menu_login:
-                String tenNV = mSignInModel.layCacheDangNhap(this);
+                String tenNV = mSignInModel.getLoginCache(this);
                 if (mFbToken == null && mGgToken == null && tenNV.equals("")) { // chưa đăng nhập
                     Intent loginIntent = new Intent(this, SignInAndSignUpActivity.class);
                     startActivityForResult(loginIntent, HomeActivity.REQUEST_CODE_LOGIN);
@@ -179,23 +179,23 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient);
                 } else {
                     // xóa tên người dùng lưu trong cache
-                    mSignInModel.capNhatCacheDangNhap(this, "");
+                    mSignInModel.updateLoginCache(this, "");
                 }
                 Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
-                capNhatMenu(mMenu);
+                updateMenu(mMenu);
                 break;
         }
         return true;
     }
 
-    private void capNhatMenu(Menu menu) {
+    private void updateMenu(Menu menu) {
         MenuItem logoutItem = menu.findItem(R.id.menu_logout);
 
-        kiemTraDangNhapFB();
-        kiemTraDangNhapGG();
-        kiemTraDangNhapEmail();
+        checkingFacebookLogin();
+        checkingGoogleLogin();
+        checkingEmailLogin();
 
-        String tenNV = mSignInModel.layCacheDangNhap(this);
+        String tenNV = mSignInModel.getLoginCache(this);
         // nếu đã đăng nhập thì hiển thị menu đăng xuất
         if (mFbToken != null || mGgToken != null || !tenNV.equals("")) {
             logoutItem.setVisible(true);
@@ -205,8 +205,8 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     }
 
     // kiểm tra xem có đăng nhập bằng fb ko, nếu có thì hiển thị tên người dùng ra menu
-    private void kiemTraDangNhapFB() {
-        mFbToken = mHandlingMenuPresenter.layTokenNguoiDungFB();
+    private void checkingFacebookLogin() {
+        mFbToken = mHandlingMenuPresenter.getFacebookAccessToken();
         // lấy thông tin người dùng từ facebookToken
         if (mFbToken != null) {
             GraphRequest request = GraphRequest.newMeRequest(mFbToken, new GraphRequest.GraphJSONObjectCallback() {
@@ -231,8 +231,8 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     }
 
     // kiểm tra xem có đăng nhập bằng gg ko, nếu có thì hiển thị tên người dùng ra menu
-    private void kiemTraDangNhapGG() {
-        mGgToken = mSignInModel.layKetQuaDangNhapGoogle(mGoogleApiClient);
+    private void checkingGoogleLogin() {
+        mGgToken = mSignInModel.getResult(mGoogleApiClient);
         if (mGgToken != null && mGgToken.getSignInAccount() != null) {
             String name = mGgToken.getSignInAccount().getDisplayName();
             mLoginItem.setTitle(String.valueOf("Hi, " + name));
@@ -240,15 +240,15 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     }
 
     // kiểm tra xem có đăng nhập bằng email ko, nếu có thì hiển thị tên người dùng ra menu
-    private void kiemTraDangNhapEmail() {
-        String tenNV = mSignInModel.layCacheDangNhap(this);
+    private void checkingEmailLogin() {
+        String tenNV = mSignInModel.getLoginCache(this);
         if (!tenNV.equals("")) {
             mLoginItem.setTitle(String.valueOf("Hi, " + tenNV));
         }
     }
 
-    private void capNhatGioHang() {
-        long soLuong = productDetailPresenter.soLuongSPCoTrongGioHang(this);
+    private void updateCart() {
+        long soLuong = productDetailPresenter.numOfproductsInCart(this);
         if (soLuong == 0)
             mTVNumOfProductInCart.setVisibility(View.GONE);
         else
@@ -257,7 +257,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     }
 
     @Override
-    public void hienThiChiTietSanPham(Product product) {
+    public void showProductDetail(Product product) {
         if (product != null) {
             mProductInCart = product; // lưu sản phẩm hiện tại để xử lý khi thêm vào giỏ hàng
             if (getSupportActionBar() != null) {
@@ -281,12 +281,12 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
                 mButtonSeeMore.setOnClickListener(this);
             }
 
-            setupChiTietSPLayout(product.getProductDetails());
+            setupProductDetailLayout(product.getProductDetails());
         }
     }
 
     @Override
-    public void hienThiSlider(String... links) {
+    public void showPicturePreview(String... links) {
         if (links != null && links.length > 0) {
             List<Fragment> fragments = new ArrayList<>();
             for (String aLink : links) {
@@ -304,7 +304,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     }
 
     @Override
-    public void hienThiDanhGia(List<Comment> commentList) {
+    public void showComments(List<Comment> commentList) {
         if (commentList != null && commentList.size() > 0) {
             CommentAdapter adapter = new CommentAdapter(this, commentList, 3);
             mRecyclerComment.setNestedScrollingEnabled(false);
@@ -323,11 +323,11 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     }
 
     @Override
-    public void ketQuaThemGiohang(boolean result) {
+    public void addToCartResult(boolean result) {
         if (result) {
             Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
             // cập nhật lại số sản phẩm trong giỏ hàng của trên menu
-            long soLuong = productDetailPresenter.soLuongSPCoTrongGioHang(this);
+            long soLuong = productDetailPresenter.numOfproductsInCart(this);
             if (soLuong == 0)
                 mTVNumOfProductInCart.setVisibility(View.GONE);
             else
@@ -353,7 +353,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
 
     }
 
-    private void setupChiTietSPLayout(List<ProductDetail> productDetails) {
+    private void setupProductDetailLayout(List<ProductDetail> productDetails) {
         int len = productDetails.size();
         for (int i = 0; i < len; i++) {
             ProductDetail productDetail = productDetails.get(i);
@@ -399,7 +399,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
                 }
                 byte[] hinhAnh = Converter.drawableToByteArray(drawable);
                 mProductInCart.setImage(hinhAnh);
-                productDetailPresenter.themGioHang(this, mProductInCart);
+                productDetailPresenter.addToCart(this, mProductInCart);
                 break;
         }
     }

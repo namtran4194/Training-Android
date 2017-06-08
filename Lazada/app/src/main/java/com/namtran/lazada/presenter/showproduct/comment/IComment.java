@@ -8,7 +8,7 @@ import com.namtran.lazada.model.objectclass.Comment;
  */
 
 interface IComment {
-    void themDanhGia(Comment comment);
+    void addComment(Comment comment);
 
-    void layDanhSachDanhGiaTheoMaSP(Action action, int maSP, int startIndex);
+    void getCommentsByProductCode(Action action, int maSP, int startIndex);
 }

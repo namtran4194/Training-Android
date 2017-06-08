@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.namtran.lazada.R;
 import com.namtran.lazada.customview.DynamicExpandableListView;
 import com.namtran.lazada.model.objectclass.ProductType;
-import com.namtran.lazada.model.home.handlingmenu.ParseJsonMenuModel;
+import com.namtran.lazada.model.home.handlingmenu.JsonParser;
 
 import java.util.List;
 
@@ -35,11 +35,11 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     // lấy các item con
     private void getChilds() {
-        ParseJsonMenuModel menuModel = new ParseJsonMenuModel();
+        JsonParser menuModel = new JsonParser();
         int count = productTypeList.size();
         for (int i = 0; i < count; i++) {
             int maLoaiSP = productTypeList.get(i).getProductTypeCode();
-            List<ProductType> childs = menuModel.getTypeOfProductById(maLoaiSP);
+            List<ProductType> childs = menuModel.getProductTypesList(maLoaiSP);
             productTypeList.get(i).setChilds(childs);
         }
     }

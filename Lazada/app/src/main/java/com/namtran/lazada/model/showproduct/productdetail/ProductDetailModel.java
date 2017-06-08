@@ -22,7 +22,8 @@ import java.util.concurrent.ExecutionException;
 
 public class ProductDetailModel {
 
-    public Product layChiTietSanPham(Action action, int maSP) {
+    // lấy thông tin chi tiết sản phẩm
+    public Product getProductDetail(Action action, int maSP) {
         Product product = new Product();
         String url = HomeActivity.SERVER_NAME + action.getAction();
 
@@ -81,7 +82,8 @@ public class ProductDetailModel {
         return product;
     }
 
-    public List<Comment> layDanhSachDanhGia(Action action, int maSP, int startIndex) {
+    // lấy danh sách đánh giá của sản phẩm
+    public List<Comment> getAllComments(Action action, int maSP, int startIndex) {
         List<Comment> commentList = new ArrayList<>();
         String url = HomeActivity.SERVER_NAME + action.getAction();
         if (!url.contains(".php")) url += ".php";

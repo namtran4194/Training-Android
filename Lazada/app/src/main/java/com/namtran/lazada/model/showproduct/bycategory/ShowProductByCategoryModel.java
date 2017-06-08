@@ -20,7 +20,8 @@ import java.util.concurrent.ExecutionException;
 
 public class ShowProductByCategoryModel {
 
-    public List<Product> layDanhSachSanPhamTheoMaThuongHieu(Action action, int brandCode, int startIndex) {
+    // lấy danh sách sản phẩm theo mã thương hiệu
+    public List<Product> getProductsByBrandCode(Action action, int brandCode, int startIndex) {
         String url = HomeActivity.SERVER_NAME + action.getAction();
         if (!url.contains(".php"))
             url += ".php";
@@ -66,7 +67,8 @@ public class ShowProductByCategoryModel {
         return productList;
     }
 
-    public List<Product> layDanhSachSanPhamTheoMaLoai(Action action, int productCode, int startIndex) {
+    // lấy danh sách sản phẩm theo mã loại sản phẩm
+    public List<Product> getProductsById(Action action, int productCode, int startIndex) {
         String url = HomeActivity.SERVER_NAME + action.getAction();
         if (!url.contains(".php"))
             url += ".php";

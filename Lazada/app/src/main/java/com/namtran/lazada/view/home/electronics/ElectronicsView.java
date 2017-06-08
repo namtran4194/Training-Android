@@ -11,9 +11,11 @@ import java.util.List;
  */
 
 public interface ElectronicsView {
-    void hienThiThuongHieuLon(List<Electronics> electronicsList);
 
-    void hienThiLogoThuongHieu(List<Brand> brandList);
-
-    void hienThiDanhSachHangMoiVe(List<Product> productList);
+    // hiển thị các thương hiệu lớn
+    void showTopBrands(List<Electronics> electronicsList);
+    // hiển thị logo các thương hiệu lớn
+    void showTopBrandLogo(List<Brand> brandList);
+    // hiển thị hàng mới về
+    void showNewProducts(List<Product> productList);
 }

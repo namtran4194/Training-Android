@@ -7,7 +7,7 @@ import com.facebook.AccessToken;
  */
 
 interface IHandlingMenu {
-    void layDanhSachMenu();
+    void getMenu();
 
-    AccessToken layTokenNguoiDungFB();
+    AccessToken getFacebookAccessToken();
 }

@@ -9,5 +9,7 @@ import java.util.List;
  */
 
 public interface ShowProductByCategoryView {
-    void hienThiDanhSachSanPham(List<Product> productList);
+
+    // hiển thị danh sách sản phẩm
+    void showProducts(List<Product> productList);
 }

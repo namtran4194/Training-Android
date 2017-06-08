@@ -20,12 +20,12 @@ import java.util.concurrent.ExecutionException;
 public class CartModel {
     private SQLiteDatabase database;
 
-    public void moKetNoi(Context context) {
+    public void openConnection(Context context) {
         ProductDatabase productDatabase = new ProductDatabase(context);
         database = productDatabase.getWritableDatabase();
     }
 
-    public boolean themGioHang(final Product product) {
+    public boolean add(final Product product) {
         AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>() {
             @Override
             protected Boolean doInBackground(Void... params) {
@@ -48,7 +48,7 @@ public class CartModel {
         }
     }
 
-    public List<Product> laySanPhamTrongGioHang() {
+    public List<Product> getAll() {
         AsyncTask<Void, Void, List<Product>> task = new AsyncTask<Void, Void, List<Product>>() {
             List<Product> sanPhamList = new ArrayList<>();
 
@@ -85,7 +85,7 @@ public class CartModel {
         }
     }
 
-    public long getRowsCount() {
+    public long size() {
         return DatabaseUtils.queryNumEntries(database, ProductDatabase.GIO_HANG_TABLE_NAME);
     }
 }

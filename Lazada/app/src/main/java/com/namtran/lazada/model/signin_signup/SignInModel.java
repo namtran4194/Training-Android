@@ -43,7 +43,7 @@ public class SignInModel {
         return accessToken;
     }
 
-    public GoogleApiClient layGoogleApiClient(FragmentActivity activity, GoogleApiClient.OnConnectionFailedListener listener) {
+    public GoogleApiClient getApi(FragmentActivity activity, GoogleApiClient.OnConnectionFailedListener listener) {
         GoogleApiClient googleApiClient;
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -56,7 +56,7 @@ public class SignInModel {
         return googleApiClient;
     }
 
-    public GoogleSignInResult layKetQuaDangNhapGoogle(GoogleApiClient googleApiClient) {
+    public GoogleSignInResult getResult(GoogleApiClient googleApiClient) {
         OptionalPendingResult<GoogleSignInResult> result = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
         if (result.isDone()) {
             return result.get();
@@ -70,7 +70,7 @@ public class SignInModel {
     }
 
     // kiểm tra đăng nhập, nếu đăng nhập thành công thì lưu cache tên người dùng
-    public boolean kiemTraDangNhap(Context context, String username, String password) {
+    public boolean checkingLogin(Context context, String username, String password) {
         List<HashMap<String, String>> attrs = new ArrayList<>();
         String url = HomeActivity.SERVER_NAME + "dangnhap.php";
 
@@ -89,10 +89,10 @@ public class SignInModel {
             String json = downloadJson.get();
             if (json != null) {
                 JSONObject object = new JSONObject(json);
-                boolean isSuccessed = object.getBoolean("result");
+                boolean isSuccessed = object.getBoolean("addCommentResult");
                 if (isSuccessed) {
                     String tenNV = object.getString("tenNV");
-                    capNhatCacheDangNhap(context, tenNV);
+                    updateLoginCache(context, tenNV);
                     return true;
                 }
             }
@@ -104,13 +104,13 @@ public class SignInModel {
     }
 
     // trả về tên người dùng được lưu trong cache
-    public String layCacheDangNhap(Context context) {
+    public String getLoginCache(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
         return preferences.getString("tenNV", "");
     }
 
     // cập nhật lại tên người dùng
-    public void capNhatCacheDangNhap(Context context, String tenNV) {
+    public void updateLoginCache(Context context, String tenNV) {
         SharedPreferences preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("tenNV", tenNV);

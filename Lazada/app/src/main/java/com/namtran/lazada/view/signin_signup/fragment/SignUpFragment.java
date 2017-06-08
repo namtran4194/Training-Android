@@ -149,7 +149,7 @@ public class SignUpFragment extends Fragment implements Validator.ValidationList
     }
 
     @Override
-    public void dangKyThanhCong() {
+    public void signUpSuccess() {
         Toast.makeText(getContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
 
         SharedPreferences preferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -162,7 +162,7 @@ public class SignUpFragment extends Fragment implements Validator.ValidationList
     }
 
     @Override
-    public void dangKyThatBai() {
+    public void signUpFailure() {
         Toast.makeText(getContext(), "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
     }
 
@@ -174,7 +174,7 @@ public class SignUpFragment extends Fragment implements Validator.ValidationList
                 mValidator.validate();
                 if (allowRegistration) {
                     if (internet.isOnline())
-                        dangKy();
+                        signUp();
                     else
                         Toast.makeText(getContext(), "Không có kết nối mạng, vui lòng thử lại sau", Toast.LENGTH_SHORT).show();
                 }
@@ -185,7 +185,7 @@ public class SignUpFragment extends Fragment implements Validator.ValidationList
         }
     }
 
-    private void dangKy() {
+    private void signUp() {
         String name = mETFullName.getText().toString();
         String username = mETEmail.getText().toString();
         String password = mETPassword.getText().toString();
@@ -200,6 +200,6 @@ public class SignUpFragment extends Fragment implements Validator.ValidationList
         staff.setStaffTypeCode(3); // Khách hàng
         staff.setReceiveNewsViaEmail(String.valueOf(viaEmail));
 
-        signUpPresenter.thucHienDangKy(staff);
+        signUpPresenter.doSigningUp(staff);
     }
 }

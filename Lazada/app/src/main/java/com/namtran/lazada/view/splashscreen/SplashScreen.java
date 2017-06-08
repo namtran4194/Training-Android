@@ -23,6 +23,7 @@ public class SplashScreen extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(SplashScreen.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    finish();
                     // handle error
                 } finally {
                     Intent home = new Intent(SplashScreen.this, HomeActivity.class);

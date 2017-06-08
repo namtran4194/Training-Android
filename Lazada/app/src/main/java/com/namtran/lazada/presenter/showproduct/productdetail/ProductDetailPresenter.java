@@ -32,30 +32,30 @@ public class ProductDetailPresenter implements IProductDetail {
     }
 
     @Override
-    public void layChiTietSanPham(Action action, int maSP) {
-        Product product = productDetailModel.layChiTietSanPham(action, maSP);
+    public void getProductDetail(Action action, int maSP) {
+        Product product = productDetailModel.getProductDetail(action, maSP);
         String stringAnhNho = product.getSmallImageUrl();
         String[] link = stringAnhNho.split(",");
-        productDetailView.hienThiChiTietSanPham(product);
-        productDetailView.hienThiSlider(link);
+        productDetailView.showProductDetail(product);
+        productDetailView.showPicturePreview(link);
     }
 
     @Override
-    public void layDanhSachDanhGia(Action action, int maSP, int startIndex) {
-        List<Comment> commentList = productDetailModel.layDanhSachDanhGia(action, maSP, startIndex);
-        productDetailView.hienThiDanhGia(commentList);
+    public void getComments(Action action, int maSP, int startIndex) {
+        List<Comment> commentList = productDetailModel.getAllComments(action, maSP, startIndex);
+        productDetailView.showComments(commentList);
     }
 
     @Override
-    public void themGioHang(Context context, Product product) {
-        cartModel.moKetNoi(context);
-        boolean result = cartModel.themGioHang(product);
-        productDetailView.ketQuaThemGiohang(result);
+    public void addToCart(Context context, Product product) {
+        cartModel.openConnection(context);
+        boolean result = cartModel.add(product);
+        productDetailView.addToCartResult(result);
     }
 
     @Override
-    public long soLuongSPCoTrongGioHang(Context context) {
-        cartModel.moKetNoi(context);
-        return cartModel.getRowsCount();
+    public long numOfproductsInCart(Context context) {
+        cartModel.openConnection(context);
+        return cartModel.size();
     }
 }

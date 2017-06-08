@@ -5,9 +5,9 @@ package com.namtran.lazada.presenter.home.electronics;
  */
 
 interface IElectronics {
-    void layDanhSachDienTu();
+    void getElectronicsList();
 
-    void layLogoThuongHieuLon();
+    void getTopBrandLogo();
 
-    void layDanhSachHangMoiVe();
+    void getnewProducts();
 }

@@ -21,15 +21,15 @@ public class CommentPresenter implements IComment {
     }
 
     @Override
-    public void themDanhGia(Comment comment) {
+    public void addComment(Comment comment) {
         Action action = Action.ADD_COMMENTARY;
-        boolean result = commentModel.themDanhGia(action, comment);
-        commentView.ketQuaThemDanhGia(result);
+        boolean result = commentModel.add(action, comment);
+        commentView.addCommentResult(result);
     }
 
     @Override
-    public void layDanhSachDanhGiaTheoMaSP(Action action, int maSP, int startIndex) {
-        List<Comment> commentList = commentModel.layDanhSachDanhGia(action, maSP, startIndex);
-        commentView.hienThiDanhSachDanhGia(commentList);
+    public void getCommentsByProductCode(Action action, int maSP, int startIndex) {
+        List<Comment> commentList = commentModel.getAll(action, maSP, startIndex);
+        commentView.showComments(commentList);
     }
 }

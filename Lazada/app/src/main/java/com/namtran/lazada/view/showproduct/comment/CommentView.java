@@ -9,7 +9,10 @@ import java.util.List;
  */
 
 public interface CommentView {
-    void ketQuaThemDanhGia(boolean result);
 
-    void hienThiDanhSachDanhGia(List<Comment> commentaries);
+    // kết quả thêm đánh giá
+    void addCommentResult(boolean result);
+
+    // hiển thị danh sách đánh giá
+    void showComments(List<Comment> commentList);
 }

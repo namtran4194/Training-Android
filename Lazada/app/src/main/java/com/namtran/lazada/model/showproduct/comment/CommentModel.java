@@ -20,7 +20,8 @@ import java.util.concurrent.ExecutionException;
 
 public class CommentModel {
 
-    public boolean themDanhGia(Action action, Comment comment) {
+    // thêm đánh giá
+    public boolean add(Action action, Comment comment) {
         List<HashMap<String, String>> attrs = new ArrayList<>();
         String url = HomeActivity.SERVER_NAME + action.getAction();
         if (!url.contains(".php")) url += ".php";
@@ -56,7 +57,7 @@ public class CommentModel {
             String json = downloadJson.get();
             if (json != null) {
                 JSONObject object = new JSONObject(json);
-                return object.getBoolean("result");
+                return object.getBoolean("addCommentResult");
             }
         } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
@@ -65,7 +66,8 @@ public class CommentModel {
         return false;
     }
 
-    public List<Comment> layDanhSachDanhGia(Action action, int maSP, int startIndex) {
+    // lấy tất cả đánh giá
+    public List<Comment> getAll(Action action, int maSP, int startIndex) {
         List<Comment> commentList = new ArrayList<>();
         String url = HomeActivity.SERVER_NAME + action.getAction();
         if (!url.contains(".php")) url += ".php";

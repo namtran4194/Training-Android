@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ElectronicsModel {
 
-    public List<Brand> layDanhSachThuongHieuLon(String action, String parentNodeName) {
+    public List<Brand> getBrandList(String action, String parentNodeName) {
         if (!action.contains(".php"))
             action += ".php";
 
@@ -55,7 +55,7 @@ public class ElectronicsModel {
         return brandList;
     }
 
-    public List<Product> layDanhSachTopSanPham(String action, String parentNodeName) {
+    public List<Product> getProducts(String action, String parentNodeName) {
         if (!action.contains(".php"))
             action += ".php";
 

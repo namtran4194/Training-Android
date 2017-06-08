@@ -8,24 +8,25 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by namtr on 5/20/2017.
  */
 
-public class ProductDatabase extends SQLiteOpenHelper {
+class ProductDatabase extends SQLiteOpenHelper {
     private static final String DB_NAME = "SQLSANPHAM";
     private static final int DB_VERSION = 1;
+
     // giỏ hàng
-    public static final String GIO_HANG_TABLE_NAME = "GioHang";
-    public static final String GIOHANG_PRODUCT_CODE = "MASP";
-    public static final String GIOHANG_PRODUCT_NAME = "TENSP";
-    public static final String GIOHANG_PRICE = "GIA";
-    public static final String GIOHANG_IMAGE = "HINHANH";
+    static final String GIO_HANG_TABLE_NAME = "GioHang";
+    static final String GIOHANG_PRODUCT_CODE = "MASP";
+    static final String GIOHANG_PRODUCT_NAME = "TENSP";
+    static final String GIOHANG_PRICE = "GIA";
+    static final String GIOHANG_IMAGE = "HINHANH";
 
     // sản phẩm yêu thích
-    public static final String YEU_THICH_TABLE_NAME = "YeuThich";
-    public static final String YEU_THICH_PRODUCT_CODE = "MASP";
-    public static final String YEU_THICH_PRODUCT_NAME = "TENSP";
-    public static final String YEU_THICH_PRICE = "GIA";
-    public static final String YEU_THICH_IMAGE = "HINHANH";
+    private static final String YEU_THICH_TABLE_NAME = "YeuThich";
+    private static final String YEU_THICH_PRODUCT_CODE = "MASP";
+    private static final String YEU_THICH_PRODUCT_NAME = "TENSP";
+    private static final String YEU_THICH_PRICE = "GIA";
+    private static final String YEU_THICH_IMAGE = "HINHANH";
 
-    public ProductDatabase(Context context) {
+    ProductDatabase(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
@@ -43,5 +44,8 @@ public class ProductDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + GIO_HANG_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + YEU_THICH_TABLE_NAME);
+        onCreate(db);
     }
 }

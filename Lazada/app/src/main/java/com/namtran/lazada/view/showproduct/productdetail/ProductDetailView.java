@@ -10,11 +10,16 @@ import java.util.List;
  */
 
 public interface ProductDetailView {
-    void hienThiChiTietSanPham(Product product);
 
-    void hienThiSlider(String... link);
+    // hiển thị chi tiết sản phẩm
+    void showProductDetail(Product product);
 
-    void hienThiDanhGia(List<Comment> commentList);
+    // hiển thị các hình ảnh xem trước của sản phẩm
+    void showPicturePreview(String... link);
 
-    void ketQuaThemGiohang(boolean result);
+    // hiển thị danh sách đánh giá
+    void showComments(List<Comment> commentList);
+
+    // kết quả thêm vào giỏ hàng
+    void addToCartResult(boolean result);
 }

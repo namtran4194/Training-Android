@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutionException;
 
 public class SignUpModel {
 
-    public boolean dangKyThanhVIen(Staff staff) {
+    public boolean signUp(Staff staff) {
         List<HashMap<String, String>> attrs = new ArrayList<>();
         String url = HomeActivity.SERVER_NAME + "dangky.php";
 
@@ -49,7 +49,7 @@ public class SignUpModel {
             String json = downloadJson.get();
             if (json != null) {
                 JSONObject object = new JSONObject(json);
-                return object.getBoolean("result");
+                return object.getBoolean("addCommentResult");
             }
         } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();

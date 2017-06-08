@@ -10,11 +10,11 @@ import com.namtran.lazada.model.objectclass.Product;
  */
 
 interface IProductDetail {
-    void layChiTietSanPham(Action action, int maSP);
+    void getProductDetail(Action action, int maSP);
 
-    void layDanhSachDanhGia(Action action, int maSP, int startIndex);
+    void getComments(Action action, int maSP, int startIndex);
 
-    void themGioHang(Context context, Product product);
+    void addToCart(Context context, Product product);
 
-    long soLuongSPCoTrongGioHang(Context context);
+    long numOfproductsInCart(Context context);
 }

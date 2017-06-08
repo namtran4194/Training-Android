@@ -7,5 +7,5 @@ import com.namtran.lazada.model.objectclass.Staff;
  */
 
 interface ISignUp {
-    void thucHienDangKy(Staff staff);
+    void doSigningUp(Staff staff);
 }

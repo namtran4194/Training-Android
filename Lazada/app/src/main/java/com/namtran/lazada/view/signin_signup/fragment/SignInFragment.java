@@ -76,7 +76,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Go
             }
         });
         // gg login
-        mGoogleApiClient = signInModel.layGoogleApiClient(getActivity(), this);
+        mGoogleApiClient = signInModel.getApi(getActivity(), this);
 
         mETEmail = (TextInputEditText) v.findViewById(R.id.login_etEmail);
         mETPassword = (TextInputEditText) v.findViewById(R.id.login_etPassword);
@@ -98,7 +98,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Go
                 String username = mETEmail.getText().toString();
                 String password = mETPassword.getText().toString();
                 if (internet.isOnline()) {
-                    boolean isSuccessed = signInModel.kiemTraDangNhap(getContext(), username, password);
+                    boolean isSuccessed = signInModel.checkingLogin(getContext(), username, password);
                     if (isSuccessed) {
                         getActivity().setResult(LOGIN_WITH_EMAIL);
                         getActivity().finish();

@@ -59,15 +59,15 @@ public class ElectronicsFragment extends Fragment implements ElectronicsView {
 
         ElectronicsPresenter electronicsPresenter = new ElectronicsPresenter(this);
         if (new Internet(getContext()).isOnline()) {
-            electronicsPresenter.layDanhSachDienTu();
-            electronicsPresenter.layLogoThuongHieuLon();
-            electronicsPresenter.layDanhSachHangMoiVe();
+            electronicsPresenter.getElectronicsList();
+            electronicsPresenter.getTopBrandLogo();
+            electronicsPresenter.getnewProducts();
         }
         return v;
     }
 
     @Override
-    public void hienThiThuongHieuLon(List<Electronics> electronicsList) {
+    public void showTopBrands(List<Electronics> electronicsList) {
         if (electronicsList != null) {
             ElectronicsAdapter adapter = new ElectronicsAdapter(getContext(), electronicsList);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -81,7 +81,7 @@ public class ElectronicsFragment extends Fragment implements ElectronicsView {
     }
 
     @Override
-    public void hienThiLogoThuongHieu(List<Brand> brandList) {
+    public void showTopBrandLogo(List<Brand> brandList) {
         if (brandList != null) {
             TopLogoOfBrandAdapter adapter = new TopLogoOfBrandAdapter(getContext(), brandList);
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2, LinearLayoutManager.HORIZONTAL, false);
@@ -96,7 +96,7 @@ public class ElectronicsFragment extends Fragment implements ElectronicsView {
     }
 
     @Override
-    public void hienThiDanhSachHangMoiVe(List<Product> productList) {
+    public void showNewProducts(List<Product> productList) {
         if (productList != null) {
             TopProductAdapter adapter = new TopProductAdapter(getContext(), R.layout.custom_recycler_electronics_gridview_top_product, productList);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);

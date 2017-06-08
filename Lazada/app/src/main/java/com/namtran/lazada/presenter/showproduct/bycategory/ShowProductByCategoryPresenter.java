@@ -21,9 +21,9 @@ public class ShowProductByCategoryPresenter implements IShowProductByCategory {
     }
 
     @Override
-    public void layDanhSachSanPham(int typeCode, boolean loadThuongHieu) {
+    public void getProducts(int typeCode, boolean loadThuongHieu) {
         List<Product> productList = loadMore(typeCode, loadThuongHieu, 0);
-        byCategoryView.hienThiDanhSachSanPham(productList);
+        byCategoryView.showProducts(productList);
     }
 
     public List<Product> loadMore(int typeCode, boolean loadThuongHieu, int startIndex) {
@@ -32,10 +32,10 @@ public class ShowProductByCategoryPresenter implements IShowProductByCategory {
 
         if (loadThuongHieu) {
             action = Action.PRODUCT_LIST_BY_BRAND_CODE;
-            productList = byCategoryModel.layDanhSachSanPhamTheoMaThuongHieu(action, typeCode, startIndex);
+            productList = byCategoryModel.getProductsByBrandCode(action, typeCode, startIndex);
         } else {
             action = Action.PRODUCT_LIST_BY_PTYPE_CODE;
-            productList = byCategoryModel.layDanhSachSanPhamTheoMaLoai(action, typeCode, startIndex);
+            productList = byCategoryModel.getProductsById(action, typeCode, startIndex);
         }
 //        Log.d("kiemtra", productList.size() + "");
         return productList;

@@ -5,7 +5,10 @@ package com.namtran.lazada.view.signin_signup;
  */
 
 public interface SignUpView {
-    void dangKyThanhCong();
 
-    void dangKyThatBai();
+    // đăng ký thành công
+    void signUpSuccess();
+
+    // đăng ký thất bại
+    void signUpFailure();
 }

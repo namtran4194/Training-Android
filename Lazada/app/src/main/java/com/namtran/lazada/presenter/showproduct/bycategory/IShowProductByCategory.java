@@ -5,5 +5,5 @@ package com.namtran.lazada.presenter.showproduct.bycategory;
  */
 
 interface IShowProductByCategory {
-    void layDanhSachSanPham(int typeCode, boolean loadThuongHieu);
+    void getProducts(int typeCode, boolean loadThuongHieu);
 }
