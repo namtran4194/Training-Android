@@ -68,4 +68,5 @@
     <string name="danhgia_et_hint_tieude">Tiêu đề</string>
     <string name="danhgia_et_hint_noidung">Nội dung</string>
     <string name="danhgia_btn_dongy">Đồng ý</string>
+    <string name="cart_btn_buy_now">Mua ngay</string>
 </resources>

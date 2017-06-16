@@ -16,5 +16,5 @@ interface IProductDetail {
 
     void addToCart(Context context, Product product);
 
-    long numOfproductsInCart(Context context);
+    long numOfProductsInCart(Context context);
 }

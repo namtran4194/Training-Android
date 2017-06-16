@@ -40,6 +40,7 @@ import com.namtran.lazada.model.signin_signup.SignInModel;
 import com.namtran.lazada.model.objectclass.ProductType;
 import com.namtran.lazada.presenter.showproduct.productdetail.ProductDetailPresenter;
 import com.namtran.lazada.presenter.home.handlingmenu.HandlingMenuPresenter;
+import com.namtran.lazada.view.cart.CartActivity;
 import com.namtran.lazada.view.signin_signup.SignInAndSignUpActivity;
 import com.namtran.lazada.view.signin_signup.fragment.SignInFragment;
 
@@ -49,7 +50,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements HandlingMenuView, GoogleApiClient.OnConnectionFailedListener, AppBarLayout.OnOffsetChangedListener {
-    public static final String SERVER_NAME = "http://192.168.1.227:8000/lazada/";
+    public static final String SERVER_NAME = "http://192.168.1.164:8000/lazada/";
     public static final int REQUEST_CODE_LOGIN = 0;
     public static final int REQUEST_CODE_CART = 9;
     private Toolbar mToolbar;
@@ -139,8 +140,15 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
         getMenuInflater().inflate(R.menu.home_menu, menu);
         mLoginItem = menu.findItem(R.id.menu_login);
         MenuItem item = menu.findItem(R.id.menu_cart);
-        View actionLayout = item.getActionView();
-        mTVNumOfProductInCart = (TextView) actionLayout.findViewById(R.id.item_cart_tv_numberOfItems);
+        View customCartView = item.getActionView();
+        customCartView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cartItent = new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(cartItent);
+            }
+        });
+        mTVNumOfProductInCart = (TextView) customCartView.findViewById(R.id.item_cart_tv_numberOfItems);
 
         updateCartStatus();
         updateMenu(menu);
@@ -240,7 +248,7 @@ public class HomeActivity extends AppCompatActivity implements HandlingMenuView,
     }
 
     private void updateCartStatus() {
-        long soLuong = productDetailPresenter.numOfproductsInCart(this);
+        long soLuong = productDetailPresenter.numOfProductsInCart(this);
         if (soLuong == 0)
             mTVNumOfProductInCart.setVisibility(View.GONE);
         else

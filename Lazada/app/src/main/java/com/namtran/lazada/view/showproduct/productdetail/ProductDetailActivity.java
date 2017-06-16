@@ -248,7 +248,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     }
 
     private void updateCartStatus() {
-        long soLuong = productDetailPresenter.numOfproductsInCart(this);
+        long soLuong = productDetailPresenter.numOfProductsInCart(this);
         if (soLuong == 0)
             mTVNumOfProductInCart.setVisibility(View.GONE);
         else
@@ -327,7 +327,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         if (result) {
             Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
             // cập nhật lại số sản phẩm trong giỏ hàng của trên menu
-            long soLuong = productDetailPresenter.numOfproductsInCart(this);
+            long soLuong = productDetailPresenter.numOfProductsInCart(this);
             if (soLuong == 0)
                 mTVNumOfProductInCart.setVisibility(View.GONE);
             else

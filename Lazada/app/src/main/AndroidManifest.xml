@@ -55,6 +55,10 @@
         <activity
             android:name=".view.showproduct.comment.CommentListActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.cart.CartActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

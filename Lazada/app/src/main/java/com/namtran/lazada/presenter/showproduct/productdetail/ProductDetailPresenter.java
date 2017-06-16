@@ -54,7 +54,7 @@ public class ProductDetailPresenter implements IProductDetail {
     }
 
     @Override
-    public long numOfproductsInCart(Context context) {
+    public long numOfProductsInCart(Context context) {
         cartModel.openConnection(context);
         return cartModel.size();
     }

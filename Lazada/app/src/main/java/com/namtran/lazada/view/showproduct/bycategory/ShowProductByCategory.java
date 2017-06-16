@@ -214,7 +214,7 @@ public class ShowProductByCategory extends AppCompatActivity implements ShowProd
     }
 
     private void updateCartStatus() {
-        long soLuong = productDetailPresenter.numOfproductsInCart(this);
+        long soLuong = productDetailPresenter.numOfProductsInCart(this);
         if (soLuong == 0)
             mTVNumOfProductsInCart.setVisibility(View.GONE);
         else
